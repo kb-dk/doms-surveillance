@@ -1,0 +1,67 @@
+<project name="surveyor"  basedir=".">
+    <property name="global.dir" value="${basedir}/../.."/>
+    <!--Contain the normal build tasks, including war-->
+    <import file="${global.dir}/build-includes.xml"/>
+
+    <!--
+       Module specific properties
+    -->
+    <property file="build.properties" />
+    <property name="warfilename" value="doms-${ant.project.name}-${doms.surveillance.version}.war"/>
+    <property name="jarfilename" value="doms-${ant.project.name}-${doms.surveillance.version}.jar"/>
+
+    <!--Local libraries-->
+    <path id="jars.path">
+        <fileset dir="lib" id="jars.set">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Global- and module specific libs -->
+    <path id="global.libs.path">
+        <pathelement location="${basedir}/../../lib"/>
+    </path>
+
+    <!-- Calculate global libs dir property from path -->
+    <pathconvert refid="global.libs.path" property="global.libs.dir"/>
+
+    <path id="used.global.libs.path">
+        <fileset id="used.global.libs.set" dir="${global.libs.dir}">
+            <!-- None so far -->
+        </fileset>
+    </path>
+
+    <target name="warasjar" depends="distclean,compile">
+        <mkdir dir="dist"/>
+        <jar file="dist/${jarfilename}" basedir="classes" includes="**/*.class"/>
+        <copy todir="libtemp" flatten="true">
+            <fileset refid="module.libs"/>
+            <fileset refid="project.libs"/>
+            <fileset dir="dist" includes="${jarfilename}"/>
+        </copy>
+
+        <war destfile="dist/${warfilename}"
+             webxml="web/WEB-INF/web.xml">
+            <lib dir="libtemp"/>
+            <webinf dir="web/WEB-INF">
+                <exclude name="web.xml"/>
+            </webinf>
+            <fileset dir="web">
+                <exclude name="WEB-INF/**"/>
+            </fileset>
+        </war>
+
+        <delete dir="libtemp"/>
+
+
+    </target>
+</project>
+
+
+
+
+
+
+
+
+
