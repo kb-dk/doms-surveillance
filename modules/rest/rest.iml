@@ -8,17 +8,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library name="jersey 1.1.4">
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/lib/jersey-1.1.4/jars" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/lib/jersey-1.1.4/jars" recursive="false" />
-      </library>
-    </orderEntry>
     <orderEntry type="library" exported="" name="jsr311-api-1.0" level="project" />
+    <orderEntry type="library" exported="" name="log4j-1.2.15" level="project" />
   </component>
 </module>
 

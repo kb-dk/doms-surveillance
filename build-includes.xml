@@ -38,6 +38,7 @@
         </javac>
         <copy todir="classes">
             <fileset dir="src">
+                <include name="**/*.properties"/>
                 <include name="**/*.xml"/>
             </fileset>
         </copy>
