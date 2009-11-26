@@ -140,7 +140,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/modules/restappender/rest.iml" filepath="$PROJECT_DIR$/modules/restappender/rest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/rest/rest.iml" filepath="$PROJECT_DIR$/modules/restappender/rest.iml" />
       <module fileurl="file://$PROJECT_DIR$/surveillance.iml" filepath="$PROJECT_DIR$/surveillance.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/surveyor/surveyor.iml" filepath="$PROJECT_DIR$/modules/surveyor/surveyor.iml" />
     </modules>
