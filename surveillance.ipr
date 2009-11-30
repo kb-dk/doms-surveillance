@@ -204,6 +204,14 @@
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/log4j-1.2.15/jars" recursive="false" />
     </library>
+    <library name="junit-3.8.2">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/junit-3.8.2/lib/jars" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/junit-3.8.2/lib/jars" recursive="false" />
+    </library>
   </component>
 </project>
 

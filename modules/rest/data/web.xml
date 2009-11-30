@@ -1,0 +1,14 @@
+<!-- This is a sample web.xml file, for what you need to put in your own web.xml
+     file to enable the logsurveyservice. Please note that you also need to
+     have Jersey deployed in the lib-directory of your war-file -->
+
+<web-app>
+    <servlet>
+        <servlet-name>Log Survey Appender</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Log Survey Appender</servlet-name>
+        <url-pattern>/logsurveyservice</url-pattern>
+    </servlet-mapping>
+</web-app>
