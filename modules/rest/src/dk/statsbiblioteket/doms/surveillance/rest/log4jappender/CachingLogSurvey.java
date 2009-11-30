@@ -27,17 +27,15 @@ package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
 import dk.statsbiblioteket.doms.surveillance.rest.Status;
 import dk.statsbiblioteket.doms.surveillance.rest.StatusMessage;
-import dk.statsbiblioteket.doms.surveillance.rest.StatusTuple;
 import org.apache.log4j.spi.LoggingEvent;
 
-import java.util.Date;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
 /** A log survey that caches log messages for later inspection. */
 public class CachingLogSurvey implements LogSurvey {
-    private NavigableMap<Date, StatusMessage> logstatusmessages
-            = new TreeMap<Date, StatusMessage>();
+    private NavigableMap<Long, StatusMessage> logstatusmessages
+            = new TreeMap<Long, StatusMessage>();
     private String name;
 
     /**
@@ -46,10 +44,10 @@ public class CachingLogSurvey implements LogSurvey {
      * @param time Only messages strictly after the given date are returned.
      * @return A status containing list of log messages.
      */
-    public Status getMessagesSince(Date time) {
-        return new StatusTuple(
+    public Status getStatusSince(long time) {
+        return new Status(
                 name, logstatusmessages.subMap(
-                        time, false, new Date(Long.MAX_VALUE), true).values());
+                        time, false, Long.MAX_VALUE, true).values());
     }
 
     /**
@@ -57,8 +55,8 @@ public class CachingLogSurvey implements LogSurvey {
      *
      * @return A status containing list of log messages.
      */
-    public Status getMessages() {
-        return getMessagesSince(new Date(0l));
+    public Status getStatus() {
+        return getStatusSince(0l);
     }
 
     /**
@@ -68,8 +66,7 @@ public class CachingLogSurvey implements LogSurvey {
      */
     public void registerMessage(LoggingEvent event) {
         logstatusmessages.put(
-                new Date(event.getTimeStamp()),
-                new LogStatusMessageTuple(event));
+                event.getTimeStamp(), new LogStatusMessage(event));
         //TODO: Ensure the log doesn't grow too huge
     }
 }

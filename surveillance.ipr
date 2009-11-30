@@ -212,6 +212,14 @@
       <SOURCES />
       <jarDirectory url="file://$PROJECT_DIR$/lib/junit-3.8.2/lib/jars" recursive="false" />
     </library>
+    <library name="jersey-1.1.4">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/jersey-1.1.4/jars" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/jersey-1.1.4/jars" recursive="false" />
+    </library>
   </component>
 </project>
 

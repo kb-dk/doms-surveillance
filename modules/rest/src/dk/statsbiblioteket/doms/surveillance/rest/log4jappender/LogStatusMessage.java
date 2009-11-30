@@ -25,14 +25,15 @@
  */
 package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
-import dk.statsbiblioteket.doms.surveillance.rest.StatusMessageTuple;
+import dk.statsbiblioteket.doms.surveillance.rest.StatusMessage;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
-import java.util.Date;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /** A status message tuple initialised with a log event. */
-public class LogStatusMessageTuple extends StatusMessageTuple {
+@XmlRootElement
+public class LogStatusMessage extends StatusMessage {
     /**
      * Helper method to map logging level to severity.
      * Severity maps to YELLOW for warnings, RED for fatal and error.
@@ -61,11 +62,9 @@ public class LogStatusMessageTuple extends StatusMessageTuple {
      *
      * @param event The log event.
      */
-    public LogStatusMessageTuple(LoggingEvent event) {
+    public LogStatusMessage(LoggingEvent event) {
         super(
                 event.getRenderedMessage(), getSeverity(event.getLevel()),
-                new Date(event.getTimeStamp()), true);
+                event.getTimeStamp(), true);
     }
-
-
 }

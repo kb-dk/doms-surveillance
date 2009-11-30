@@ -27,49 +27,82 @@ package dk.statsbiblioteket.doms.surveillance.rest;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
 
-/** The interface for a status message for a surveyed application. */
+/** A status message for a surveyed application. */
 @XmlRootElement
-public interface StatusMessage {
+public class StatusMessage {
     /** Severity defined in a classic traffic-light fashion. */
-    enum Severity {
+    @XmlRootElement
+    public enum Severity {
         GREEN, RED, YELLOW
     }
 
+    private final String message;
+    private final Severity severity;
+    private final long time;
+    private final boolean logMessage;
+
+    /** Default no-arg constructor to make JAXB happy. */
+    private StatusMessage() {
+        message = "";
+        severity = Severity.GREEN;
+        time = 0;
+        logMessage = true;
+    }
+
     /**
-     * Get the text for the status message. May be formatted in HTML.
+     * Initialise the tuple.
+     *
+     * @param message    The message.
+     * @param severity   The severity.
+     * @param time       The time.
+     * @param logMessage The log message.
+     */
+    public StatusMessage(String message, Severity severity, long time,
+                         boolean logMessage) {
+        this.message = message;
+        this.severity = severity;
+        this.time = time;
+        this.logMessage = logMessage;
+    }
+
+    /**
+     * Get the text for the status message. Only trivially reformatted in HTML.
      *
      * @return The message. Never null.
      */
     @XmlElement
-    public String getMessage();
+    public String getMessage() {
+        return message;
+    }
 
     /**
      * Get the severity of the message.
      *
-     * @return The severity. Never null.
+     * @return The severity.
      */
     @XmlElement
-    public Severity getSeverity();
+    public Severity getSeverity() {
+        return severity;
+    }
 
     /**
-     * Get the time for this message. For log messages, this is the time it
-     * was logged. For status messages, this is the first time this state
-     * was true.
+     * Get the time for this message.
      *
-     * @return The time this message was first generated. Never null.
+     * @return The time this message was generated. Never null.
      */
     @XmlElement
-    public Date getTime();
+    public long getTime() {
+        return time;
+    }
 
     /**
-     * Whether this message is about the immediate state of the system, or
-     * some logged message.
+     * Returns whether this is a logged message.
      *
-     * @return true if the message is a log message, false if it is a
-     *         message about the current state. Never null.
+     * @return Whether this is a logged message.
      */
     @XmlElement
-    public boolean isLogMessage();
+    public boolean isLogMessage() {
+        return logMessage;
+    }
 }

@@ -7,6 +7,8 @@
        Module specific properties
     -->
     <property file="build.properties"/>
+    <property name="warfilename"
+              value="doms-${ant.project.name}-${doms.surveillance.version}.war"/>
     <property name="jarfilename"
               value="doms-${ant.project.name}-${doms.surveillance.version}.jar"/>
 
@@ -28,6 +30,7 @@
     <path id="project.libs.path">
         <fileset id="project.libs" dir="${project.libs.dir}">
             <include name="jsr311-api-1.0/jars/**"/>
+            <include name="jersey-1.1.4/jars/**"/>
             <include name="log4j-1.2.15/jars/**"/>
         </fileset>
     </path>

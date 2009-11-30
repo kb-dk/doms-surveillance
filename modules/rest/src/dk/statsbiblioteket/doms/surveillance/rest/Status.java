@@ -27,18 +27,43 @@ package dk.statsbiblioteket.doms.surveillance.rest;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-/** The interface for the status of a surveyed application. */
+/** A system status. */
 @XmlRootElement
-public interface Status {
+public class Status {
+    private final String name;
+    private final List<StatusMessage> messages;
+
+    /** Default no-args constructor. */
+    private Status() {
+        name = "";
+        messages = Collections.emptyList();
+    }
+
+    /**
+     * Initialise the tuple.
+     *
+     * @param name     The name of what is being surveyed.
+     * @param messages The list of status messages.
+     */
+    public Status(String name, Collection<StatusMessage> messages) {
+        this.name = name;
+        this.messages = new ArrayList<StatusMessage>(messages);
+    }
+
     /**
      * A list of status messages.
      *
      * @return A list of status messages.
      */
     @XmlElement
-    public List<StatusMessage> getMessages();
+    public List<StatusMessage> getMessages() {
+        return messages;
+    }
 
     /**
      * Name of what is being surveyed.
@@ -46,5 +71,7 @@ public interface Status {
      * @return Name of what is being surveyed.
      */
     @XmlElement
-    public String getName();
+    public String getName() {
+        return name;
+    }
 }

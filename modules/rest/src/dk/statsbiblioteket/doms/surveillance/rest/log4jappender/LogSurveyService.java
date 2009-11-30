@@ -32,31 +32,30 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import java.util.Date;
 
 /** Class that exposes log messages as surveyable messages over REST. */
-@Path("logsurveyservice")
+@Path("/")
 public class LogSurveyService implements Surveyable {
     @GET
-    @Path("getMessagesSince/{date}")
+    @Path("getStatusSince/{date}")
     @Produces("application/xml")
     /** Returns all log messages received since the given date.
      *
      * @param time Only messages strictly after the given date are returned.
      * @return A status containing list of log messages.
      */
-    public Status getMessagesSince(@PathParam("date") Date time) {
-        return LogSurveyFactory.getLogSurvey().getMessagesSince(time);
+    public Status getStatusSince(@PathParam("date") long time) {
+        return LogSurveyFactory.getLogSurvey().getStatusSince(time);
     }
 
     @GET
-    @Path("getMessages")
+    @Path("getStatus")
     @Produces("application/xml")
     /** Returns all log messages received.
      *
      * @return A status containing list of log messages.
      */
-    public Status getMessages() {
-        return LogSurveyFactory.getLogSurvey().getMessages();
+    public Status getStatus() {
+        return LogSurveyFactory.getLogSurvey().getStatus();
     }
 }

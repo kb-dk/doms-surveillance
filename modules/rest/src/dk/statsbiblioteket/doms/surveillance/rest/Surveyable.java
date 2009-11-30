@@ -25,8 +25,6 @@
  */
 package dk.statsbiblioteket.doms.surveillance.rest;
 
-import java.util.Date;
-
 /** The interface of something that offers status messages for surveillance. */
 public interface Surveyable {
     /**
@@ -38,7 +36,7 @@ public interface Surveyable {
      * @param time Only get message strictly newer than this timestamp.
      * @return List of status messages. May be empty, but never null.
      */
-    public Status getMessagesSince(Date time);
+    public Status getStatusSince(long time);
 
     /**
      * Get all status messages. This behaves exactly like
@@ -46,8 +44,8 @@ public interface Surveyable {
      *
      * @return List of status messages. May be empty, but never null.
      *
-     * @see #getMessagesSince(Date)
+     * @see #getStatusSince(long)
      */
-    public Status getMessages();
+    public Status getStatus();
 
 }

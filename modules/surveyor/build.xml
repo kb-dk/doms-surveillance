@@ -29,7 +29,8 @@
 
     <path id="used.global.libs.path">
         <fileset id="used.global.libs.set" dir="${global.libs.dir}">
-            <include name="jsr311-api-1.0"/>
+            <include name="jsr311-api-1.0/jars/**"/>
+            <include name="jersey-1.1.4/jars/**"/>
         </fileset>
     </path>
 
