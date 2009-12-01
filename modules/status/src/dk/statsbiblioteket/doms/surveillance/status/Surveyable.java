@@ -23,7 +23,7 @@
 * specific language governing permissions and limitations
 * under the License.
  */
-package dk.statsbiblioteket.doms.surveillance.rest;
+package dk.statsbiblioteket.doms.surveillance.status;
 
 /** The interface of something that offers status messages for surveillance. */
 public interface Surveyable {

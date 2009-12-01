@@ -10,21 +10,22 @@
         <exclude name="**"/>
     </fileset>
 
-    <fileset id="module.dependencies" dir="${global.dir}/modules">
-        <exclude name="**"/>
-    </fileset>
-
     <path id="build.classpath">
         <!--        <pathelement location="${java.home}/../lib/tools.jar"/>-->
         <fileset refid="module.libs"/>
         <fileset refid="project.libs"/>
-        <fileset refid="module.dependencies"/>
     </path>
 
+    <patternset id="license.pattern">
+        <include name="lib/**/licenses/*"/>
+        <include name="LICENSE"/>
+        <include name="README"/>
+    </patternset>
 
-    <target name="depends">
-        <!--        <ant dir="${modules.dir}/repository" target="jar"/>-->
-    </target>
+    <patternset id="jars.pattern">
+        <include name="lib/**/*.jar"/>
+        <include name="dist/*.jar"/>
+    </patternset>
 
     <target name="compile" depends="depends"
             description="Compile all production classes, and copy properties to class dir">
@@ -44,7 +45,6 @@
         </copy>
     </target>
 
-
     <target name="clean">
         <delete dir="classes"/>
         <delete dir="tempsrc"/>
@@ -52,7 +52,6 @@
 
     <target name="distclean" depends="clean">
         <delete dir="dist"/>
-
     </target>
 
 
@@ -82,6 +81,13 @@
 
     </target>
 
-    <target name="dist" depends="war"/>
+    <target name="jar" depends="distclean,compile"
+            description="Build a jar file from classes">
+        <mkdir dir="dist"/>
+        <jar destfile="dist/${jarfilename}">
+            <fileset dir="classes"/>
+        </jar>
+    </target>
 
+    <target name="dist" depends="war"/>
 </project>

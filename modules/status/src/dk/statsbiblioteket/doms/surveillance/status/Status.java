@@ -23,7 +23,7 @@
 * specific language governing permissions and limitations
 * under the License.
  */
-package dk.statsbiblioteket.doms.surveillance.rest;
+package dk.statsbiblioteket.doms.surveillance.status;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

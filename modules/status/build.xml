@@ -1,0 +1,45 @@
+<project name="surveillance-status" basedir=".">
+    <property name="global.dir" value="${basedir}/../.."/>
+    <!--Contain the normal build tasks, including war-->
+    <import file="${global.dir}/build-includes.xml"/>
+
+    <!-- Module specific properties -->
+    <property file="build.properties"/>
+    <property name="warfilename"
+              value="doms-${ant.project.name}-${doms.surveillance.version}.war"/>
+    <property name="jarfilename"
+              value="doms-${ant.project.name}-${doms.surveillance.version}.jar"/>
+
+    <!--Local libraries-->
+    <path id="jars.path">
+        <fileset dir="lib" id="jars.set">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Global- and module specific libs -->
+    <path id="global.libs.path">
+        <pathelement location="${basedir}/../../lib"/>
+    </path>
+
+    <!-- Calculate global libs dir property from path -->
+    <pathconvert refid="global.libs.path" property="global.libs.dir"/>
+
+    <path id="used.global.libs.path">
+        <fileset id="used.global.libs.set" dir="${global.libs.dir}">
+            <!-- None -->
+        </fileset>
+    </path>
+
+    <target name="depends"/>
+
+</project>
+
+
+
+
+
+
+
+
+

@@ -25,7 +25,7 @@
  */
 package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
-import dk.statsbiblioteket.doms.surveillance.rest.Surveyable;
+import dk.statsbiblioteket.doms.surveillance.status.Surveyable;
 import org.apache.log4j.spi.LoggingEvent;
 
 /** A class for exposing Log4J log events as Surveyable. */

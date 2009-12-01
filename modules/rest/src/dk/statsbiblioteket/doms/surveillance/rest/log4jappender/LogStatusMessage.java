@@ -25,7 +25,7 @@
  */
 package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
-import dk.statsbiblioteket.doms.surveillance.rest.StatusMessage;
+import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 

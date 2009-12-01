@@ -25,8 +25,8 @@
  */
 package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
-import dk.statsbiblioteket.doms.surveillance.rest.Status;
-import dk.statsbiblioteket.doms.surveillance.rest.Surveyable;
+import dk.statsbiblioteket.doms.surveillance.status.Status;
+import dk.statsbiblioteket.doms.surveillance.status.Surveyable;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

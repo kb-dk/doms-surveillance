@@ -27,6 +27,7 @@
     <!-- Calculate global libs dir property from path -->
     <pathconvert refid="project.libs.path" property="project.libs.dir"/>
 
+    <!-- Project library dependencies -->
     <path id="project.libs.path">
         <fileset id="project.libs" dir="${project.libs.dir}">
             <include name="jsr311-api-1.0/jars/**"/>
@@ -34,6 +35,34 @@
             <include name="log4j-1.2.15/jars/**"/>
         </fileset>
     </path>
+
+    <target name="depends">
+        <subant buildpath="${global.dir}/modules/status" antfile="build.xml"
+                target="jar" inheritall="false" verbose="true"
+                inheritrefs="false"/>
+        <copy todir="lib" verbose="true">
+            <fileset dir="${global.dir}/modules/status">
+                <patternset refid="jars.pattern"/>
+            </fileset>
+            <regexpmapper from="^.*/([^/]+\.jar)$"
+                          to="status-${doms.surveillance.version}/jars/\1"/>
+        </copy>
+        <copy todir="lib" verbose="true" enablemultiplemappings="true">
+            <fileset dir="${global.dir}/modules/status">
+                <patternset refid="license.pattern"/>
+            </fileset>
+            <regexpmapper from="^.*/lib/([^/]+)/license/(.*)$"
+                          to="\status-${doms.surveillance.version}/license/\1/\2"/>
+        </copy>
+        <copy todir="lib/status-${doms.surveillance.version}/license">
+            <fileset dir="${global.dir}">
+                <include name="LICENSE"/>
+                <include name="NOTICE"/>
+                <include name="README"/>
+            </fileset>
+        </copy>
+        <!-- TODO: src and javadoc -->
+    </target>
 </project>
 
 
