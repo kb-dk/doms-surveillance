@@ -11,7 +11,7 @@ public class SurveyorFactory {
     private static Surveyor surveyor;
 
     public static Surveyor getSurveyor() {
-        if (surveyor != null) {
+        if (surveyor == null) {
             surveyor = new RestSurveyor();
         }
         return surveyor;

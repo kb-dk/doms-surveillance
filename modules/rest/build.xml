@@ -45,16 +45,16 @@
                 <patternset refid="jars.pattern"/>
             </fileset>
             <regexpmapper from="^.*/([^/]+\.jar)$"
-                          to="status-${doms.surveillance.version}/jars/\1"/>
+                          to="doms-status-${doms.surveillance.version}/jars/\1"/>
         </copy>
         <copy todir="lib" verbose="true" enablemultiplemappings="true">
             <fileset dir="${global.dir}/modules/status">
                 <patternset refid="license.pattern"/>
             </fileset>
             <regexpmapper from="^.*/lib/([^/]+)/license/(.*)$"
-                          to="\status-${doms.surveillance.version}/license/\1/\2"/>
+                          to="\doms-status-${doms.surveillance.version}/license/\1/\2"/>
         </copy>
-        <copy todir="lib/status-${doms.surveillance.version}/license">
+        <copy todir="lib/doms-status-${doms.surveillance.version}/license">
             <fileset dir="${global.dir}">
                 <include name="LICENSE"/>
                 <include name="NOTICE"/>

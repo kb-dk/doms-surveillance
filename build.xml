@@ -1,4 +1,4 @@
 <project name="surveillance" basedir=".">
     <!--Contain the normal build tasks, including war-->
-    <import file="build-includes.xml"/>
+    <!-- TODO: Add project build -->
 </project>

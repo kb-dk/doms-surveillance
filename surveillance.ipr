@@ -149,7 +149,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/modules/rest/rest.iml" filepath="$PROJECT_DIR$/modules/rest/rest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/modules/interface/status.iml" filepath="$PROJECT_DIR$/modules/interface/status.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/status/status.iml" filepath="$PROJECT_DIR$/modules/status/status.iml" />
       <module fileurl="file://$PROJECT_DIR$/surveillance.iml" filepath="$PROJECT_DIR$/surveillance.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/surveyor/surveyor.iml" filepath="$PROJECT_DIR$/modules/surveyor/surveyor.iml" />
     </modules>
@@ -225,8 +225,16 @@
       <CLASSES>
         <root url="file://$PROJECT_DIR$/lib/jersey-1.1.4/jars" />
       </CLASSES>
-      <JAVADOC />
-      <SOURCES />
+      <JAVADOC>
+        <root url="jar://$PROJECT_DIR$/lib/jersey-1.1.4/apidocs/jersey-server-1.1.4-javadoc.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jersey-1.1.4/apidocs/jersey-client-1.1.4-javadoc.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jersey-1.1.4/apidocs/jersey-core-1.1.4-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/lib/jersey-1.1.4/src/jersey-client-1.1.4-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jersey-1.1.4/src/jersey-server-1.1.4-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jersey-1.1.4/src/jersey-core-1.1.4-sources.jar!/" />
+      </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/jersey-1.1.4/jars" recursive="false" />
     </library>
   </component>

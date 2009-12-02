@@ -1,10 +1,24 @@
 <web-app>
     <servlet>
-        <servlet-name>Jersey Web Application</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <servlet-name>Log Survey Appender</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer
+        </servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>dk.statsbiblioteket.doms.surveillance.rest
+            </param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Jersey Web Application</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <servlet-name>Log Survey Appender</servlet-name>
+        <url-pattern>/logsurveyservice/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Surveyor</servlet-name>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Log Survey Appender</servlet-name>
+        <url-pattern>/surveyor/*</url-pattern>
     </servlet-mapping>
 </web-app>
