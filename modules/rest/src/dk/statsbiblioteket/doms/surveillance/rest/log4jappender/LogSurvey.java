@@ -36,4 +36,11 @@ public interface LogSurvey extends Surveyable {
      * @param event The log message to register.
      */
     public void registerMessage(LoggingEvent event);
+
+    /**
+     * Sets the name.
+     *
+     * @param name The name.
+     */
+    public void setName(String name);
 }

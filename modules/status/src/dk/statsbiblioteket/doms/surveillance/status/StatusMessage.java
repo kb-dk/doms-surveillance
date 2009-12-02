@@ -37,10 +37,10 @@ public class StatusMessage {
         GREEN, RED, YELLOW
     }
 
-    private final String message;
-    private final Severity severity;
-    private final long time;
-    private final boolean logMessage;
+    private String message;
+    private Severity severity;
+    private long time;
+    private boolean logMessage;
 
     /** Default no-arg constructor to make JAXB happy. */
     private StatusMessage() {
@@ -104,5 +104,21 @@ public class StatusMessage {
     @XmlElement
     public boolean isLogMessage() {
         return logMessage;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setSeverity(Severity severity) {
+        this.severity = severity;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public void setLogMessage(boolean logMessage) {
+        this.logMessage = logMessage;
     }
 }

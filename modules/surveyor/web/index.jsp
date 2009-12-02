@@ -1,8 +1,15 @@
 <%@ page import="dk.statsbiblioteket.doms.surveillance.status.Status" %>
 <%@ page import="dk.statsbiblioteket.doms.surveillance.status.StatusMessage" %>
 <%@ page
+        import="dk.statsbiblioteket.doms.surveillance.surveyor.Surveyor" %>
+<%@ page
         import="dk.statsbiblioteket.doms.surveillance.surveyor.SurveyorFactory" %>
+<%@ page import="org.apache.log4j.Level" %>
+<%@ page import="org.apache.log4j.Logger" %>
+<%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.util.Enumeration" %>
+<%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
@@ -25,8 +32,26 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     </thead>
     <tbody>
     <%
-        Map<String, Status> statusMap = SurveyorFactory.getSurveyor()
-                .getStatusMap();
+        Surveyor surveyor = SurveyorFactory.getSurveyor();
+        ServletConfig context = pageContext.getServletConfig();
+        String restUrlParameter = context.getInitParameter(
+                "dk.statsbiblioteket.doms.surveillance.surveyor.urls");
+        Enumeration parameterNames = context.getInitParameterNames();
+        System.out.println("Hello");
+        while (parameterNames.hasMoreElements()) {
+            String name = (String) parameterNames.nextElement();
+            System.out.println(
+                    "Parameter: " + name + " Value: " + context
+                            .getInitParameter(name));
+        }
+
+        Logger.getLogger("dk.statsbiblioteket.doms.surveyor.surveillance.Test")
+                .log(
+                        Level.FATAL, "Oh noes!!!!");
+
+        List<String> restUrls = Arrays.asList(restUrlParameter.split(";"));
+        surveyor.setRestStatusUrls(restUrls);
+        Map<String, Status> statusMap = surveyor.getStatusMap();
         for (Status status : statusMap.values()) {
     %>
     <tr>

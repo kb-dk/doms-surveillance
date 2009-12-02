@@ -2,15 +2,22 @@ package dk.statsbiblioteket.doms.surveillance.surveyor;
 
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 
+import java.util.List;
 import java.util.Map;
 
-/**
- * Created by IntelliJ IDEA.
- * User: kfc
- * Date: Dec 1, 2009
- * Time: 2:42:31 PM
- * To change this template use File | Settings | File Templates.
- */
+/** Interface for getting status messages. */
 public interface Surveyor {
+    /**
+     * Get the current status.
+     *
+     * @return Current status.
+     */
     Map<String, Status> getStatusMap();
+
+    /**
+     * Set list of URLs to get status from.
+     *
+     * @param restStatusUrls List of URLs to get status from.
+     */
+    void setRestStatusUrls(List<String> restStatusUrls);
 }

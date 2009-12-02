@@ -69,4 +69,13 @@ public class CachingLogSurvey implements LogSurvey {
                 event.getTimeStamp(), new LogStatusMessage(event));
         //TODO: Ensure the log doesn't grow too huge
     }
+
+    /**
+     * Sets the name.
+     *
+     * @param name The name.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 }

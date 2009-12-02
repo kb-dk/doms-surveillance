@@ -42,6 +42,11 @@ public class LogSurveyAppender extends AppenderSkeleton {
         LogSurveyFactory.getLogSurvey().registerMessage(event);
     }
 
+    /** Set the name of this Appender. */
+    public void setName(String name) {
+        LogSurveyFactory.getLogSurvey().setName(name);
+    }
+
     /**
      * Release any resources allocated within the appender such as file
      * handles, network connections, etc.

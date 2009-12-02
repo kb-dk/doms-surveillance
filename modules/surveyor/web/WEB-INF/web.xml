@@ -16,9 +16,17 @@
 
     <servlet>
         <servlet-name>Surveyor</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+        <init-param>
+            <param-name>dk.statsbiblioteket.doms.surveillance.surveyor.urls
+            </param-name>
+            <param-value>
+                http://localhost:8080/doms-surveillance-surveyor-0.0.1/logsurveyservice/getStatusSince/{date};http://localhost:8080/doms-surveillance-surveyor-0.0.1/logsurveyservice/getStatus
+            </param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Log Survey Appender</servlet-name>
+        <servlet-name>Surveyor</servlet-name>
         <url-pattern>/surveyor/*</url-pattern>
     </servlet-mapping>
 </web-app>

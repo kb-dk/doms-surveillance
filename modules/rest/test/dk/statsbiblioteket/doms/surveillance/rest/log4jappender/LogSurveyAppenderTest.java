@@ -1,6 +1,6 @@
 package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
-import dk.statsbiblioteket.doms.surveillance.rest.StatusMessage;
+import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
 import junit.framework.TestCase;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -24,5 +24,8 @@ public class LogSurveyAppenderTest extends TestCase {
         assertEquals(
                 "Should be yellow", StatusMessage.Severity.YELLOW,
                 ls.getStatus().getMessages().get(0).getSeverity());
+        assertEquals(
+                "Should have right name", "LogSurvey",
+                ls.getStatus().getName());
     }
 }

@@ -29,19 +29,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /** A system status. */
 @XmlRootElement
 public class Status {
-    private final String name;
-    private final List<StatusMessage> messages;
+    private String name;
+    private List<StatusMessage> messages;
 
     /** Default no-args constructor. */
     private Status() {
         name = "";
-        messages = Collections.emptyList();
+        messages = new ArrayList<StatusMessage>();
     }
 
     /**
@@ -74,4 +73,14 @@ public class Status {
     public String getName() {
         return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMessages(List<StatusMessage> messages) {
+        this.messages = messages;
+    }
+
+
 }
