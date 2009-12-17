@@ -25,15 +25,17 @@
  */
 package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
+import org.apache.log4j.spi.LoggingEvent;
+
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
-import org.apache.log4j.spi.LoggingEvent;
 
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
 /** A log survey that caches log messages for later inspection. */
 public class CachingLogSurvey implements LogSurvey {
+    //FIXME: Key not uniq: Several messages may be logged at the same instant.
     private NavigableMap<Long, StatusMessage> logstatusmessages
             = new TreeMap<Long, StatusMessage>();
     private String name;
@@ -44,7 +46,7 @@ public class CachingLogSurvey implements LogSurvey {
      * @param time Only messages strictly after the given date are returned.
      * @return A status containing list of log messages.
      */
-    public Status getStatusSince(long time) {
+    public synchronized Status getStatusSince(long time) {
         return new Status(
                 name, logstatusmessages.subMap(
                         time, false, Long.MAX_VALUE, true).values());
@@ -55,7 +57,7 @@ public class CachingLogSurvey implements LogSurvey {
      *
      * @return A status containing list of log messages.
      */
-    public Status getStatus() {
+    public synchronized Status getStatus() {
         return getStatusSince(0l);
     }
 
@@ -64,7 +66,7 @@ public class CachingLogSurvey implements LogSurvey {
      *
      * @param event The log message to register.
      */
-    public void registerMessage(LoggingEvent event) {
+    public synchronized void registerMessage(LoggingEvent event) {
         logstatusmessages.put(
                 event.getTimeStamp(), new LogStatusMessage(event));
         //TODO: Ensure the log doesn't grow too huge
@@ -75,7 +77,7 @@ public class CachingLogSurvey implements LogSurvey {
      *
      * @param name The name.
      */
-    public void setName(String name) {
+    public synchronized void setName(String name) {
         this.name = name;
     }
 }

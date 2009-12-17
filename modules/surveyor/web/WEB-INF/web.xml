@@ -21,12 +21,12 @@
             <param-name>dk.statsbiblioteket.doms.surveillance.surveyor.urls
             </param-name>
             <param-value>
-                http://localhost:8080/doms-surveillance-surveyor-0.0.1/logsurveyservice/getStatusSince/{date};http://localhost:8080/doms-surveillance-surveyor-0.0.1/logsurveyservice/getStatus
+                http://localhost:8080/doms-surveillance-surveyor-0.0.1/logsurveyservice/getStatusSince/{date}
             </param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>Surveyor</servlet-name>
-        <url-pattern>/surveyor/*</url-pattern>
+        <url-pattern>/surveyor/</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -34,7 +34,7 @@ public class StatusMessage {
     /** Severity defined in a classic traffic-light fashion. */
     @XmlRootElement
     public enum Severity {
-        GREEN, RED, YELLOW
+        GREEN, YELLOW, RED
     }
 
     private String message;
