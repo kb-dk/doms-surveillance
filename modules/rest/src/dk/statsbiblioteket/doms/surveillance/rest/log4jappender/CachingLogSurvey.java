@@ -35,8 +35,10 @@ import java.util.TreeMap;
 
 /** A log survey that caches log messages for later inspection. */
 public class CachingLogSurvey implements LogSurvey {
+    private static final int MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG = 1000;
+
     //FIXME: Key not uniq: Several messages may be logged at the same instant.
-    private NavigableMap<Long, StatusMessage> logstatusmessages
+    private NavigableMap<Long, StatusMessage> logStatusMessages
             = new TreeMap<Long, StatusMessage>();
     private String name;
 
@@ -48,7 +50,7 @@ public class CachingLogSurvey implements LogSurvey {
      */
     public synchronized Status getStatusSince(long time) {
         return new Status(
-                name, logstatusmessages.subMap(
+                name, logStatusMessages.subMap(
                         time, false, Long.MAX_VALUE, true).values());
     }
 
@@ -67,9 +69,16 @@ public class CachingLogSurvey implements LogSurvey {
      * @param event The log message to register.
      */
     public synchronized void registerMessage(LoggingEvent event) {
-        logstatusmessages.put(
+
+        // Ensure the log doesn't grow too huge
+        if (logStatusMessages.size() > MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG - 1) {
+            long earliestTimeStamp = logStatusMessages.firstKey();
+            logStatusMessages.remove(earliestTimeStamp);
+        }
+
+        // Log it
+        logStatusMessages.put(
                 event.getTimeStamp(), new LogStatusMessage(event));
-        //TODO: Ensure the log doesn't grow too huge
     }
 
     /**
