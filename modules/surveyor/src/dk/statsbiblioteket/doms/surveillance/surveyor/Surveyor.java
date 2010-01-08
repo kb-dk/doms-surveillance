@@ -1,5 +1,6 @@
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +14,13 @@ public interface Surveyor {
     Map<String, CondensedStatus> getStatusMap();
 
     /**
-     * Set list of URLs to get status from.
+     * Set configuration of surveyor
      *
-     * @param restStatusUrls List of URLs to get status from.
+     * @param restStatusUrls      List of URLs to get status from.
+     * @param ignoredMessagesFile File to store list of ignored messages in.
      */
-    void setRestStatusUrls(List<String> restStatusUrls);
+    void setConfiguration(List<String> restStatusUrls,
+                          File ignoredMessagesFile);
 
     /**
      * Mark a message as handled, thus removing it from the list of currently

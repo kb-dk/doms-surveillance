@@ -25,12 +25,10 @@
  */
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
-import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /** A system status. */
@@ -46,26 +44,6 @@ public class CondensedStatus {
     public CondensedStatus(String name) {
         this.name = name;
         this.messages = new LinkedHashMap<String, CondensedStatusMessage>();
-    }
-
-    /**
-     * Initialise the status.
-     *
-     * @param name     The name of what is being surveyed.
-     * @param messages List of status messages.
-     */
-    public CondensedStatus(String name, List<CondensedStatusMessage> messages) {
-        this(name);
-        for (CondensedStatusMessage message : messages) {
-            addMessage(message);
-        }
-    }
-
-    public CondensedStatus(Status status) {
-        this(status.getName());
-        for (StatusMessage message : status.getMessages()) {
-            addMessage(message);
-        }
     }
 
     /**
@@ -86,10 +64,16 @@ public class CondensedStatus {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * Add a status message to this condensed status. If a condensed status
+     * message with the same textual content already exists, it will be updated
+     * with information from the status message. Otherwise, a new condensed
+     * status message will be added.
+     *
+     * @param message The message to add
+     * @see CondensedStatusMessage#CondensedStatusMessage(StatusMessage)
+     * @see CondensedStatusMessage#update(StatusMessage)
+     */
     public void addMessage(StatusMessage message) {
         if (messages.containsKey(message.getMessage())) {
             CondensedStatusMessage oldMessage = messages
@@ -101,6 +85,15 @@ public class CondensedStatus {
         }
     }
 
+    /**
+     * Add a condensed status message to this condensed status. If a condensed
+     * status message with the same textual content already exists, it will be
+     * updated with information from the status message. Otherwise, this
+     * condensed status will be added.
+     *
+     * @param message The message to add
+     * @see CondensedStatusMessage#update(CondensedStatusMessage)
+     */
     public void addMessage(CondensedStatusMessage message) {
         if (messages.containsKey(message.getMessage())) {
             CondensedStatusMessage oldMessage = messages
@@ -111,6 +104,11 @@ public class CondensedStatus {
         }
     }
 
+    /**
+     * Remove condensed status messages with the given textual content.
+     *
+     * @param message The textual content of the message to remove.
+     */
     public void removeLogMessage(String message) {
         if (messages.get(message) != null && messages.get(message)
                 .isLogMessage()) {

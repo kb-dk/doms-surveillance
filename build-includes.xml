@@ -36,6 +36,11 @@
                encoding="UTF-8">
             <src path="src"/>
             <classpath refid="build.classpath"/>
+            <!--FIXME-->
+            <classpath>
+                <fileset dir="/home/kfc/build/apache-tomcat-6.0.20/lib"
+                         includes="*.jar"/>
+            </classpath>
         </javac>
         <copy todir="classes">
             <fileset dir="src">

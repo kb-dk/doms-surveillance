@@ -7,8 +7,10 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                 dk.statsbiblioteket.doms.surveillance.surveyor.CondensedStatusMessage,
                 dk.statsbiblioteket.doms.surveillance.surveyor.Surveyor,
                 dk.statsbiblioteket.doms.surveillance.surveyor.SurveyorFactory,
+                java.io.File,
                 java.net.URLEncoder,
                 java.util.Arrays,
+                java.util.Collections,
                 java.util.Date,
                 java.util.List,
                 java.util.Map" pageEncoding="UTF-8" %>
@@ -29,10 +31,26 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     </thead>
     <tbody>
     <%
-        Surveyor surveyor = SurveyorFactory.getSurveyor();
+        //Read configuration
         String restUrlParameter = config.getInitParameter(
                 "dk.statsbiblioteket.doms.surveillance.surveyor.urls");
+        List<String> restUrls;
+        if (restUrlParameter == null || restUrlParameter.equals("")) {
+            restUrls = Collections.emptyList();
+        } else {
+            restUrls = Arrays.asList(restUrlParameter.split(";"));
+        }
+        String ignoredMessagesPath = config.getInitParameter(
+                "dk.statsbiblioteket.doms.surveillance.surveyor.ignoredMessagesFile");
+        if (ignoredMessagesPath == null || ignoredMessagesPath.equals("")) {
+            ignoredMessagesPath = "ignored.txt";
+        }
 
+        //Initialise surveyor
+        Surveyor surveyor = SurveyorFactory.getSurveyor();
+        surveyor.setConfiguration(restUrls, new File(ignoredMessagesPath));
+
+        //Read and handle request parameters
         request.setCharacterEncoding("UTF-8");
         String applicationName = request.getParameter("applicationname");
         if (applicationName != null) {
@@ -44,14 +62,13 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                             applicationName, key.substring("handle:".length()));
                 }
             }
-            Thread.sleep(1);
             if (request.getParameter("notagain") != null) {
                 surveyor.notAgain(
                         applicationName, request.getParameter("notagain"));
             }
         }
-        List<String> restUrls = Arrays.asList(restUrlParameter.split(";"));
-        surveyor.setRestStatusUrls(restUrls);
+
+        //Get and present status
         Map<String, CondensedStatus> statusMap = surveyor.getStatusMap();
         for (CondensedStatus status : statusMap.values()) {
     %>

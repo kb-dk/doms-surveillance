@@ -30,6 +30,8 @@ import org.apache.log4j.spi.LoggingEvent;
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
@@ -37,9 +39,8 @@ import java.util.TreeMap;
 public class CachingLogSurvey implements LogSurvey {
     private static final int MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG = 1000;
 
-    //FIXME: Key not uniq: Several messages may be logged at the same instant.
-    private NavigableMap<Long, StatusMessage> logStatusMessages
-            = new TreeMap<Long, StatusMessage>();
+    private NavigableMap<Long, Collection<StatusMessage>> logStatusMessages
+            = new TreeMap<Long, Collection<StatusMessage>>();
     private String name;
 
     /**
@@ -49,9 +50,14 @@ public class CachingLogSurvey implements LogSurvey {
      * @return A status containing list of log messages.
      */
     public synchronized Status getStatusSince(long time) {
-        return new Status(
-                name, logStatusMessages.subMap(
-                        time, false, Long.MAX_VALUE, true).values());
+        Collection<Collection<StatusMessage>> listCollection = logStatusMessages
+                .subMap(time, false, Long.MAX_VALUE, true).values();
+        Collection<StatusMessage> statusMessages
+                = new ArrayList<StatusMessage>();
+        for (Collection<StatusMessage> collection : listCollection) {
+            statusMessages.addAll(collection);
+        }
+        return new Status(name, statusMessages);
     }
 
     /**
@@ -69,7 +75,6 @@ public class CachingLogSurvey implements LogSurvey {
      * @param event The log message to register.
      */
     public synchronized void registerMessage(LoggingEvent event) {
-
         // Ensure the log doesn't grow too huge
         if (logStatusMessages.size() > MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG - 1) {
             long earliestTimeStamp = logStatusMessages.firstKey();
@@ -77,8 +82,13 @@ public class CachingLogSurvey implements LogSurvey {
         }
 
         // Log it
-        logStatusMessages.put(
-                event.getTimeStamp(), new LogStatusMessage(event));
+        Collection<StatusMessage> collection;
+        collection = logStatusMessages.get(event.getTimeStamp());
+        if (collection == null) {
+            collection = new ArrayList<StatusMessage>();
+            logStatusMessages.put(event.getTimeStamp(), collection);
+        }
+        collection.add(new LogStatusMessage(event));
     }
 
     /**
