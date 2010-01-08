@@ -12,4 +12,3 @@ public class SurveyorFactory {
         return surveyor;
     }
 }
-a
