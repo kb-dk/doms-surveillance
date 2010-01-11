@@ -267,6 +267,30 @@
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/jersey-1.1.4/jars" recursive="false" />
     </library>
+    <library name="servlet-api-2.5-apache-tomcat-6.0.20">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/servlet-api-2.5-apache-tomcat-6.0.20/jars" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$PROJECT_DIR$/lib/servlet-api-2.5-apache-tomcat-6.0.20/apidocs/servlet-api-2.5-apache-tomcat-6.0.20-apidocs.zip!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/lib/servlet-api-2.5-apache-tomcat-6.0.20/src/servlet-api-2.5-apache-tomcat-6.0.20-src.zip!/" />
+      </SOURCES>
+      <jarDirectory url="file://$PROJECT_DIR$/lib/servlet-api-2.5-apache-tomcat-6.0.20/jars" recursive="false" />
+    </library>
+    <library name="jsp-api-2.1-apache-tomcat-6.0.20">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/jsp-api-2.1-apache-tomcat-6.0.20/jars" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$PROJECT_DIR$/lib/jsp-api-2.1-apache-tomcat-6.0.20/apidocs/jsp-api-2.1-apache-tomcat-6.0.20-apidocs.zip!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/lib/jsp-api-2.1-apache-tomcat-6.0.20/src/jsp-api-2.1-apache-tomcat-6.0.20-src.zip!/" />
+      </SOURCES>
+      <jarDirectory url="file://$PROJECT_DIR$/lib/jsp-api-2.1-apache-tomcat-6.0.20/jars" recursive="false" />
+    </library>
   </component>
 </project>
 
