@@ -291,6 +291,18 @@
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/jsp-api-2.1-apache-tomcat-6.0.20/jars" recursive="false" />
     </library>
+    <library name="commons-logging-1.1.1">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/commons-logging-1.1.1/jars" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.1.1/apidocs/commons-logging-1.1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.1.1/src/commons-logging-1.1.1-sources.jar!/" />
+      </SOURCES>
+      <jarDirectory url="file://$PROJECT_DIR$/lib/commons-logging-1.1.1/jars" recursive="false" />
+    </library>
   </component>
 </project>
 

@@ -1,7 +1,33 @@
+/* $Id$
+ * $Revision$
+ * $Date$
+ * $Author$
+ *
+ * The DOMS project.
+ * Copyright (C) 2007-2009  The State and University Library
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
 import com.sun.jersey.api.client.Client;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
@@ -36,11 +62,11 @@ public class RestSurveyor implements Surveyor {
     /** File containing ignored strings */
     public File ignoredMessagesFile = new File("ignored.txt");
     /** Logger for this class. */
-    private static final Logger LOG = Logger.getLogger(Surveyor.class);
+    private final Log log = LogFactory.getLog(Surveyor.class);
 
     /** Initialise this surveyor. */
     public RestSurveyor() {
-        LOG.info("Starting surveyor");
+        log.info("Starting surveyor");
     }
 
     /**
@@ -51,8 +77,16 @@ public class RestSurveyor implements Surveyor {
      */
     public synchronized void setConfiguration(List<String> restStatusUrls,
                                               File ignoredMessagesFile) {
-        this.restStatusUrls = restStatusUrls;
+        log.trace("enter setConfiguration('" + restStatusUrls + "', '"
+                + ignoredMessagesFile + "')");
+        if (!restStatusUrls.equals(this.restStatusUrls)) {
+            log.info("Setting list of surveyed REST status URLs to '"
+                    + restStatusUrls + "'");
+            this.restStatusUrls = restStatusUrls;
+        }
         if (!this.ignoredMessagesFile.equals(ignoredMessagesFile)) {
+            log.info("Setting file with list of ignored messages to '"
+                    + ignoredMessagesFile + "'");
             this.ignoredMessagesFile = ignoredMessagesFile;
             readIgnoredMessagesFromFile(ignoredMessagesFile);
         }
@@ -67,8 +101,12 @@ public class RestSurveyor implements Surveyor {
      */
     public synchronized void markHandled(String applicationName,
                                          String message) {
+        log.trace("enter markHandled('" + applicationName + "', '" + message
+                + "')");
         CondensedStatus status = currentStatus.get(applicationName);
         if (status != null) {
+            log.debug("Log message ('" + applicationName + "', '" + message
+                    + "') marked as handled");
             status.removeLogMessage(message);
         }
     }
@@ -80,6 +118,8 @@ public class RestSurveyor implements Surveyor {
      * @param message         The message never to show again.
      */
     public synchronized void notAgain(String applicationName, String message) {
+        log.debug("Log message ('" + applicationName + "', '" + message
+                + "') will never be shown again");
         Set<String> ignored = ignoredMessages.get(applicationName);
         if (ignored == null) {
             ignored = new HashSet<String>();
@@ -97,6 +137,7 @@ public class RestSurveyor implements Surveyor {
      * @return A map of statuses from name to status.
      */
     public synchronized Map<String, CondensedStatus> getStatusMap() {
+        log.trace("enter getStatusMap()");
         Map<String, CondensedStatus> result
                 = new HashMap<String, CondensedStatus>();
         //Keep only non-ignored log messages
@@ -120,8 +161,8 @@ public class RestSurveyor implements Surveyor {
             //Filter status by list of ignored messages
             Set<String> ignored = ignoredMessages.get(restStatus.getName());
             for (StatusMessage message : restStatus.getMessages()) {
-                if (ignored == null || !ignored
-                        .contains(message.getMessage())) {
+                if (ignored == null || !ignored.contains(
+                        message.getMessage())) {
                     status.addMessage(message);
                 }
             }
@@ -134,11 +175,14 @@ public class RestSurveyor implements Surveyor {
         }
         //Remember result
         currentStatus = result;
+        log.trace("exit getStatusMap()");
         return result;
     }
 
     /**
      * Get status from a REST URL.
+     * This method serves as fault barrier for REST calls. All exceptions are
+     * caught and turned into a status message.
      *
      * @param restClient The REST client to use for REST communication
      * @param statusUrl  The URL to query for status. Any occurence of "{date}"
@@ -151,12 +195,12 @@ public class RestSurveyor implements Surveyor {
      */
     private Status getStatusFromRest(Client restClient, String statusUrl,
                                      Long timestamp) {
+        log.trace("enter getStatusFromRest('" + restClient + "','" + statusUrl
+                + "','" + timestamp + "')");
         //Initialise URL
         String queryUrl;
         if (statusUrl.contains("{date}")) {
-            queryUrl = statusUrl.replace(
-                    "{date}", Long.toString(
-                            timestamp));
+            queryUrl = statusUrl.replace("{date}", Long.toString(timestamp));
         } else {
             queryUrl = statusUrl;
         }
@@ -164,8 +208,12 @@ public class RestSurveyor implements Surveyor {
         //Query REST
         Status restStatus;
         try {
+            log.debug("REST status query for URL '" + statusUrl + "'");
             restStatus = restClient.resource(queryUrl).get(Status.class);
         } catch (Exception e) {
+            log.debug(
+                    "Cannot get status for REST status URL '" + statusUrl + "'",
+                    e);
             //On exceptions, create false status about trouble
             String name;
             if (currentStatus.get(statusUrl) != null) {
@@ -173,13 +221,9 @@ public class RestSurveyor implements Surveyor {
             } else {
                 name = statusUrl;
             }
-            restStatus = new Status(
-                    name, Arrays.asList(
-                            new StatusMessage(
-                                    "Unable to communicate with service: " + e
-                                            .getMessage(),
-                                    StatusMessage.Severity.RED, timestamp,
-                                    false)));
+            restStatus = new Status(name, Arrays.asList(new StatusMessage(
+                    "Unable to communicate with service: " + e.getMessage(),
+                    StatusMessage.Severity.RED, timestamp, false)));
         }
         return restStatus;
     }
@@ -194,6 +238,7 @@ public class RestSurveyor implements Surveyor {
      */
     private void updateResultFromOldStatus(
             Map<String, CondensedStatus> result) {
+        log.trace("enter updateResultFromOldStatus('" + result + "')");
         if (currentStatus != null) {
             for (CondensedStatus oldStatus : currentStatus.values()) {
                 CondensedStatus newStatus = new CondensedStatus(
@@ -202,8 +247,8 @@ public class RestSurveyor implements Surveyor {
                 for (CondensedStatusMessage statusMessage : oldStatus
                         .getMessages()) {
                     if (statusMessage.isLogMessage()) {
-                        if (ignored == null || !ignored
-                                .contains(statusMessage.getMessage())) {
+                        if (ignored == null || !ignored.contains(
+                                statusMessage.getMessage())) {
                             newStatus.addMessage(statusMessage);
                         }
                     }
@@ -221,20 +266,22 @@ public class RestSurveyor implements Surveyor {
      *                            applicationname;message
      */
     private void readIgnoredMessagesFromFile(File ignoredMessagesFile) {
+        log.trace("readIgnoredMessagesFromFile('" + ignoredMessagesFile + "')");
         ignoredMessages.clear();
         if (ignoredMessagesFile.isFile()) {
             BufferedReader fr = null;
             String s;
             try {
                 try {
-                    fr = new BufferedReader(
-                            new FileReader(ignoredMessagesFile));
+                    fr = new BufferedReader(new FileReader(
+                            ignoredMessagesFile));
                     s = fr.readLine();
                     while (s != null) {
                         s = fr.readLine();
                         if (!s.trim().isEmpty() && s.indexOf(';') > 0) {
                             String key = s.substring(0, s.indexOf(';'));
                             String value = s.substring(s.indexOf(';') + 1);
+                            value = value.replaceAll("\\\\n", "\n");
                             Set<String> values = ignoredMessages.get(key);
                             if (values == null) {
                                 values = new HashSet<String>();
@@ -249,33 +296,31 @@ public class RestSurveyor implements Surveyor {
                     }
                 }
             } catch (IOException e) {
-                LOG.warn(
-                        "Unable to read from file of ignored messages."
-                                + "Ignoring rest of file.", e);
+                log.warn("Unable to read from file of ignored messages."
+                        + "Ignoring rest of file.", e);
             }
         }
     }
 
     private void appendIgnoredMessageToFile(String applicationName,
                                             String message) {
+        log.trace("appendIgnoredMessageToFile('" + applicationName + "', '"
+                + message + "')");
         try {
             PrintWriter pw = null;
             try {
-                pw = new PrintWriter(
-                        new BufferedWriter(
-                                new FileWriter(ignoredMessagesFile, true)));
-                pw.println(
-                        applicationName + ";" + message
-                                .replaceAll("\n", "\\\\n"));
+                pw = new PrintWriter(new BufferedWriter(new FileWriter(
+                        ignoredMessagesFile, true)));
+                pw.println(applicationName + ";" + message.replaceAll("\n",
+                                                                      "\\\\n"));
             } finally {
                 if (pw != null) {
                     pw.close();
                 }
             }
         } catch (IOException e) {
-            LOG.warn(
-                    "Unable to write ignored message to file of ignored"
-                            + " messages", e);
+            log.warn("Unable to write ignored message to file of ignored"
+                    + " messages", e);
         }
     }
 }

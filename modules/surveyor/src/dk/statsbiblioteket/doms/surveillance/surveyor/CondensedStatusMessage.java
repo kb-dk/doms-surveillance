@@ -5,23 +5,23 @@
  *
  * The DOMS project.
  * Copyright (C) 2007-2009  The State and University Library
-*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*    http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
@@ -29,16 +29,22 @@ import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
 
 /** A status message for a surveyed application. */
 public class CondensedStatusMessage {
+    /** The textual message. */
     private String message;
 
+    /** The severity of the message. */
     private StatusMessage.Severity severity;
 
+    /** The first time this message occured. */
     private long firstTime;
 
+    /** The last time this message occured. */
     private long lastTime;
 
+    /** Whether this is a log message or a realtime status. */
     private boolean logMessage;
 
+    /** The number of times this message was produced. */
     private int number;
 
     /**
@@ -118,10 +124,10 @@ public class CondensedStatusMessage {
      * message. The new status message MUST have the same textual message as
      * the current textual message. The following will be updated:
      * <ul>
-     * <li>The number is increased with one.
      * <li>The firstdate and lastdate are updated from the given message
      * <li>The severity is updated to the greatest severity
      * <li>Log message is updated to be only if both are log messages
+     * <li>If this is a log message, the number is increased with one.
      * </ul>
      *
      * @param statusMessage The message to update with.
@@ -137,7 +143,6 @@ public class CondensedStatusMessage {
                             + "New status message: '"
                             + statusMessage.getMessage() + "'");
         }
-        ++number;
         if (firstTime > statusMessage.getTime()) {
             firstTime = statusMessage.getTime();
         }
@@ -147,8 +152,11 @@ public class CondensedStatusMessage {
         if (severity.ordinal() < statusMessage.getSeverity().ordinal()) {
             severity = statusMessage.getSeverity();
         }
-        if (logMessage && !statusMessage.isLogMessage()) {
-            logMessage = false;
+        logMessage &= statusMessage.isLogMessage();
+        if (logMessage) {
+            ++number;
+        } else {
+            number = 1;
         }
     }
 
@@ -158,10 +166,10 @@ public class CondensedStatusMessage {
      * textual message as the current textual message. The following will be
      * updated:
      * <ul>
-     * <li>The number is increased with the old number.
      * <li>The firstdate and lastdate are updated from the given message
      * <li>The severity is updated to the greatest severity
      * <li>Log message is updated to be only if both are log messages
+     * <li>If this is a log message, the number is the sum of numbers.
      * </ul>
      *
      * @param statusMessage The message to update with.
@@ -177,7 +185,6 @@ public class CondensedStatusMessage {
                             + "New status message: '"
                             + statusMessage.getMessage() + "'");
         }
-        number += statusMessage.getNumber();
         if (firstTime > statusMessage.getFirstTime()) {
             firstTime = statusMessage.getFirstTime();
         }
@@ -187,8 +194,11 @@ public class CondensedStatusMessage {
         if (severity.ordinal() < statusMessage.getSeverity().ordinal()) {
             severity = statusMessage.getSeverity();
         }
-        if (logMessage && !statusMessage.isLogMessage()) {
-            logMessage = false;
+        logMessage &= statusMessage.isLogMessage();
+        if (logMessage) {
+            number += statusMessage.getNumber();
+        } else {
+            number = 1;
         }
     }
 }
