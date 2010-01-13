@@ -32,6 +32,7 @@
             <include name="jsr311-api-1.0/jars/**"/>
             <include name="jersey-1.1.4/jars/**"/>
             <include name="log4j-1.2.15/jars/**"/>
+            <include name="commons-logging-1.1.1/jars/**"/>
         </fileset>
     </path>
 
