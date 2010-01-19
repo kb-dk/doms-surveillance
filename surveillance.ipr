@@ -34,6 +34,14 @@
       <maximumStackSize value="32" />
       <properties />
     </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/modules/fedorasurveyor/build.xml">
+      <additionalClassPath />
+      <antReference projectDefault="true" />
+      <customJdkName value="" />
+      <maximumHeapSize value="128" />
+      <maximumStackSize value="32" />
+      <properties />
+    </buildFile>
   </component>
   <component name="BuildJarProjectSettings">
     <option name="BUILD_JARS_ON_MAKE" value="false" />
@@ -178,6 +186,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" filepath="$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/rest/rest.iml" filepath="$PROJECT_DIR$/modules/rest/rest.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/status/status.iml" filepath="$PROJECT_DIR$/modules/status/status.iml" />
       <module fileurl="file://$PROJECT_DIR$/surveillance.iml" filepath="$PROJECT_DIR$/surveillance.iml" />

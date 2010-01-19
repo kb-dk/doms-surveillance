@@ -1,0 +1,77 @@
+<project name="surveillance-fedorasurveyor" basedir=".">
+    <property name="global.dir" value="${basedir}/../.."/>
+    <!--Contain the normal build tasks, including war-->
+    <import file="${global.dir}/build-includes.xml"/>
+
+    <!--
+       Module specific properties
+    -->
+    <property file="build.properties"/>
+    <property name="warfilename"
+              value="doms-${ant.project.name}-${doms.surveillance.version}.war"/>
+    <property name="jarfilename"
+              value="doms-${ant.project.name}-${doms.surveillance.version}.jar"/>
+
+    <!--Local libraries-->
+    <path id="jars.path">
+        <fileset dir="lib" id="jars.set">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Project- and module specific libs -->
+    <path id="project.libs.path">
+        <pathelement location="${basedir}/../../lib"/>
+    </path>
+
+    <!-- Calculate global libs dir property from path -->
+    <pathconvert refid="project.libs.path" property="project.libs.dir"/>
+
+    <!-- Project library dependencies -->
+    <path id="project.libs.path">
+        <fileset id="project.libs" dir="${project.libs.dir}">
+            <include name="jsr311-api-1.0/jars/**"/>
+            <include name="jersey-1.1.4/jars/**"/>
+            <include name="commons-logging-1.1.1/jars/**"/>
+            <include name="servlet-api-2.5-apache-tomcat-6.0.20/jars/**"/>
+            <include name="log4j-1.2.15/jars/**"/>
+        </fileset>
+    </path>
+
+    <target name="depends">
+        <subant buildpath="${global.dir}/modules/status" antfile="build.xml"
+                target="jar" inheritall="false" verbose="true"
+                inheritrefs="false"/>
+        <copy todir="lib" verbose="true">
+            <fileset dir="${global.dir}/modules/status">
+                <patternset refid="jars.pattern"/>
+            </fileset>
+            <regexpmapper from="^.*/([^/]+\.jar)$"
+                          to="doms-status-${doms.surveillance.version}/jars/\1"/>
+        </copy>
+        <copy todir="lib" verbose="true" enablemultiplemappings="true">
+            <fileset dir="${global.dir}/modules/status">
+                <patternset refid="license.pattern"/>
+            </fileset>
+            <regexpmapper from="^.*/lib/([^/]+)/license/(.*)$"
+                          to="\doms-status-${doms.surveillance.version}/license/\1/\2"/>
+        </copy>
+        <copy todir="lib/doms-status-${doms.surveillance.version}/license">
+            <fileset dir="${global.dir}">
+                <include name="LICENSE"/>
+                <include name="NOTICE"/>
+                <include name="README"/>
+            </fileset>
+        </copy>
+        <!-- TODO: src and javadoc -->
+    </target>
+</project>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+<web-app>
+    <servlet>
+        <servlet-name>Fedora Real Time surveyor</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer
+        </servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>dk.statsbiblioteket.doms.surveillance.fedorasurveyor
+            </param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Fedora Real Time surveyor</servlet-name>
+        <url-pattern>/fedorarealtime/*</url-pattern>
+        <init-param>
+            <param-name>
+                dk.statsbiblioteket.doms.surveillance.fedorasurveyor.fedoraUrl
+            </param-name>
+            <param-value>
+                http://localhost:8080/fedora
+            </param-value>
+        </init-param>
+        <init-param>
+            <param-name>
+                dk.statsbiblioteket.doms.surveillance.fedorasurveyor.fedoraUser
+            </param-name>
+            <param-value>
+                fedoraSurveyor
+            </param-value>
+        </init-param>
+        <init-param>
+            <param-name>
+                dk.statsbiblioteket.doms.surveillance.fedorasurveyor.fedoraPassword
+            </param-name>
+            <param-value>
+                fedoraSurveyorPass
+            </param-value>
+        </init-param>
+    </servlet-mapping>
+</web-app>
