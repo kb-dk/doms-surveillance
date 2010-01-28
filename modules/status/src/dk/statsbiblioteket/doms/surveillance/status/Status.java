@@ -34,15 +34,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/** A system status. */
+/** A datastructure for system status. */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
         level = QAInfo.Level.NORMAL,
         state = QAInfo.State.QA_OK)
 @XmlRootElement
 public class Status {
+    /** The name of what is being surveyed. */
     private String name;
 
+    /** A list of status messages. */
     private List<StatusMessage> messages;
 
     /** Default no-args constructor. */
@@ -82,12 +84,22 @@ public class Status {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * Set the list of status messages.
+     *
+     * @param messages A list of status messages.
+     */
     public void setMessages(List<StatusMessage> messages) {
         this.messages = messages;
+    }
+
+    /**
+     * Set the name of what is being surveyed.
+     *
+     * @param name Name of what is being surveyed.
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
 

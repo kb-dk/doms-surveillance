@@ -40,14 +40,15 @@ public interface Surveyable {
      * from the last call as input to this method next time it calls it, to
      * ensure not losing messages.
      *
-     * @param time Only get message strictly newer than this timestamp.
+     * @param time Only get messages strictly newer than this timestamp. The
+     * timestamp is measured in milliseconds since 1970-01-01 00:00:00.000Z.
      * @return List of status messages. May be empty, but never null.
      */
     public Status getStatusSince(long time);
 
     /**
      * Get all status messages. This behaves exactly like
-     * getMessagesSince(new Date(0)).
+     * getMessagesSince().
      *
      * @return List of status messages. May be empty, but never null.
      *

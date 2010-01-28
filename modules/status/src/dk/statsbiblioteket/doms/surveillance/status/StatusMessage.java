@@ -31,7 +31,7 @@ import dk.statsbiblioteket.util.qa.QAInfo;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/** A status message for a surveyed application. */
+/** A status message data structure for a surveyed application. */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
         level = QAInfo.Level.NORMAL,
@@ -44,12 +44,16 @@ public class StatusMessage {
         GREEN, YELLOW, RED
     }
 
+    /** A human readable status message. */
     private String message;
 
+    /** The severity of the message in traffic-light fashion. */
     private Severity severity;
 
+    /** The time at which the message was generated. */
     private long time;
 
+    /** True if this is a log message. False if this is a real time status. */
     private boolean logMessage;
 
     /** Default no-arg constructor to make JAXB happy. */
@@ -77,7 +81,7 @@ public class StatusMessage {
     }
 
     /**
-     * Get the text for the status message. Only trivially reformatted in HTML.
+     * Get the text for the status message.
      *
      * @return The message. Never null.
      */
@@ -116,18 +120,38 @@ public class StatusMessage {
         return logMessage;
     }
 
+    /**
+     * Set the text for the status message.
+     *
+     * @param message The message. Should never be null.
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * Set the severity of the message.
+     *
+     * @param severity The severity.
+     */
     public void setSeverity(Severity severity) {
         this.severity = severity;
     }
 
+    /**
+     * Set the time for this message.
+     *
+     * @param time The time this message was generated. Should never be null.
+     */
     public void setTime(long time) {
         this.time = time;
     }
 
+    /**
+     * Set whether this is a logged message.
+     *
+     * @param logMessage Whether this is a logged message.
+     */
     public void setLogMessage(boolean logMessage) {
         this.logMessage = logMessage;
     }
