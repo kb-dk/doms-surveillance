@@ -34,6 +34,7 @@ import org.apache.commons.logging.LogFactory;
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
 import dk.statsbiblioteket.doms.surveillance.status.Surveyable;
+import dk.statsbiblioteket.util.qa.QAInfo;
 
 import javax.servlet.ServletConfig;
 import javax.ws.rs.GET;
@@ -46,28 +47,40 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /** Class that exposes log messages as surveyable messages over REST. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_NEEDED)
 @Path("/")
 public class FedoraStatusService implements Surveyable {
     /** The application name for what is being surveyed. */
     private static final String APPLICATION_NAME = "fedora";
+
     /** Logger for this class. */
     private Log log = LogFactory.getLog(getClass());
+
     /** The web service context. Injected by the web service. */
     @Context
     private ServletConfig config;
+
     /** Parameter name for Fedora URL. */
     private static final String FEDORA_URL_PARAMETER
             = "dk.statsbiblioteket.doms.surveyor.fedorasurveyor.fedoraUrl";
+
     /** Parameter name for Fedora user name. */
     private static final String FEDORA_USER_PARAMETER
             = "dk.statsbiblioteket.doms.surveyor.fedorasurveyor.fedoraUser";
+
     /** Parameter name for Fedora password. */
     private static final String FEDORA_PASSWORD_PARAMETER
             = "dk.statsbiblioteket.doms.surveyor.fedorasurveyor.fedoraPassword";
+
     /** Read parameter for Fedora URL. */
     private String fedoraUrl;
+
     /** Read parameter for Fedora user. */
     private String fedoraUser;
+
     /** Read parameter for Fedora password. */
     private String fedoraPassword;
 
@@ -83,7 +96,7 @@ public class FedoraStatusService implements Surveyable {
      * @return A status containing list of log messages.
      */
     public Status getStatusSince(@PathParam("date") long time) {
-        log.trace("enter getStatusSince(" + time + ")");
+        log.trace("Enter getStatusSince(" + time + ")");
         initialize();
 
         StatusMessage statusMessage;
@@ -109,7 +122,7 @@ public class FedoraStatusService implements Surveyable {
      * @return A status containing list of log messages.
      */
     public Status getStatus() {
-        log.trace("enter getStatus()");
+        log.trace("Enter getStatus()");
         return getStatusSince(0L);
     }
 

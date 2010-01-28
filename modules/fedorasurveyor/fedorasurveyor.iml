@@ -26,6 +26,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="servlet-api-2.5-apache-tomcat-6.0.20" level="project" />
+    <orderEntry type="library" exported="" name="sbutil-0.4.6" level="project" />
   </component>
 </module>
 
