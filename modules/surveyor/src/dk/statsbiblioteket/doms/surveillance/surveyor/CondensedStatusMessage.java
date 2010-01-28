@@ -27,8 +27,13 @@
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
+import dk.statsbiblioteket.util.qa.QAInfo;
 
 /** A status message for a surveyed application. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public class CondensedStatusMessage {
     /** The textual message. */
     private String message;

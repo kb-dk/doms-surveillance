@@ -30,6 +30,7 @@ import org.apache.log4j.spi.LoggingEvent;
 
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
+import dk.statsbiblioteket.util.qa.QAInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +38,16 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 
 /** A log survey that caches log messages for later inspection. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public class CachingLogSurvey implements LogSurvey {
     private static final int MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG = 1000;
 
     private NavigableMap<Long, Collection<StatusMessage>> logStatusMessages
             = new TreeMap<Long, Collection<StatusMessage>>();
+
     private String name;
 
     /**

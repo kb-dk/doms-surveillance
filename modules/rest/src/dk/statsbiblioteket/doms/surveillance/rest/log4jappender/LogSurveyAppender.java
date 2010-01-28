@@ -29,10 +29,16 @@ package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
 
+import dk.statsbiblioteket.util.qa.QAInfo;
+
 /**
  * Log4J appender that caches log messages and exposes them with the
  * Surveyable interface.
  */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public class LogSurveyAppender extends AppenderSkeleton {
     /**
      * Cache the event, for later inspection by the surveyor.

@@ -26,11 +26,17 @@
  */
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
+import dk.statsbiblioteket.util.qa.QAInfo;
+
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 
 /** Interface for getting status messages. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public interface Surveyor {
     /**
      * Get the current status.

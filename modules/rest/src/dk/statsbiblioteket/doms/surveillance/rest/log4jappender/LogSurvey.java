@@ -29,8 +29,13 @@ package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 import org.apache.log4j.spi.LoggingEvent;
 
 import dk.statsbiblioteket.doms.surveillance.status.Surveyable;
+import dk.statsbiblioteket.util.qa.QAInfo;
 
 /** A class for exposing Log4J log events as Surveyable. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public interface LogSurvey extends Surveyable {
     /**
      * Register a message for later inspection.

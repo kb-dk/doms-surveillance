@@ -26,10 +26,16 @@
  */
 package dk.statsbiblioteket.doms.surveillance.status;
 
+import dk.statsbiblioteket.util.qa.QAInfo;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /** A status message for a surveyed application. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 @XmlRootElement
 public class StatusMessage {
     /** Severity defined in a classic traffic-light fashion. */
@@ -39,8 +45,11 @@ public class StatusMessage {
     }
 
     private String message;
+
     private Severity severity;
+
     private long time;
+
     private boolean logMessage;
 
     /** Default no-arg constructor to make JAXB happy. */

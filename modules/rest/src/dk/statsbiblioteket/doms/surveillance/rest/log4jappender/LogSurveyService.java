@@ -28,6 +28,7 @@ package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.Surveyable;
+import dk.statsbiblioteket.util.qa.QAInfo;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -36,6 +37,10 @@ import javax.ws.rs.Produces;
 
 /** Class that exposes log messages as surveyable messages over REST. */
 @Path("/")
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public class LogSurveyService implements Surveyable {
     @GET
     @Path("getStatusSince/{date}")

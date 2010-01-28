@@ -32,6 +32,7 @@ import org.apache.commons.logging.LogFactory;
 
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
+import dk.statsbiblioteket.util.qa.QAInfo;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -49,19 +50,28 @@ import java.util.Map;
 import java.util.Set;
 
 /** A surveyor that calls specified REST URLs to get status. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public class RestSurveyor implements Surveyor {
     /** Currently stored state, for keeping log messages until handled. */
     private Map<String, CondensedStatus> currentStatus
             = new HashMap<String, CondensedStatus>();
+
     /** Newest message time from last time we queried a given URL. */
     private Map<String, Long> newestStatus = new HashMap<String, Long>();
+
     /** List of REST URLs to query. */
     private List<String> restStatusUrls = new ArrayList<String>();
+
     /** Set of messages to ignore. */
     private Map<String, Set<String>> ignoredMessages
             = new HashMap<String, Set<String>>();
+
     /** File containing ignored strings */
     public File ignoredMessagesFile = new File("ignored.txt");
+
     /** Logger for this class. */
     private final Log log = LogFactory.getLog(Surveyor.class);
 
@@ -78,7 +88,7 @@ public class RestSurveyor implements Surveyor {
      */
     public synchronized void setConfiguration(List<String> restStatusUrls,
                                               File ignoredMessagesFile) {
-        log.trace("enter setConfiguration('" + restStatusUrls + "', '"
+        log.trace("Enter setConfiguration('" + restStatusUrls + "', '"
                 + ignoredMessagesFile + "')");
         if (!restStatusUrls.equals(this.restStatusUrls)) {
             log.info("Setting list of surveyed REST status URLs to '"
@@ -102,7 +112,7 @@ public class RestSurveyor implements Surveyor {
      */
     public synchronized void markHandled(String applicationName,
                                          String message) {
-        log.trace("enter markHandled('" + applicationName + "', '" + message
+        log.trace("Enter markHandled('" + applicationName + "', '" + message
                 + "')");
         CondensedStatus status = currentStatus.get(applicationName);
         if (status != null) {
@@ -138,13 +148,14 @@ public class RestSurveyor implements Surveyor {
      * @return A map of statuses from name to status.
      */
     public synchronized Map<String, CondensedStatus> getStatusMap() {
-        log.trace("enter getStatusMap()");
+        log.trace("Enter getStatusMap()");
         Map<String, CondensedStatus> result
                 = new HashMap<String, CondensedStatus>();
+        Client c;
         //Keep only non-ignored log messages
         updateResultFromOldStatus(result);
         //Query REST-URLS for more messages
-        Client c = Client.create();
+        c = Client.create();
         for (String statusUrl : restStatusUrls) {
             //Find time of newest currently known log message from that URL
             Long newest = newestStatus.get(statusUrl);
@@ -176,7 +187,7 @@ public class RestSurveyor implements Surveyor {
         }
         //Remember result
         currentStatus = result;
-        log.trace("exit getStatusMap()");
+        log.trace("Exit getStatusMap()");
         return result;
     }
 
@@ -196,10 +207,12 @@ public class RestSurveyor implements Surveyor {
      */
     private Status getStatusFromRest(Client restClient, String statusUrl,
                                      Long timestamp) {
-        log.trace("enter getStatusFromRest('" + restClient + "','" + statusUrl
+        log.trace("Enter getStatusFromRest('" + restClient + "','" + statusUrl
                 + "','" + timestamp + "')");
         //Initialise URL
         String queryUrl;
+        Status restStatus;
+
         if (statusUrl.contains("{date}")) {
             queryUrl = statusUrl.replace("{date}", Long.toString(timestamp));
         } else {
@@ -207,7 +220,6 @@ public class RestSurveyor implements Surveyor {
         }
 
         //Query REST
-        Status restStatus;
         try {
             log.debug("REST status query for URL '" + statusUrl + "'");
             restStatus = restClient.resource(queryUrl).get(Status.class);
@@ -239,7 +251,7 @@ public class RestSurveyor implements Surveyor {
      */
     private void updateResultFromOldStatus(
             Map<String, CondensedStatus> result) {
-        log.trace("enter updateResultFromOldStatus('" + result + "')");
+        log.trace("Enter updateResultFromOldStatus('" + result + "')");
         if (currentStatus != null) {
             for (CondensedStatus oldStatus : currentStatus.values()) {
                 CondensedStatus newStatus = new CondensedStatus(
@@ -267,7 +279,7 @@ public class RestSurveyor implements Surveyor {
      *                            applicationname;message
      */
     private void readIgnoredMessagesFromFile(File ignoredMessagesFile) {
-        log.trace("readIgnoredMessagesFromFile('" + ignoredMessagesFile + "')");
+        log.trace("ReadIgnoredMessagesFromFile('" + ignoredMessagesFile + "')");
         ignoredMessages.clear();
         if (ignoredMessagesFile.isFile()) {
             BufferedReader fr = null;
@@ -282,8 +294,8 @@ public class RestSurveyor implements Surveyor {
                         if (!s.trim().isEmpty() && s.indexOf(';') > 0) {
                             String key = s.substring(0, s.indexOf(';'));
                             String value = s.substring(s.indexOf(';') + 1);
-                            value = value.replaceAll("\\\\n", "\n");
                             Set<String> values = ignoredMessages.get(key);
+                            value = value.replaceAll("\\\\n", "\n");
                             if (values == null) {
                                 values = new HashSet<String>();
                                 ignoredMessages.put(key, values);
@@ -305,8 +317,8 @@ public class RestSurveyor implements Surveyor {
 
     private void appendIgnoredMessageToFile(String applicationName,
                                             String message) {
-        log.trace("appendIgnoredMessageToFile('" + applicationName + "', '"
-                + message + "')");
+        log.trace("Enter AppendIgnoredMessageToFile('" + applicationName
+                + "', '" + message + "')");
         try {
             PrintWriter pw = null;
             try {

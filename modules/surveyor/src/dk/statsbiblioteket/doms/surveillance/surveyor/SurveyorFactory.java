@@ -29,13 +29,21 @@ package dk.statsbiblioteket.doms.surveillance.surveyor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import dk.statsbiblioteket.util.qa.QAInfo;
+
 /** Get a surveyor. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public class SurveyorFactory {
     /** Default implentation class. */
     private static final String DEFAULT_IMPLEMENTATION = RestSurveyor.class
             .getName();
+
     /** Logger for this class. */
     private static Log log = LogFactory.getLog(SurveyorFactory.class);
+
     /** The surveyor singleton instance. */
     private static Surveyor surveyor;
 
@@ -45,7 +53,7 @@ public class SurveyorFactory {
      * @return Surveyor singleton instance.
      */
     public static synchronized Surveyor getSurveyor() {
-        log.trace("enter getSurveyor");
+        log.trace("Enter getSurveyor");
         //TODO: Make implementation configurable
         String implementation = DEFAULT_IMPLEMENTATION;
         if (surveyor == null || !surveyor.getClass().getName().equals(

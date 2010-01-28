@@ -27,15 +27,21 @@
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
+import dk.statsbiblioteket.util.qa.QAInfo;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /** A system status. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public class CondensedStatus {
     /** Name of what is being surveyed. */
     private String name;
+
     /** Map of messages, mapping from message to more info about message. */
     private Map<String, CondensedStatusMessage> messages;
 

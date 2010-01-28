@@ -26,6 +26,8 @@
  */
 package dk.statsbiblioteket.doms.surveillance.status;
 
+import dk.statsbiblioteket.util.qa.QAInfo;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
@@ -33,9 +35,14 @@ import java.util.Collection;
 import java.util.List;
 
 /** A system status. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 @XmlRootElement
 public class Status {
     private String name;
+
     private List<StatusMessage> messages;
 
     /** Default no-args constructor. */

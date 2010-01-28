@@ -30,11 +30,16 @@ import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
+import dk.statsbiblioteket.util.qa.QAInfo;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 /** A status message tuple initialised with a log event. */
 @XmlRootElement
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public class LogStatusMessage extends StatusMessage {
     /**
      * Helper method to map logging level to severity.

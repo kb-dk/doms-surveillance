@@ -318,6 +318,18 @@
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/commons-logging-1.1.1/jars" recursive="false" />
     </library>
+    <library name="sbutil-0.4.6">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/sbutils-0.4.6/jars" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$PROJECT_DIR$/lib/sbutils-0.4.6/apidocs/sbutil-0.4.6-apidocs.zip!/sbutil-0.4.6/doc" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/lib/sbutils-0.4.6/src/sbutil-0.4.6-src.zip!/sbutil-0.4.6/src" />
+      </SOURCES>
+      <jarDirectory url="file://$PROJECT_DIR$/lib/sbutils-0.4.6/jars" recursive="false" />
+    </library>
   </component>
 </project>
 

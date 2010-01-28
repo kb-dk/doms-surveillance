@@ -26,7 +26,13 @@
  */
 package dk.statsbiblioteket.doms.surveillance.status;
 
+import dk.statsbiblioteket.util.qa.QAInfo;
+
 /** The interface of something that offers status messages for surveillance. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public interface Surveyable {
     /**
      * Get all status messages newer than the given time.

@@ -26,7 +26,13 @@
  */
 package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
+import dk.statsbiblioteket.util.qa.QAInfo;
+
 /** Factory for getting the log survey singleton. */
+@QAInfo(author = "kfc",
+        reviewers = "jrg",
+        level = QAInfo.Level.NORMAL,
+        state = QAInfo.State.QA_OK)
 public class LogSurveyFactory {
     /** The log survey singleton. */
     static LogSurvey instance;
