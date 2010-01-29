@@ -30,8 +30,8 @@
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
                      debug="false">
-    <appender name="LogSurvey"
-              class="dk.statsbiblioteket.doms.surveillance.rest.log4jappender.LogSurveyAppender">
+    <appender name="LogRegistry"
+              class="dk.statsbiblioteket.doms.surveillance.rest.log4jappender.LogRegistryAppender">
         <param name="Threshold" value="INFO"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%-5p [%t] [%d] [%c] %m%n"/>
@@ -49,7 +49,7 @@
 
     <logger name="dk.statsbiblioteket">
         <level value="WARN"/>
-        <appender-ref ref="LogSurvey"/>
+        <appender-ref ref="LogRegistry"/>
     </logger>
 
     <root>

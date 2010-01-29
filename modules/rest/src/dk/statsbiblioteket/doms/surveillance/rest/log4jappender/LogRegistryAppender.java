@@ -26,28 +26,45 @@
  */
 package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.spi.LoggingEvent;
+
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-/** Factory for getting the log survey singleton. */
+/**
+ * Log4J appender that registers log messages in a registry.
+ */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
         level = QAInfo.Level.NORMAL,
         state = QAInfo.State.QA_OK)
-public class LogSurveyFactory {
-    /** The log survey singleton. */
-    static LogSurvey instance;
-
+public class LogRegistryAppender extends AppenderSkeleton {
     /**
-     * Get the log survey instance.
+     * Cache the event, for later inspection by the surveyor.
      *
-     * @return The log survey instance.
+     * @param event The event to cache.
      */
-    public static LogSurvey getLogSurvey() {
-        if (instance == null) {
-            //TODO: Allow setting the implementation to something different.
-            instance = new CachingLogSurvey();
-        }
-        return instance;
+    protected void append(LoggingEvent event) {
+        LogRegistryFactory.getLogRegistry().registerMessage(event);
     }
 
+    /** Set the name of this Appender. */
+    public void setName(String name) {
+        LogRegistryFactory.getLogRegistry().setName(name);
+    }
+
+    /**
+     * Release any resources allocated within the appender such as file
+     * handles, network connections, etc.
+     *
+     * Currently does nothing in this implementation.
+     */
+    public void close() {
+        // Does nothing
+    }
+
+    /** This appender requires layout. */
+    public boolean requiresLayout() {
+        return true;
+    }
 }

@@ -34,11 +34,11 @@ import org.apache.log4j.Logger;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
 
 /** Test the Log4JAppender */
-public class LogSurveyAppenderTest extends TestCase {
+public class LogRegistryAppenderTest extends TestCase {
     public void testAppend() {
-        Logger logger = Logger.getLogger(LogSurveyAppenderTest.class);
+        Logger logger = Logger.getLogger(LogRegistryAppenderTest.class);
         logger.log(Level.WARN, "Oh noes!");
-        LogSurvey ls = LogSurveyFactory.getLogSurvey();
+        LogRegistry ls = LogRegistryFactory.getLogRegistry();
         assertEquals(
                 "Should have one logged message", 1,
                 ls.getStatus().getMessages().size());
@@ -53,7 +53,7 @@ public class LogSurveyAppenderTest extends TestCase {
                 "Should be yellow", StatusMessage.Severity.YELLOW,
                 ls.getStatus().getMessages().get(0).getSeverity());
         assertEquals(
-                "Should have right name", "LogSurvey",
+                "Should have right name", "LogRegistry",
                 ls.getStatus().getName());
     }
 }

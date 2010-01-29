@@ -26,6 +26,8 @@
  */
 package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.spi.LoggingEvent;
 
 import dk.statsbiblioteket.doms.surveillance.status.Status;
@@ -37,18 +39,31 @@ import java.util.Collection;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
-/** A log survey that caches log messages for later inspection. */
+/**
+ * A log survey that caches log messages for later inspection.
+ *
+ * Note that all methods in this class are synchronized. This may affect
+ * performance if your logging level for what you register in the class is
+ * too broad.
+ */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
         level = QAInfo.Level.NORMAL,
         state = QAInfo.State.QA_OK)
-public class CachingLogSurvey implements LogSurvey {
+public class CachingLogRegistry implements LogRegistry {
+    //TODO: Make configurable in log4j.xml
+    /** At most this many log messages are by default kept in the registry. */
     private static final int MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG = 1000;
 
+    /** A sorted map from timestamp of log message to list of actual messages.*/
     private NavigableMap<Long, Collection<StatusMessage>> logStatusMessages
             = new TreeMap<Long, Collection<StatusMessage>>();
 
+    /** The name of what is being surveyed. */
     private String name;
+
+    /** The logger for this class. */
+    private Log log = LogFactory.getLog(getClass());
 
     /**
      * Returns all log messages received since the given date.
@@ -57,6 +72,7 @@ public class CachingLogSurvey implements LogSurvey {
      * @return A status containing list of log messages.
      */
     public synchronized Status getStatusSince(long time) {
+        log.trace("Enter getStatusSince(" + time + ")");
         Collection<Collection<StatusMessage>> listCollection = logStatusMessages
                 .subMap(time, false, Long.MAX_VALUE, true).values();
         Collection<StatusMessage> statusMessages
@@ -73,23 +89,32 @@ public class CachingLogSurvey implements LogSurvey {
      * @return A status containing list of log messages.
      */
     public synchronized Status getStatus() {
+        log.trace("Enter getStatus()");
         return getStatusSince(0l);
     }
 
     /**
      * Register a message for later inspection.
      *
-     * @param event The log message to register.
+     * @param event The log message to register. Should never be null.
+     * @throws IllegalArgumentException if event is null.
      */
     public synchronized void registerMessage(LoggingEvent event) {
+        Collection<StatusMessage> collection;
+
+        // Check parameters
+        if (event == null) {
+            throw new IllegalArgumentException(
+                    "Parameter event must not be null");
+        }
+
         // Ensure the log doesn't grow too huge
         if (logStatusMessages.size() > MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG - 1) {
             long earliestTimeStamp = logStatusMessages.firstKey();
             logStatusMessages.remove(earliestTimeStamp);
         }
 
-        // Log it
-        Collection<StatusMessage> collection;
+        // Register it
         collection = logStatusMessages.get(event.getTimeStamp());
         if (collection == null) {
             collection = new ArrayList<StatusMessage>();
@@ -99,11 +124,16 @@ public class CachingLogSurvey implements LogSurvey {
     }
 
     /**
-     * Sets the name.
+     * Sets the name of what is being surveyed.
      *
-     * @param name The name.
+     * @param name The name. Should never be null.
      */
     public synchronized void setName(String name) {
+        log.trace("Enter setName('" + name + "')");
+        if (name == null) {
+            throw new IllegalArgumentException(
+                    "Parameter name must not be null");
+        }
         this.name = name;
     }
 }

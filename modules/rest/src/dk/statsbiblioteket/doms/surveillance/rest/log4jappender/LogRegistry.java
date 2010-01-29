@@ -31,12 +31,12 @@ import org.apache.log4j.spi.LoggingEvent;
 import dk.statsbiblioteket.doms.surveillance.status.Surveyable;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-/** A class for exposing Log4J log events as Surveyable. */
+/** Interface for a surveyable log message registry. */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
         level = QAInfo.Level.NORMAL,
         state = QAInfo.State.QA_OK)
-public interface LogSurvey extends Surveyable {
+public interface LogRegistry extends Surveyable {
     /**
      * Register a message for later inspection.
      *
