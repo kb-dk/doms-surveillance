@@ -33,7 +33,10 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/** A system status. */
+/** A data structure for a surveyed application. This data structure contains
+ * messages in a condensed form, where each textually identical message is
+ * treated as one entry.
+ */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
         level = QAInfo.Level.NORMAL,
@@ -77,9 +80,12 @@ public class CondensedStatus {
      * Add a status message to this condensed status. If a condensed status
      * message with the same textual content already exists, it will be updated
      * with information from the status message. Otherwise, a new condensed
-     * status message will be added.
+     * status message will be added. See the references for how a condensed
+     * status message relates to the given status message.
+     * Note that data isn't necessarily copied, so any changes to the internal
+     * structure of the parameter may affect this datastructure and vice versa.
      *
-     * @param message The message to add
+     * @param message The message to add. Should never be null.
      * @see CondensedStatusMessage#CondensedStatusMessage(StatusMessage)
      * @see CondensedStatusMessage#update(StatusMessage)
      */
@@ -98,9 +104,12 @@ public class CondensedStatus {
      * Add a condensed status message to this condensed status. If a condensed
      * status message with the same textual content already exists, it will be
      * updated with information from the status message. Otherwise, this
-     * condensed status will be added.
+     * condensed status will be added. See the reference for how a condensed
+     * status is updated.
+     * Note that data isn't necessarily copied, so any changes to the internal
+     * structure of the parameter may affect this datastructure and vice versa.
      *
-     * @param message The message to add
+     * @param message The message to add. Should never be null.
      * @see CondensedStatusMessage#update(CondensedStatusMessage)
      */
     public void addMessage(CondensedStatusMessage message) {
@@ -115,13 +124,16 @@ public class CondensedStatus {
 
     /**
      * Remove condensed log status messages with the given textual content.
-     * Non-log messages cannot be removed.
+     * Used for removing a log message from the status when it is no longer
+     * relevant.
+     * Non-log messages cannot be removed, since they represent a real-time
+     * status.
      *
      * @param message The textual content of the message to remove.
      */
     public void removeLogMessage(String message) {
-        if (messages.get(message) != null && messages.get(message)
-                .isLogMessage()) {
+        if ((messages.get(message) != null)
+                && messages.get(message).isLogMessage()) {
             messages.remove(message);
         }
     }

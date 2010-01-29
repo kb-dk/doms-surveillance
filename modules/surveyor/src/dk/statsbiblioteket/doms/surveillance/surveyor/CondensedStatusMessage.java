@@ -29,7 +29,8 @@ package dk.statsbiblioteket.doms.surveillance.surveyor;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-/** A status message for a surveyed application. */
+/** A datastructure for status messages. This datastructure condenses status
+ * messages with the same textual message to one summary entry. */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
         level = QAInfo.Level.NORMAL,
@@ -71,7 +72,7 @@ public class CondensedStatusMessage {
     }
 
     /**
-     * Get the text for the status message. Only trivially reformatted in HTML.
+     * Get the text for the status message.
      *
      * @return The message. Never null.
      */
@@ -133,7 +134,9 @@ public class CondensedStatusMessage {
      * <li>The firstdate and lastdate are updated from the given message
      * <li>The severity is updated to the greatest severity
      * <li>Log message is updated to be only if both are log messages
-     * <li>If this is a log message, the number is increased with one.
+     * <li>If this is a log message, the number is increased with one, otherwise
+     * the number is set to 1, to indicate this being a single message (a
+     * realtime status overrides a log status).
      * </ul>
      *
      * @param statusMessage The message to update with.
@@ -175,7 +178,9 @@ public class CondensedStatusMessage {
      * <li>The firstdate and lastdate are updated from the given message
      * <li>The severity is updated to the greatest severity
      * <li>Log message is updated to be only if both are log messages
-     * <li>If this is a log message, the number is the sum of numbers.
+     * <li>If this is a log message, the number is the sum of numbers, otherwise
+     * the number is set to 1, to indicate this being a single message (a
+     * realtime status overrides a log status).
      * </ul>
      *
      * @param statusMessage The message to update with.

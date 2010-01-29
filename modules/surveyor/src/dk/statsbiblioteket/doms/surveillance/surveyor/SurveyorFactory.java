@@ -31,15 +31,15 @@ import org.apache.commons.logging.LogFactory;
 
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-/** Get a surveyor. */
+/** Factory for getting the surveyor singleton. */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
         level = QAInfo.Level.NORMAL,
         state = QAInfo.State.QA_OK)
 public class SurveyorFactory {
     /** Default implentation class. */
-    private static final String DEFAULT_IMPLEMENTATION = RestSurveyor.class
-            .getName();
+    private static final String DEFAULT_IMPLEMENTATION
+            = RestSurveyor.class.getName();
 
     /** Logger for this class. */
     private static Log log = LogFactory.getLog(SurveyorFactory.class);
@@ -48,35 +48,33 @@ public class SurveyorFactory {
     private static Surveyor surveyor;
 
     /**
-     * Get the surveyor singleton instance.
+     * Get the surveyor singleton instance. As this produces a singleton,
+     * a new instance will only be generated on the first call, after this the
+     * same instance will be returned. If the configuration that defines the
+     * implementing class is changed, though, a new instance of the new class
+     * will be produced. This method is synchronized.
      *
      * @return Surveyor singleton instance.
+     *
+     * @throws SurveyorInstantiationException on trouble instantiating the
+     * singleton.
      */
-    public static synchronized Surveyor getSurveyor() {
+    public static synchronized Surveyor getSurveyor()
+            throws SurveyorInstantiationException {
         log.trace("Enter getSurveyor");
         //TODO: Make implementation configurable
         String implementation = DEFAULT_IMPLEMENTATION;
-        if (surveyor == null || !surveyor.getClass().getName().equals(
-                implementation)) {
+        if ((surveyor == null)
+                || !surveyor.getClass().getName().equals(implementation)) {
             try {
                 Class surveyorClass = Class.forName(implementation);
                 surveyor = (Surveyor) surveyorClass.newInstance();
-            } catch (InstantiationException e) {
-                log.error(
-                        "Cannot instantiate Surveyor class: " + e.getMessage(),
-                        e);
-            } catch (IllegalAccessException e) {
-                log.error(
-                        "Cannot instantiate Surveyor class: " + e.getMessage(),
-                        e);
-            } catch (ClassCastException e) {
-                log.error(
-                        "Cannot instantiate Surveyor class: " + e.getMessage(),
-                        e);
-            } catch (ClassNotFoundException e) {
-                log.error(
-                        "Cannot instantiate Surveyor class: " + e.getMessage(),
-                        e);
+                log.debug("Initiated surveyor class '"
+                        + implementation + "'");
+            } catch (Exception e) {
+                throw new SurveyorInstantiationException(
+                        "Cannot instantiate Surveyor class '"
+                        + implementation + "': " + e.getMessage(), e);
             }
         }
         return surveyor;

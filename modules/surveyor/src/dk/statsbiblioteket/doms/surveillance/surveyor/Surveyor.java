@@ -41,15 +41,20 @@ public interface Surveyor {
     /**
      * Get the current status.
      *
-     * @return Current status.
+     * @return Current status, described in a map from name to condensed system
+     *         status. Never null.
      */
     Map<String, CondensedStatus> getStatusMap();
 
     /**
      * Set configuration of surveyor
      *
-     * @param restStatusUrls      List of URLs to get status from.
-     * @param ignoredMessagesFile File to store list of ignored messages in.
+     * @param restStatusUrls      List of URLs to get status from. May be empty,
+     *                            but should never be null.
+     * @param ignoredMessagesFile File to store list of ignored messages in. The
+     *                            file must not exist, in which case it will be
+     *                            created, but the parent directory of the file
+     *                            should exist. Never null.
      */
     void setConfiguration(List<String> restStatusUrls,
                           File ignoredMessagesFile);
@@ -58,16 +63,16 @@ public interface Surveyor {
      * Mark a message as handled, thus removing it from the list of currently
      * unhandled log messages.
      *
-     * @param applicationName Name of application with message.
-     * @param message         The message to mark as handled.
+     * @param applicationName Name of application with message. Never null.
+     * @param message         The message to mark as handled. Never null.
      */
     void markHandled(String applicationName, String message);
 
     /**
-     * Mark a message as one that should never be shwon again.
+     * Mark a message as one that should never be shown again.
      *
-     * @param applicationName Name of application with message.
-     * @param message         The message never to show again.
+     * @param applicationName Name of application with message. Never null.
+     * @param message         The message never to show again. Never null.
      */
     void notAgain(String applicationName, String message);
 }
