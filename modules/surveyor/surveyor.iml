@@ -11,7 +11,6 @@
     <orderEntry type="library" exported="" name="jsr311-api-1.0" level="project" />
     <orderEntry type="library" exported="" name="jersey-1.1.4" level="project" />
     <orderEntry type="module" module-name="status" exported="" />
-    <orderEntry type="module" module-name="rest" exported="" />
     <orderEntry type="library" name="servlet-api-2.5-apache-tomcat-6.0.20" level="project" />
     <orderEntry type="library" name="jsp-api-2.1-apache-tomcat-6.0.20" level="project" />
     <orderEntry type="library" exported="" name="commons-logging-1.1.1" level="project" />

@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%--
   ~ $Id$
   ~ $Revision$
@@ -24,22 +28,13 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   --%>
-
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page
         import="dk.statsbiblioteket.doms.surveillance.surveyor.CondensedStatus,
                 dk.statsbiblioteket.doms.surveillance.surveyor.CondensedStatusMessage,
                 dk.statsbiblioteket.doms.surveillance.surveyor.Surveyor,
-                dk.statsbiblioteket.doms.surveillance.surveyor.SurveyorFactory,
-                java.io.File,
+                dk.statsbiblioteket.doms.surveillance.surveyor.SurveyorServletUtils,
                 java.net.URLEncoder,
-                java.util.Arrays,
-                java.util.Collections,
                 java.util.Date,
-                java.util.List,
                 java.util.Map" pageEncoding="UTF-8" %>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -58,45 +53,16 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     </thead>
     <tbody>
     <%
-        //Read configuration
-        String restUrlParameter = config.getInitParameter(
-                "dk.statsbiblioteket.doms.surveillance.surveyor.urls");
-        List<String> restUrls;
-        if (restUrlParameter == null || restUrlParameter.equals("")) {
-            restUrls = Collections.emptyList();
-        } else {
-            restUrls = Arrays.asList(restUrlParameter.split(";"));
-        }
-        String ignoredMessagesPath = config.getInitParameter(
-                "dk.statsbiblioteket.doms.surveillance.surveyor.ignoredMessagesFile");
-        if (ignoredMessagesPath == null || ignoredMessagesPath.equals("")) {
-            ignoredMessagesPath = "ignored.txt";
-        }
+        // Note: The fault barrier in this case is the Tomcat 500 error page.
+        // Initialize surveyor with configuration from servlet
+        Surveyor surveyor = SurveyorServletUtils.initializeSurveyor(config);
 
-        //Initialise surveyor
-        Surveyor surveyor = SurveyorFactory.getSurveyor();
-        surveyor.setConfiguration(restUrls, new File(ignoredMessagesPath));
+        // Read and handle request parameters
+        SurveyorServletUtils.handlePostedParameters(request, surveyor);
 
-        //Read and handle request parameters
-        request.setCharacterEncoding("UTF-8");
-        String applicationName = request.getParameter("applicationname");
-        if (applicationName != null) {
-            Map<String, String[]> parameters = request.getParameterMap();
-            for (String key : parameters.keySet()) {
-                if (key.startsWith("handle:") && Arrays.equals(
-                        new String[]{"Handled"}, parameters.get(key))) {
-                    surveyor.markHandled(
-                            applicationName, key.substring("handle:".length()));
-                }
-            }
-            if (request.getParameter("notagain") != null) {
-                surveyor.notAgain(
-                        applicationName, request.getParameter("notagain"));
-            }
-        }
-
-        //Get and present status
+        // Get and present status
         Map<String, CondensedStatus> statusMap = surveyor.getStatusMap();
+        // For each application being surveyed
         for (CondensedStatus status : statusMap.values()) {
     %>
     <form action="" method="post">
@@ -108,12 +74,14 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
             </strong></td>
         </tr>
         <%
+            // For all messages registered for the given application
             for (CondensedStatusMessage statusMessage : status.getMessages()) {
         %>
         <tr>
             <td><img
                     src="<%= request.getContextPath() + "/" + statusMessage.getSeverity().toString().toLowerCase() %>.jpg"
-                    alt="<%= statusMessage.getSeverity() %>"/></td>
+                    alt="<%= statusMessage.getSeverity() %>"/>
+            </td>
             <td><%= statusMessage.getMessage() %>
             </td>
             <td style="background-color: #888888">
@@ -136,10 +104,11 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
             %>
             <td><input type="submit"
                        name="handle:<%= statusMessage.getMessage().replaceAll("\\\"", "&quot;") %>"
-                       value="Handled"/><br/><input
-                    type="checkbox" name="notagain"
-                    value="<%= statusMessage.getMessage().replaceAll("\\\"", "&quot;") %>"/>Don't
-                show again
+                       value="Handled"/><br/>
+                <input type="checkbox"
+                       name="notagain"
+                       value="<%= statusMessage.getMessage().replaceAll("\\\"", "&quot;") %>"/>
+                Don't show again
             </td>
             <%
                 }

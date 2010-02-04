@@ -89,32 +89,5 @@
             </fileset>
         </copy>
         <!-- TODO: src and javadoc -->
-
-
-        <subant buildpath="${global.dir}/modules/rest" antfile="build.xml"
-                target="jar" inheritall="false" verbose="true"
-                inheritrefs="false"/>
-        <copy todir="lib" verbose="true">
-            <fileset dir="${global.dir}/modules/rest">
-                <patternset refid="jars.pattern"/>
-            </fileset>
-            <regexpmapper from="^.*/([^/]+\.jar)$"
-                          to="doms-rest-${doms.surveillance.version}/jars/\1"/>
-        </copy>
-        <copy todir="lib" verbose="true" enablemultiplemappings="true">
-            <fileset dir="${global.dir}/modules/rest">
-                <patternset refid="license.pattern"/>
-            </fileset>
-            <regexpmapper from="^.*/lib/([^/]+)/license/(.*)$"
-                          to="doms-rest-${doms.surveillance.version}/license/\1/\2"/>
-        </copy>
-        <copy todir="lib/doms-rest-${doms.surveillance.version}/license">
-            <fileset dir="${global.dir}">
-                <include name="LICENSE"/>
-                <include name="NOTICE"/>
-                <include name="README"/>
-            </fileset>
-        </copy>
-        <!-- TODO: src and javadoc -->
     </target>
 </project>
