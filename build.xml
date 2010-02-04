@@ -26,24 +26,35 @@
   -->
 
 <project name="surveillance" basedir=".">
-    <!--Contain the normal build tasks, including war-->
     <target name="dist">
         <mkdir dir="dist"/>
-        <subant target="war">
+        <subant target="dist">
             <fileset dir="modules/fedorasurveyor" includes="build.xml"/>
+            <fileset dir="modules/surveyor" includes="build.xml"/>
+            <fileset dir="modules/rest" includes="build.xml"/>
         </subant>
         <copy todir="dist">
             <fileset dir="modules/fedorasurveyor/dist/">
                 <include name="*.war"/>
             </fileset>
-        </copy>
-        <subant target="war">
-            <fileset dir="modules/surveillance" includes="build.xml"/>
-        </subant>
-        <copy todir="dist">
-            <fileset dir="modules/surveillance/dist/">
+            <fileset dir="modules/surveyor/dist/">
                 <include name="*.war"/>
+            </fileset>
+            <fileset dir="modules/rest/dist/">
+                <include name="*.jar"/>
             </fileset>
         </copy>
     </target>
+
+    <target name="clean">
+        <delete dir="dist"/>
+        <subant target="clean">
+            <fileset dir="modules/fedorasurveyor" includes="build.xml"/>
+            <fileset dir="modules/surveyor" includes="build.xml"/>
+            <fileset dir="modules/rest" includes="build.xml"/>
+            <fileset dir="modules/status" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <import file="qascan.xml"/>
 </project>

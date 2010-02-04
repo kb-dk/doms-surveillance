@@ -25,27 +25,16 @@
   ~ under the License.
   -->
 
-<project name="surveillance-surveyor" basedir=".">
-    <property name="global.dir" value="${basedir}/../.."/>
-    <property file="${global.dir}/build.properties"/>
-    <property name="warfilename"
-              value="doms-${ant.project.name}-${doms.surveillance.version}.war"/>
-    <property name="jarfile"
-              value="doms-${ant.project.name}-${doms.surveillance.version}.jar"/>
+        <!--This build-include sets the correct project lib dependencies
+        for the module to build as a soap webservice-->
+<project name="soap-webservice">
 
-    <!--Contain the normal build tasks, including war-->
-    <import  file="${global.dir}/build-webservice.xml"/>
+<!--    <import file="build-webservice.xml"/>-->
+
+    <selector id="soap.jars">
+        <filename name="jaxws-ri-2.1.7/jars/**/*.jar"/>
+    </selector>
 
 
-    <dirset  id="module.dependencies" dir="${global.dir}/modules/">
-        <include name="status"/>
-    </dirset>
 
-    <!--Project libs used by this module-->
-    <fileset id="project.libs" dir="${global.dir}/lib">
-        <include name="jsr311-api-1.0/jars/**"/>
-        <include name="jersey-1.1.4/jars/**"/>
-        <include name="commons-logging-1.1.1/jars/**"/>
-        <include name="servlet-api-2.5-apache-tomcat-6.0.20/jars/**"/>
-    </fileset>
 </project>

@@ -25,27 +25,54 @@
   ~ under the License.
   -->
 
-<project name="surveillance-surveyor" basedir=".">
-    <property name="global.dir" value="${basedir}/../.."/>
-    <property file="${global.dir}/build.properties"/>
-    <property name="warfilename"
-              value="doms-${ant.project.name}-${doms.surveillance.version}.war"/>
-    <property name="jarfile"
-              value="doms-${ant.project.name}-${doms.surveillance.version}.jar"/>
+<!-- Global- and module specific libs -->
+<project name="dependencies">
 
-    <!--Contain the normal build tasks, including war-->
-    <import  file="${global.dir}/build-webservice.xml"/>
+    <property name="global.dir" value="${basedir}"/>
+
+    <fileset id="module.libs" dir="${basedir}/lib">
+        <include name="**/jars/*.jar"/>
+    </fileset>
+
+    <fileset id="project.libs" dir="${global.dir}/lib">
+        <exclude name="**"/>
+    </fileset>
 
 
-    <dirset  id="module.dependencies" dir="${global.dir}/modules/">
-        <include name="status"/>
+    <dirset id="module.dependencies" dir="${global.dir}/modules">
+        <exclude name="**"/>
     </dirset>
 
-    <!--Project libs used by this module-->
-    <fileset id="project.libs" dir="${global.dir}/lib">
-        <include name="jsr311-api-1.0/jars/**"/>
-        <include name="jersey-1.1.4/jars/**"/>
-        <include name="commons-logging-1.1.1/jars/**"/>
-        <include name="servlet-api-2.5-apache-tomcat-6.0.20/jars/**"/>
+
+    <fileset id="build.project.libs" dir="${global.dir}/lib">
+        <exclude name="**"/>
     </fileset>
+
+
+
+
+
+
+
+
+    <path id="rhino.classpath">
+        <fileset dir="${global.dir}/build-libs/rhino/jars">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="depends" depends="_predepends">
+        <script language="javascript" classpathref="rhino.classpath" src="${global.dir}/dependsforloop.js"/>
+        <antcall target="_postdepends"/>
+        
+
+    </target>
+
+    <target  name="_postdepends"/>
+    <target name="_predepends"/>
+
+
+
+
+
 </project>

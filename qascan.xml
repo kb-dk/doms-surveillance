@@ -32,13 +32,20 @@
 
     <property name="report.html" value="${user.home}/public_html/qa/report.html"/>
 
+    <property name="classes.dir" value="classes"/>
+
     <!-- ADD NEW MODULES TO THE CLASSPATH HERE.
          YOU MUST ALSO ADD TO THE INSPECTED MODULES
          IN THE BOTTOM OF THIS FILE -->
     <path id="path.all">
         <fileset dir="${basedir}">
-            <include name="lib/*.jar"/>
+            <include name="lib/**/*.jar"/>
+            <include name="modules/*/lib/**/*.jar"/>
+            <include name="modules/*/${classes.dir}"/>
         </fileset>
+        <dirset dir="${basedir}">
+            <include name="modules/*/${classes.dir}"/>
+        </dirset>
     </path>
 	
 	<target name="qa-report">
@@ -46,26 +53,31 @@
     	      classname="dk.statsbiblioteket.util.qa.PackageScannerDriver"
     	      output="${report.html}"
               classpathref="path.all"
-              dir="${basedir}/..">
+              dir="${basedir}/modules">
 
             <!-- Link to ViewVC server -->
             <arg value="-s"/>
-            <arg value="http://merkur/viewvc/trunk/@MODULE@/src/@FILE@?root=doms&amp;view=log"/>
+            <arg value="http://doms.svn.sourceforge.net/viewvc/doms/surveillance/trunk/modules/@MODULE@/src/@FILE@?view=markup"/>
 
             <!-- Set project name -->
             <arg value="-n"/>
-            <arg value="SB DOMS"/>
+            <arg value="Doms"/>
 
-            <!-- Only scan packages in dk.statsbiblioteket name space -->
+            <!-- HTML output -->
+            <arg value="-o"/>
+            <arg value="html"/>
+
+            <!-- Only scan packages in dk.statsbiblioteket.doms name space -->
             <arg value="-p"/>
-            <arg value="dk.statsbiblioteket"/>
+            <arg value="dk.statsbiblioteket.doms.surveillance"/>
 
-            <arg value="ingest/${classes.dir}"/>
+            <arg value="status/${classes.dir}"/>
+            <arg value="rest/${classes.dir}"/>
+            <arg value="surveyor/${classes.dir}"/>
+            <arg value="fedorasurveyor/${classes.dir}"/>
             <!-- ADD NEW MODULES HERE. YOU MUST ALSO ADD TO THE CLASSPATH
                  IN THE TOP OF THIS FILE -->
 
         </java>
 	</target>
-	
-    <target name="release" depends="qa-report"/>
 </project>
