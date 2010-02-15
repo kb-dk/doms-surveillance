@@ -27,16 +27,16 @@
 
 <project name="surveillance-surveyor" basedir=".">
     <property name="global.dir" value="${basedir}/../.."/>
-    <property file="${global.dir}/build.properties"/>
     <property name="warfilename"
-              value="doms-${ant.project.name}-${doms.surveillance.version}.war"/>
+              value="surveillance-surveyor.war"/>
     <property name="jarfile"
-              value="doms-${ant.project.name}-${doms.surveillance.version}.jar"/>
+              value="surveillance-surveyor.jar"/>
 
     <!--Contain the normal build tasks, including war-->
-    <import  file="${global.dir}/build-webservice.xml"/>
+    <import  file="${global.dir}/build/build-webservice.xml"/>
+    <target  name="_postdist" depends="war"/>
 
-
+    <!--Module dependencies-->
     <dirset  id="module.dependencies" dir="${global.dir}/modules/">
         <include name="status"/>
     </dirset>

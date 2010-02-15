@@ -27,18 +27,16 @@
 
 <project name="surveillance-fedorasurveyor" basedir=".">
     <property name="global.dir" value="${basedir}/../.."/>
-    <property file="${global.dir}/build.properties"/>
-    <property name="warfilename"
-              value="doms-${ant.project.name}-${doms.surveillance.version}.war"/>
-    <property name="jarfile"
-              value="doms-${ant.project.name}-${doms.surveillance.version}.jar"/>
+    <property name="warfilename" value="surveillance-fedorasurveyor.war"/>
 
     <!--Contain the normal build tasks, including war-->
-    <import  file="${global.dir}/build-webservice.xml"/>
+    <import  file="${global.dir}/build/build-webservice.xml"/>
+    <target  name="_postdist" depends="war"/>
 
     <!--Adds the rest libs to the build-->
-    <import file="${global.dir}/build-rest-webservice.xml"/>
+    <import file="${global.dir}/build/build-rest-webservice.xml"/>
 
+    <!--Module dependencies-->
     <dirset  id="module.dependencies" dir="${global.dir}/modules/">
         <include name="status"/>
     </dirset>
@@ -49,6 +47,7 @@
         <include name="jersey-1.1.4/jars/**"/>
         <include name="commons-logging-1.1.1/jars/**"/>
         <include name="servlet-api-2.5-apache-tomcat-6.0.20/jars/**"/>
+        <include name="sbutil-0.4.6/jars/**"/>
     </fileset>
 </project>
 

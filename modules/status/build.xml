@@ -27,13 +27,11 @@
 
 <project name="surveillance-status" basedir=".">
     <property name="global.dir" value="${basedir}/../.."/>
-    <property file="build.properties"/>
-    <property file="${global.dir}/build.properties"/>
     <property name="jarfile"
-              value="doms-${ant.project.name}-${doms.surveillance.version}.jar"/>
+              value="surveillance-status.jar"/>
 
-    <!--Contain the normal build tasks, including war-->
-    <import  file="${global.dir}/build-common.xml"/>
+    <!--Contain the normal build tasks, including jar-->
+    <import  file="${global.dir}/build/build-common.xml"/>
 
     <!--Project libs used by this module-->
     <fileset id="project.libs" dir="${global.dir}/lib">
