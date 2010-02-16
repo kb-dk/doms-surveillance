@@ -1,9 +1,9 @@
 /*
- * Doms build framework version 1.0.4
+ * Doms build framework version 1.0.5
  *
- * $Id: dependsforloop.js 213 2010-02-05 10:07:18Z blekinge $
- * $Revision: 213 $
- * $Date: 2010-02-05 11:07:18 +0100 (Fri, 05 Feb 2010) $
+ * $Id: dependsforloop.js 252 2010-02-16 12:01:55Z blekinge $
+ * $Revision: 252 $
+ * $Date: 2010-02-16 13:01:55 +0100 (Tue, 16 Feb 2010) $
  * $Author: blekinge $
  *
  * The DOMS project.
@@ -27,12 +27,16 @@
  * under the License.
  */
 
-/* Part of doms build framework version 1.0.4 */
+/* Part of doms build framework version 1.0.5 */
 importClass(java.io.File);
 importPackage(Packages.org.apache.tools.ant);
 importPackage(Packages.org.apache.tools.ant.types);
 
 importPackage(Packages.org.apache.tools.ant.taskdefs);
+var target = attributes.get("target");
+
+var dirSetname = attributes.get("dependencies");
+var dirSet = project.getReference(dirSetname);
 
 var echo = project.createTask("echo");
 /*echo.setMessage("Hello, World!");
@@ -40,7 +44,6 @@ var echo = project.createTask("echo");
  */
 // Obtain a reference to a files
 // et in the enclosing project
-var dirSet = project.getReference("module.dependencies");
 /*echo.setMessage("fileSet size = "+dirSet.size());
 
  echo.execute();
@@ -57,11 +60,23 @@ for (var i = 0; i < dirs.length; i++) {
     subdir = new File(basedir, dirs[i])
     echo.setMessage("recursing into " + subdir);
     echo.execute();
-    var anttask = project.createTask("ant");
-    anttask.setDir(subdir);
-    anttask.setTarget("dist");
-    anttask.setInheritAll(false);
-    anttask.perform();
+    if (contains(subdir.list(),"build.xml")){
+        var anttask = project.createTask("ant");
+        anttask.setDir(subdir);
+        anttask.setTarget(target);
+        anttask.setInheritAll(false);
+        anttask.perform();
+    }
 }
- 
+
+function contains(array, name){
+
+    for (var i=0; i< array.length; i++){
+        if (array[i] == name){
+            return true;
+        }
+    }
+    return false;
+}
+
 

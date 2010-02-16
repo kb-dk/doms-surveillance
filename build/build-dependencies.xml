@@ -1,5 +1,5 @@
 <!--
-  ~ Doms build framework version 1.0.4
+  ~ Doms build framework version 1.0.5
   ~
   ~ $Id$
   ~ $Revision$
@@ -29,15 +29,15 @@
 
 <!-- Global- and module specific libs -->
 <project name="dependencies">
-    <!--Part of doms build framework version 1.0.4-->
+    <!--Part of doms build framework version 1.0.5-->
 
 
-    <property name="global.dir" value="${basedir}"/>
+    <property name="global.dir" value="${basedir}/.."/>
 
     <dirname property="dependencies.basedir" file="${ant.file.dependencies}"/>
 
     <property file="${dependencies.basedir}/build-framework.properties"/>
-    
+
     <fileset id="module.libs" dir="${basedir}/lib">
         <include name="**/jars/*.jar"/>
     </fileset>
@@ -63,13 +63,30 @@
         </fileset>
     </path>
 
+    <!--Call the specified target in all the specified dirs-->
+    <scriptdef name="dependsloop" language="javascript" classpathref="rhino.classpath"
+               src="${dependencies.basedir}/dependsforloop.js">
+        <attribute name="target"/>
+        <attribute name="dependencies"/>
+    </scriptdef>
+
+
+    <!--Create list of files from a dirset-->
+    <scriptdef name="convertPath" language="javascript" classpathref="rhino.classpath"
+               src="${dependencies.basedir}/convertPath.js">
+        <attribute name="dirset"/>
+        <attribute name="postfix"/>
+        <attribute name="newfileset"/>
+    </scriptdef>
+
+
+
     <target name="depends" depends="_predepends">
-        <script language="javascript" classpathref="rhino.classpath"
-                src="${dependencies.basedir}/dependsforloop.js"/>
+        <dependsloop target="all" dependencies="module.dependencies"/>
         <antcall target="_postdepends"/>
-
-
     </target>
+
+
 
     <target name="_postdepends"/>
     <target name="_predepends"/>

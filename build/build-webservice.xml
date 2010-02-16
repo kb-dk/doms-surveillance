@@ -1,5 +1,5 @@
 <!--
-  ~ Doms build framework version 1.0.4
+  ~ Doms build framework version 1.0.5
   ~
   ~ $Id$
   ~ $Revision$
@@ -28,8 +28,9 @@
   -->
 
 <project name="webservice">
-    <!--Part of doms build framework version 1.0.4-->
-
+    <!--Part of doms build framework version 1.0.5-->
+    <property name="global.dir" value="${basedir}/.."/>
+    
     <property name="warfilename" value="${ant.project.name}.war"/>
 
     <import file="build-common.xml"/>
@@ -39,14 +40,6 @@
     <target name="war"
             description="Pack the webdirectory into a warfile ready for deployment">
         <mkdir dir="dist"/>
-        <pathconvert property="module.dependencies.pathconvert"
-                     refid="module.dependencies">
-            <mapper type="regexp" from="^(.)*" to="\0/dist/\*.jar"/>
-        </pathconvert>
-
-        <script language="javascript" classpathref="rhino.classpath"
-                src="${webservice.basedir}/convertPath.js"/>
-
 
         <copy todir="libtemp" flatten="true">
 

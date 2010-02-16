@@ -1,5 +1,5 @@
 <!--
-  ~ Doms build framework version 1.0.4
+  ~ Doms build framework version 1.0.5
   ~
   ~ $Id$
   ~ $Revision$
@@ -28,12 +28,13 @@
   -->
 
 <project name="common">
-    <!--Part of doms build framework version 1.0.4-->
+    <!--Part of doms build framework version 1.0.5-->
 
 
-    <property name="global.dir" value="${basedir}"/>
+    <property name="global.dir" value="${basedir}/.."/>
     <property name="jarfile" value="${ant.project.name}.jar"/>
     <property name="srcpack.zip" value="${ant.project.name}-src.zip"/>
+    <property name="docspack.zip" value="${ant.project.name}-apidocs.zip"/>
 
     <import file="build-dependencies.xml"/>
 
@@ -103,7 +104,7 @@
 
 
     <target name="init">
-        <echo message="Using doms buildframework version 1.0.4"/>
+        <echo message="Using doms buildframework version 1.0.5"/>
     </target>
 
 
@@ -120,8 +121,9 @@
             <mapper type="regexp" from="^(.)*" to="\0/dist/\*.jar"/>
         </pathconvert>
 
-        <script language="javascript" classpathref="rhino.classpath"
-                src="${common.basedir}/convertPath.js"/>
+        <convertPath dirset="module.dependencies"
+                     postfix="/dist/**/*.jar"
+                     newfileset="module.dependencies.jars"/>
 
         <!-- get the source compile classpath in a printable form -->
         <pathconvert pathsep="${line.separator}|   |-- "
@@ -169,17 +171,17 @@
         <antcall target="_postjar"/>
     </target>
 
-    <target name="_predist"/>
-    <target name="_postdist"/>
+    <target name="_preall"/>
+    <target name="_postall"/>
 
-    <target name="dist" depends="jar,sourcezip,_predist"
+    <target name="all" depends="jar,sourcezip,apidocs,_preall"
             description="Build the distributable package">
         <mkdir dir="dist"/>
 
         <copy todir="dist" flatten="true">
             <fileset refid="module.libs"/>
         </copy>
-        <antcall target="_postdist"/>
+        <antcall target="_postall"/>
     </target>
 
     <target name="_presourcezip"/>
@@ -193,12 +195,30 @@
             <zipfileset dir="src">
                 <include name="**/*"/>
             </zipfileset>
+<!--
             <zipfileset dir="tempsrc">
                 <include name="**/*"/>
             </zipfileset>
+-->
         </zip>
         <antcall target="_postsourcezip"/>
     </target>
 
+    <target name="_preapidocs"/>
+
+    <target name="_postapidocs"/>
+
+    <target name="apidocs" depends="init, _preapidocs">
+        <mkdir dir="docstemp"/>
+        <mkdir dir="dist"/>
+        <javadoc sourcepath="src" destdir="docstemp"/>
+        <zip destfile="dist/${docspack.zip}">
+            <zipfileset dir="docstemp">
+                <include name="**/*"/>
+            </zipfileset>
+        </zip>
+        <delete dir="docstemp"/>
+        <antcall target="_postapidocs"/>
+    </target>
 
 </project>

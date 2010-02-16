@@ -26,35 +26,9 @@
   -->
 
 <project name="surveillance" basedir=".">
-    <target name="dist">
-        <mkdir dir="dist"/>
-        <subant target="dist">
-            <fileset dir="modules/fedorasurveyor" includes="build.xml"/>
-            <fileset dir="modules/surveyor" includes="build.xml"/>
-            <fileset dir="modules/rest" includes="build.xml"/>
-        </subant>
-        <copy todir="dist">
-            <fileset dir="modules/fedorasurveyor/dist/">
-                <include name="*.war"/>
-            </fileset>
-            <fileset dir="modules/surveyor/dist/">
-                <include name="*.war"/>
-            </fileset>
-            <fileset dir="modules/rest/dist/">
-                <include name="*.jar"/>
-            </fileset>
-        </copy>
-    </target>
+    <property file="build.properties"/>
+    <property name="global.dir" value="${basedir}"/>
 
-    <target name="clean">
-        <delete dir="dist"/>
-        <subant target="clean">
-            <fileset dir="modules/fedorasurveyor" includes="build.xml"/>
-            <fileset dir="modules/surveyor" includes="build.xml"/>
-            <fileset dir="modules/rest" includes="build.xml"/>
-            <fileset dir="modules/status" includes="build.xml"/>
-        </subant>
-    </target>
-
+    <import file="build/build-dist.xml"/>
     <import file="qascan.xml"/>
 </project>

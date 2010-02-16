@@ -1,5 +1,5 @@
 <!--
-  ~ Doms build framework version 1.0.4
+  ~ Doms build framework version 1.0.5
   ~
   ~ $Id$
   ~ $Revision$
@@ -28,9 +28,10 @@
   -->
 
 <project name="jaxb">
-    <!--Part of doms build framework version 1.0.4-->
+    <!--Part of doms build framework version 1.0.5-->
 
     <!--    <import  file="build-webservice.xml"/>-->
+    <property name="global.dir" value="${basedir}/.."/>
 
     <import file="build-soap-webservice.xml"/>
 
