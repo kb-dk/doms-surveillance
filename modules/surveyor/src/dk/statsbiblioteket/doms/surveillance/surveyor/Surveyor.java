@@ -28,15 +28,14 @@ package dk.statsbiblioteket.doms.surveillance.surveyor;
 
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-import java.io.File;
-import java.util.List;
 import java.util.Map;
 
 /** Interface for getting status messages. */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
+        comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
-        state = QAInfo.State.QA_OK)
+        state = QAInfo.State.QA_NEEDED)
 public interface Surveyor {
     /**
      * Get the current status.
@@ -45,19 +44,6 @@ public interface Surveyor {
      *         status. Never null.
      */
     Map<String, CondensedStatus> getStatusMap();
-
-    /**
-     * Set configuration of surveyor
-     *
-     * @param restStatusUrls      List of URLs to get status from. May be empty,
-     *                            but should never be null.
-     * @param ignoredMessagesFile File to store list of ignored messages in. The
-     *                            file must not exist, in which case it will be
-     *                            created, but the parent directory of the file
-     *                            should exist. Never null.
-     */
-    void setConfiguration(List<String> restStatusUrls,
-                          File ignoredMessagesFile);
 
     /**
      * Mark a message as handled, thus removing it from the list of currently

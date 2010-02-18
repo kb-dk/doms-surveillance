@@ -29,15 +29,29 @@ package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-/** Factory for getting the log registry singleton. */
+/** Factory for getting the log registry singleton.
+ * The choice of singleton is defined by configuration parameter
+ * <code>dk.statsbiblioteket.doms.surveillance.rest.log4jappender.registryClass</code>.
+ * Default is dk.statsbiblioteket.doms.surveillance.surveyor.RestSurveyor.
+ * */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
+        comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
-        state = QAInfo.State.QA_OK)
+        state = QAInfo.State.QA_NEEDED)
 public class LogRegistryFactory {
-    /** Default implentation class. */
+    /** The package prefix for parameter names. */
+    private static final String CONFIGURATION_PACKAGE_NAME
+            = "dk.statsbiblioteket.doms.surveillance.rest.log4jappender";
+
+    /** Parameter for class for log registry. */
+    public static final String REGISTRYCLASS_CONFIGURATION_PARAMETER
+            = CONFIGURATION_PACKAGE_NAME + ".registryClass";
+
+    /** Default implementation class. */
     private static final String DEFAULT_IMPLEMENTATION
             = CachingLogRegistry.class.getName();
 
@@ -62,15 +76,19 @@ public class LogRegistryFactory {
     public static synchronized LogRegistry getLogRegistry()
             throws LogRegistryInstantiationException {
         log.trace("Enter getLogRegistry()");
-        //TODO: Make implementation configurable
-        String implementation = DEFAULT_IMPLEMENTATION;
+
+        String implementation = ConfigCollection.getProperties().getProperty(
+                REGISTRYCLASS_CONFIGURATION_PARAMETER);
+        if (implementation == null || implementation.equals("")) {
+            implementation = DEFAULT_IMPLEMENTATION;
+        }
         if ((logRegistry == null)
                 || !logRegistry.getClass().getName().equals(implementation)) {
+            log.info("Initializing log registry class '" + implementation
+                    + "'");
             try {
                 Class logRegistryClass = Class.forName(implementation);
                 logRegistry = (LogRegistry) logRegistryClass.newInstance();
-                log.debug("Initiated log registry class '"
-                        + implementation + "'");
             } catch (Exception e) {
                 throw new LogRegistryInstantiationException(
                         "Cannot instantiate LogRegistry class '"

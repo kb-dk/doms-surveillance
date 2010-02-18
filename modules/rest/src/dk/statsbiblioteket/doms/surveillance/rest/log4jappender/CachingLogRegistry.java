@@ -32,6 +32,7 @@ import org.apache.log4j.spi.LoggingEvent;
 
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
+import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
 import java.util.ArrayList;
@@ -48,14 +49,15 @@ import java.util.TreeMap;
  */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
+        comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
-        state = QAInfo.State.QA_OK)
+        state = QAInfo.State.QA_NEEDED)
 public class CachingLogRegistry implements LogRegistry {
-    //TODO: Make configurable in log4j.xml
-    /** At most this many log messages are by default kept in the registry. */
-    private static final int MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG = 1000;
+    /** At most this many log messages are kept in the registry. */
+    private int maxNumberOfMessagesKeptByLog
+            = DEFAULT_MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG;
 
-    /** A sorted map from timestamp of log message to list of actual messages.*/
+    /** A sorted map from timestamp of log message to list of actual messages. */
     private NavigableMap<Long, Collection<StatusMessage>> logStatusMessages
             = new TreeMap<Long, Collection<StatusMessage>>();
 
@@ -64,6 +66,32 @@ public class CachingLogRegistry implements LogRegistry {
 
     /** The logger for this class. */
     private Log log = LogFactory.getLog(getClass());
+
+    /** Read paramters from configuration, and initialize caching log registry. */
+    public CachingLogRegistry() {
+        log.trace("Enter CachingLogEntry()");
+        configure();
+    }
+
+    /** Read configuration. This method acts as fault barrier */
+    private void configure() {
+        log.trace("Enter configure()");
+        try {
+            String configValue = ConfigCollection.getProperties()
+                    .getProperty(NUMBEROFMESSAGES_CONFIGURATION_PARAMETER);
+            if (configValue != null && !configValue.equals("")) {
+                int configIntValue = Integer.parseInt(configValue);
+                if (configIntValue != maxNumberOfMessagesKeptByLog) {
+                    maxNumberOfMessagesKeptByLog = configIntValue;
+                    log.info("Setting number of messages kept by registry to "
+                            + maxNumberOfMessagesKeptByLog);
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Error while configuring appender."
+                    + " Falling back to default values.", e);
+        }
+    }
 
     /**
      * Returns all log messages received since the given date.
@@ -109,7 +137,7 @@ public class CachingLogRegistry implements LogRegistry {
         }
 
         // Ensure the log doesn't grow too huge
-        if (logStatusMessages.size() > MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG - 1) {
+        if (logStatusMessages.size() > maxNumberOfMessagesKeptByLog - 1) {
             long earliestTimeStamp = logStatusMessages.firstKey();
             logStatusMessages.remove(earliestTimeStamp);
         }

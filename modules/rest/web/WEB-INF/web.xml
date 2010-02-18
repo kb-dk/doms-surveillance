@@ -44,4 +44,19 @@
         <servlet-name>Log Survey Appender</servlet-name>
         <url-pattern>/logsurveyservice/*</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>
+            dk.statsbiblioteket.doms.webservices.ConfigContextListener
+        </listener-class>
+    </listener>
+
+    <context-param>
+        <param-name>
+            dk.statsbiblioteket.doms.surveillance.rest.log4jappender.registryClass
+        </param-name>
+        <param-value>
+            dk.statsbiblioteket.doms.surveillance.rest.log4jappender.CachingLogRegistry
+        </param-value>
+    </context-param>
 </web-app>

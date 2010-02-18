@@ -7,11 +7,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="status" exported="" />
-    <orderEntry type="library" exported="" name="jsr311-api-1.0" level="project" />
-    <orderEntry type="library" exported="" name="jersey-1.1.4" level="project" />
-    <orderEntry type="library" exported="" name="commons-logging-1.1.1" level="project" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module" module-name="status" />
+    <orderEntry type="library" name="jsr311-api-1.0" level="project" />
+    <orderEntry type="library" name="jersey-1.1.4" level="project" />
+    <orderEntry type="library" name="commons-logging-1.1.1" level="project" />
+    <orderEntry type="module-library">
       <library name="fedora-client-3.2.1">
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib/fedora-client-3.2.1/jars" />
@@ -25,8 +25,9 @@
         <jarDirectory url="file://$MODULE_DIR$/lib/fedora-client-3.2.1/jars" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="servlet-api-2.5-apache-tomcat-6.0.20" level="project" />
-    <orderEntry type="library" exported="" name="sbutil-0.4.6" level="project" />
+    <orderEntry type="library" name="servlet-api-2.5-apache-tomcat-6.0.20" level="project" />
+    <orderEntry type="library" name="sbutil-0.4.6" level="project" />
+    <orderEntry type="library" name="domsutil-0.0.2#SNAPSHOT" level="project" />
   </component>
 </module>
 

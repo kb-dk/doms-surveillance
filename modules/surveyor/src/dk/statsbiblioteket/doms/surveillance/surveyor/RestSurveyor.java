@@ -32,6 +32,7 @@ import org.apache.commons.logging.LogFactory;
 
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
+import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
 import java.io.BufferedReader;
@@ -43,6 +44,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -52,13 +54,33 @@ import java.util.Set;
 /**
  * A surveyor that calls specified REST URLs to get status.
  *
+ * This is configurable with parameters:
+ * <code>dk.statsbiblioteket.doms.surveillance.surveyor.urls</code>
+ * defining list of REST status URLs to monitor (default is empty), and
+ * <code>dk.statsbiblioteket.doms.surveillance.surveyor.ignoredMessagesFile</code>
+ * defining the file used to persist list of ignored messages (default is
+ * "ignored.txt"). 
+ *
  * This class is synchronized on all public methods.
  */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
+        comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
-        state = QAInfo.State.QA_OK)
+        state = QAInfo.State.QA_NEEDED)
 public class RestSurveyor implements Surveyor {
+    /** The package prefix for parameter names. */
+    private static final String CONFIGURATION_PACKAGE_NAME
+            = "dk.statsbiblioteket.doms.surveillance.surveyor";
+
+    /** Parameter for URLS for surveyor. */
+    public static final String URLS_CONFIGURATION_PARAMETER
+            = CONFIGURATION_PACKAGE_NAME + ".urls";
+
+    /** Parameter for file with ignored messages for surveyor. */
+    public static final String IGNOREFILE_CONFIGURATION_PARAMETER
+            = CONFIGURATION_PACKAGE_NAME + ".ignoredMessagesFile";
+
     /**
      * Currently stored state, for keeping log messages until handled. Maps
      * from application name to status for that application.
@@ -88,23 +110,47 @@ public class RestSurveyor implements Surveyor {
     /** Initialise this surveyor. */
     public RestSurveyor() {
         log.info("Starting surveyor");
+        readConfiguration();
     }
 
     /**
      * Set configuration.
      *
-     * @param restStatusUrls      REST status URLs to query.
-     * @param ignoredMessagesFile File to store list of ignored messages in.
+     * This method will read the configuration values, and do initialization
+     * based on this.
+     *
+     * @see #URLS_CONFIGURATION_PARAMETER
+     * @see #IGNOREFILE_CONFIGURATION_PARAMETER
      */
-    public synchronized void setConfiguration(List<String> restStatusUrls,
-                                              File ignoredMessagesFile) {
-        log.trace("Enter setConfiguration('" + restStatusUrls + "', '"
-                + ignoredMessagesFile + "')");
+    private synchronized void readConfiguration() {
+        log.trace("Enter readConfiguration()");
+
+        //Read configuration
+        String restUrlParameter
+                = ConfigCollection.getProperties().getProperty(
+                URLS_CONFIGURATION_PARAMETER);
+        String ignoredMessagesPath = ConfigCollection.getProperties()
+                .getProperty(IGNOREFILE_CONFIGURATION_PARAMETER);
+        List<String> restStatusUrls;
+        File ignoredMessagesFile;
+
+        //Initialize status urls
+        if (restUrlParameter == null || restUrlParameter.equals("")) {
+            restStatusUrls = Collections.emptyList();
+        } else {
+            restStatusUrls = Arrays.asList(restUrlParameter.split(";"));
+        }
         if (!restStatusUrls.equals(this.restStatusUrls)) {
             log.info("Setting list of surveyed REST status URLs to '"
                     + restStatusUrls + "'");
             this.restStatusUrls = restStatusUrls;
         }
+
+        //Initialize file with list of ignored messages.
+        if (ignoredMessagesPath == null || ignoredMessagesPath.equals("")) {
+            ignoredMessagesPath = "ignored.txt";
+        }
+        ignoredMessagesFile = new File(ignoredMessagesPath);
         if (!this.ignoredMessagesFile.equals(ignoredMessagesFile)) {
             log.info("Setting file with list of ignored messages to '"
                     + ignoredMessagesFile + "'");

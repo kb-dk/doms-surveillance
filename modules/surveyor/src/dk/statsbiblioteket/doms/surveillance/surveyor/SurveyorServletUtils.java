@@ -31,68 +31,22 @@ import org.apache.commons.logging.LogFactory;
 
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 /**
- * Utility methods for initializing a surveyor from a servlet configuration,
- * and handling servlet requests.
+ * Utility method for handling servlet requests.
  */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
+        comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
-        state = QAInfo.State.QA_OK)
+        state = QAInfo.State.QA_NEEDED)
 public class SurveyorServletUtils {
-    /** The package prfix for parameter names. */
-    private static final String CONFIGURATION_PACKAGE_NAME
-            = "dk.statsbiblioteket.doms.surveillance.surveyor";
-
-    /** Parameter for URLS for surveyor. */
-    private static final String URLS_CONFIGURATION_PARAMETER
-            = CONFIGURATION_PACKAGE_NAME + ".urls";
-
-    /** Parameter for file with ignored messages for surveyor. */
-    private static final String IGNOREFILE_CONFIGURATION_PARAMETER
-            = CONFIGURATION_PACKAGE_NAME + ".ignoredMessagesFile";
-
     /** The logger for this class. */
     private static Log log = LogFactory.getLog(SurveyorServletUtils.class);
-
-    /**
-     * Initialize a surveyor, reading configuration parameters from the given
-     * servlet configuration.
-     *
-     * @param config Configuration to read parameters for.
-     * @return The initialized surveyor.
-     */
-    public static Surveyor initializeSurveyor(ServletConfig config) {
-        log.trace("Enter initializeSurveyor()");
-        //Read configuration
-        String restUrlParameter = config.getInitParameter(
-                URLS_CONFIGURATION_PARAMETER);
-        List<String> restUrls;
-        if (restUrlParameter == null || restUrlParameter.equals("")) {
-            restUrls = Collections.emptyList();
-        } else {
-            restUrls = Arrays.asList(restUrlParameter.split(";"));
-        }
-        String ignoredMessagesPath = config.getInitParameter(
-                IGNOREFILE_CONFIGURATION_PARAMETER);
-        if (ignoredMessagesPath == null || ignoredMessagesPath.equals("")) {
-            ignoredMessagesPath = "ignored.txt";
-        }
-
-        //Initialise surveyor
-        Surveyor surveyor = SurveyorFactory.getSurveyor();
-        surveyor.setConfiguration(restUrls, new File(ignoredMessagesPath));
-        return surveyor;
-    }
 
     /**
      * Handle actions given a servlet request on a surveyor.

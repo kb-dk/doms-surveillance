@@ -31,12 +31,25 @@ import org.apache.log4j.spi.LoggingEvent;
 import dk.statsbiblioteket.doms.surveillance.status.Surveyable;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-/** Interface for a surveyable log message registry. */
+/** Interface for a surveyable log message registry.
+ * Implementations may be configured by the parameter:
+ * <code>dk.statsbiblioteket.doms.surveillance.rest.log4jappender.numberOfMessages</code> 
+ * */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
+        comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
-        state = QAInfo.State.QA_OK)
+        state = QAInfo.State.QA_NEEDED)
 public interface LogRegistry extends Surveyable {
+    /** The package prefix for parameter names. */
+    String CONFIGURATION_PACKAGE_NAME
+            = "dk.statsbiblioteket.doms.surveillance.rest.log4jappender";
+    /** Parameter for now many log messages are kept in the registry. */
+    String NUMBEROFMESSAGES_CONFIGURATION_PARAMETER
+            = CONFIGURATION_PACKAGE_NAME + ".numberOfMessages";
+    /** At most this many log messages are by default kept in the registry. */
+    int DEFAULT_MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG = 1000;
+
     /**
      * Register a message for later inspection.
      *

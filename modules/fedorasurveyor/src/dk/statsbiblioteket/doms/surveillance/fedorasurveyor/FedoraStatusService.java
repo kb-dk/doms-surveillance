@@ -34,24 +34,26 @@ import org.apache.commons.logging.LogFactory;
 import dk.statsbiblioteket.doms.surveillance.status.Status;
 import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
 import dk.statsbiblioteket.doms.surveillance.status.Surveyable;
+import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-import javax.servlet.ServletConfig;
+import javax.annotation.PostConstruct;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 /** Class that exposes fedora status as surveyable messages over REST. */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
+        comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
-        state = QAInfo.State.QA_OK)
+        state = QAInfo.State.QA_NEEDED)
 @Path("/")
 public class FedoraStatusService implements Surveyable {
     /** The application name for what is being surveyed. */
@@ -59,10 +61,6 @@ public class FedoraStatusService implements Surveyable {
 
     /** Logger for this class. */
     private Log log = LogFactory.getLog(getClass());
-
-    /** The web service context. Injected by the web service framework. */
-    @Context
-    private ServletConfig config;
 
     /** Prefix for parameter names. */
     private static final String PARAMETER_PACKAGENAME_PREFIX
@@ -120,7 +118,6 @@ public class FedoraStatusService implements Surveyable {
         List<StatusMessage> list = new ArrayList<StatusMessage>();
         StatusMessage statusMessage;
 
-        initialize();
         try {
             statusMessage = getFedoraStatus();
         } catch (Exception e) {
@@ -136,12 +133,14 @@ public class FedoraStatusService implements Surveyable {
     }
 
     /** Initialise the web service by reading the parameters. */
+    @PostConstruct
     private synchronized void initialize() {
         log.trace("Enter initialize()");
-        String fedoraUrl = config.getInitParameter(FEDORA_URL_PARAMETER);
-        String fedoraUser = config.getInitParameter(FEDORA_USER_PARAMETER);
-        String fedoraPassword = config
-                .getInitParameter(FEDORA_PASSWORD_PARAMETER);
+        Properties configuration = ConfigCollection.getProperties();
+        String fedoraUrl = configuration.getProperty(FEDORA_URL_PARAMETER);
+        String fedoraUser = configuration.getProperty(FEDORA_USER_PARAMETER);
+        String fedoraPassword = configuration
+                .getProperty(FEDORA_PASSWORD_PARAMETER);
 
         if (!this.fedoraUrl.equals(fedoraUrl)) {
             this.fedoraUrl = fedoraUrl;

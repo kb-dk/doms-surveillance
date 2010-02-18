@@ -29,15 +29,28 @@ package dk.statsbiblioteket.doms.surveillance.surveyor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-/** Factory for getting the surveyor singleton. */
+/** Factory for getting the surveyor singleton.
+ * The choice of singleton is defined by configuration parameter
+ * <code>dk.statsbiblioteket.doms.surveillance.surveyor.surveyorClass</code>.
+ * Default is dk.statsbiblioteket.doms.surveillance.surveyor.RestSurveyor. */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
+        comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
-        state = QAInfo.State.QA_OK)
+        state = QAInfo.State.QA_NEEDED)
 public class SurveyorFactory {
-    /** Default implentation class. */
+    /** The package prefix for parameter names. */
+    private static final String CONFIGURATION_PACKAGE_NAME
+            = "dk.statsbiblioteket.doms.surveillance.surveyor";
+
+    /** Parameter for class for surveyor. */
+    public static final String SURVEYORCLASS_CONFIGURATION_PARAMETER
+            = CONFIGURATION_PACKAGE_NAME + ".surveyorClass";
+
+    /** Default implementation class. */
     private static final String DEFAULT_IMPLEMENTATION
             = RestSurveyor.class.getName();
 
@@ -62,15 +75,17 @@ public class SurveyorFactory {
     public static synchronized Surveyor getSurveyor()
             throws SurveyorInstantiationException {
         log.trace("Enter getSurveyor");
-        //TODO: Make implementation configurable
-        String implementation = DEFAULT_IMPLEMENTATION;
+        String implementation = ConfigCollection.getProperties().getProperty(
+                SURVEYORCLASS_CONFIGURATION_PARAMETER);
+        if (implementation == null || implementation.equals("")) {
+            implementation = DEFAULT_IMPLEMENTATION;
+        }
         if ((surveyor == null)
                 || !surveyor.getClass().getName().equals(implementation)) {
+            log.info("Initializing surveyor class '" + implementation + "'");
             try {
                 Class surveyorClass = Class.forName(implementation);
                 surveyor = (Surveyor) surveyorClass.newInstance();
-                log.debug("Initiated surveyor class '"
-                        + implementation + "'");
             } catch (Exception e) {
                 throw new SurveyorInstantiationException(
                         "Cannot instantiate Surveyor class '"

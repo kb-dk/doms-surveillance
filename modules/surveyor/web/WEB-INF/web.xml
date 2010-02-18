@@ -27,42 +27,42 @@
 
 <web-app>
     <servlet>
-        <servlet-name>Log Survey Appender</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer
-        </servlet-class>
-        <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>dk.statsbiblioteket.doms.surveillance.rest
-            </param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Log Survey Appender</servlet-name>
-        <url-pattern>/logsurveyservice/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>Surveyor</servlet-name>
         <jsp-file>/index.jsp</jsp-file>
-        <init-param>
-            <param-name>
-                dk.statsbiblioteket.doms.surveillance.surveyor.urls
-            </param-name>
-            <param-value>
-                http://localhost:8080/doms-surveillance-surveyor-0.0.1/logsurveyservice/getStatusSince/{date}
-            </param-value>
-        </init-param>
-        <init-param>
-            <param-name>
-                dk.statsbiblioteket.doms.surveillance.surveyor.ignoredMessagesFile
-            </param-name>
-            <param-value>
-                ignored.txt
-            </param-value>
-        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>Surveyor</servlet-name>
         <url-pattern>/surveyor/</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>
+            dk.statsbiblioteket.doms.webservices.ConfigContextListener
+        </listener-class>
+    </listener>
+
+    <context-param>
+        <param-name>
+            dk.statsbiblioteket.doms.surveillance.surveyor.urls
+        </param-name>
+        <param-value>
+            http://localhost:8080/surveillance-surveyor.war/logsurveyservice/getStatusSince/{date}
+        </param-value>
+    </context-param>
+    <context-param>
+        <param-name>
+            dk.statsbiblioteket.doms.surveillance.surveyor.ignoredMessagesFile
+        </param-name>
+        <param-value>
+            ignored.txt
+        </param-value>
+    </context-param>
+    <context-param>
+        <param-name>
+            dk.statsbiblioteket.doms.surveillance.surveyor.surveyorClass
+        </param-name>
+        <param-value>
+            dk.statsbiblioteket.doms.surveillance.surveyor.RestSurveyor
+        </param-value>
+    </context-param>
 </web-app>

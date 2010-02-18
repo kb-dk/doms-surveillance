@@ -29,16 +29,58 @@ package dk.statsbiblioteket.doms.surveillance.rest.log4jappender;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
 
+import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
+
+import java.util.Properties;
 
 /**
  * Log4J appender that registers log messages in a registry.
+ *
+ * The configuration parameter MaxNumberOfMessages will, if present, be
+ * delegated to the log registry by setting the parameter 
+ * <code>dk.statsbiblioteket.doms.surveillance.rest.log4jappender.numberOfMessages</code>
  */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
+        comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
-        state = QAInfo.State.QA_OK)
+        state = QAInfo.State.QA_NEEDED)
 public class LogRegistryAppender extends AppenderSkeleton {
+    /** Used to configure max number of messages. */
+    private int maxNumberOfMessages;
+
+    /** Create new instance. */
+    public LogRegistryAppender() {
+        super();
+    }
+
+    /**
+     * This method is called by the log4j framework by introspection if the
+     * maxNumberOfMessages property is set. The value may then be read by
+     * the log registry.
+     *
+     * @param maxNumberOfMessages Max number of messages to store in cache.
+     */
+    private void setMaxNumberOfMessages(int maxNumberOfMessages) {
+        Properties p = new Properties();
+        p.setProperty(LogRegistry.NUMBEROFMESSAGES_CONFIGURATION_PARAMETER,
+                      Integer.toString(maxNumberOfMessages));
+        ConfigCollection.addContextConfig(p);
+        this.maxNumberOfMessages = maxNumberOfMessages;
+    }
+
+    /**
+     * Used by the log4j introspection framework, this method will return the
+     * value of the parameter maxNumberOfMessages, as set in the log4j
+     * configuration file.
+     *
+     * @return Max number of messages. 0 if not initialized.
+     */
+    private int getMaxNumberOfMessages() {
+        return maxNumberOfMessages;
+    }
+
     /**
      * Cache the event, for later inspection by the surveyor.
      *

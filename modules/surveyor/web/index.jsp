@@ -32,10 +32,10 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         import="dk.statsbiblioteket.doms.surveillance.surveyor.CondensedStatus,
                 dk.statsbiblioteket.doms.surveillance.surveyor.CondensedStatusMessage,
                 dk.statsbiblioteket.doms.surveillance.surveyor.Surveyor,
+                dk.statsbiblioteket.doms.surveillance.surveyor.SurveyorFactory,
                 dk.statsbiblioteket.doms.surveillance.surveyor.SurveyorServletUtils,
                 java.net.URLEncoder,
-                java.util.Date,
-                java.util.Map" pageEncoding="UTF-8" %>
+                java.util.Date, java.util.Map" pageEncoding="UTF-8" %>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <title>Surveillance</title>
@@ -55,7 +55,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     <%
         // Note: The fault barrier in this case is the Tomcat 500 error page.
         // Initialize surveyor with configuration from servlet
-        Surveyor surveyor = SurveyorServletUtils.initializeSurveyor(config);
+        Surveyor surveyor = SurveyorFactory.getSurveyor();
 
         // Read and handle request parameters
         SurveyorServletUtils.handlePostedParameters(request, surveyor);

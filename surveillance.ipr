@@ -332,6 +332,16 @@
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/sbutils-0.4.6/jars" recursive="false" />
     </library>
+    <library name="domsutil-0.0.2#SNAPSHOT">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/domsutil-0.0.2#SNAPSHOT/jars" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.2#SNAPSHOT/apidocs/webservice-common-apidocs.zip!/" />
+      </JAVADOC>
+      <SOURCES />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/domsutil-0.0.2#SNAPSHOT/jars" recursive="false" />
+    </library>
   </component>
 </project>
 
