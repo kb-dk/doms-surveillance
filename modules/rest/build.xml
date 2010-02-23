@@ -44,5 +44,6 @@
         <include name="servlet-api-2.5-apache-tomcat-6.0.20"/>
         <include name="log4j-1.2.15"/>
         <include name="sbutils-0.4.6"/>
+        <include name="domsutil-0.0.2#SNAPSHOT"/>
     </dirset>
 </project>

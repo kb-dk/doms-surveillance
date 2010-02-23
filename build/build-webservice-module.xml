@@ -26,6 +26,7 @@
   -->
 
 <project name="webservice">
+    <property name="wsdl.dir" value=""/>
 
     <import file="build-module.xml"/>
 
