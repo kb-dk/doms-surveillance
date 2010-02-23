@@ -27,16 +27,14 @@
 
 <project name="surveillance-status" basedir=".">
     <property name="global.dir" value="${basedir}/../.."/>
-    <property name="jarfile"
-              value="surveillance-status.jar"/>
 
     <!--Contain the normal build tasks, including jar-->
-    <import  file="${global.dir}/build/build-common.xml"/>
+    <import  file="${global.dir}/build/build-module.xml"/>
 
     <!--Project libs used by this module-->
-    <fileset id="project.libs" dir="${global.dir}/lib">
-        <include name="sbutil-0.4.6/jars/**"/>
-    </fileset>
+    <dirset id="project.libs" dir="${global.dir}/lib">
+        <include name="sbutils-0.4.6"/>
+    </dirset>
 </project>
 
 

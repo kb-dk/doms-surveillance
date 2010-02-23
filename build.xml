@@ -29,6 +29,6 @@
     <property file="build.properties"/>
     <property name="global.dir" value="${basedir}"/>
 
-    <import file="build/build-dist.xml"/>
+    <import file="build/build-project.xml"/>
     <import file="qascan.xml"/>
 </project>

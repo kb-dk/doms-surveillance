@@ -27,11 +27,9 @@
 
 <project name="surveillance-rest" basedir=".">
     <property name="global.dir" value="${basedir}/../.."/>
-    <property name="jarfile"
-              value="surveillance-rest.jar"/>
 
     <!--Contain the normal build tasks, including jar-->
-    <import file="${global.dir}/build/build-common.xml"/>
+    <import file="${global.dir}/build/build-module.xml"/>
 
     <!--Module dependencies-->
     <dirset  id="module.dependencies" dir="${global.dir}/modules/">
@@ -39,12 +37,12 @@
     </dirset>
 
     <!--Project libs used by this module-->
-    <fileset id="project.libs" dir="${global.dir}/lib">
-        <include name="jsr311-api-1.0/jars/**"/>
-        <include name="jersey-1.1.4/jars/**"/>
-        <include name="commons-logging-1.1.1/jars/**"/>
-        <include name="servlet-api-2.5-apache-tomcat-6.0.20/jars/**"/>
-        <include name="log4j-1.2.15/jars/**"/>
-        <include name="sbutil-0.4.6/jars/**"/>
-    </fileset>
+    <dirset id="project.libs" dir="${global.dir}/lib">
+        <include name="jsr311-api-1.0"/>
+        <include name="jersey-1.1.4"/>
+        <include name="commons-logging-1.1.1"/>
+        <include name="servlet-api-2.5-apache-tomcat-6.0.20"/>
+        <include name="log4j-1.2.15"/>
+        <include name="sbutils-0.4.6"/>
+    </dirset>
 </project>

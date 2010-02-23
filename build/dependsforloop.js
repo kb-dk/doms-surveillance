@@ -1,10 +1,10 @@
 /*
- * Doms build framework version 1.0.5
+ * Doms build framework version 1.0.7#SNAPSHOT
  *
- * $Id: dependsforloop.js 252 2010-02-16 12:01:55Z blekinge $
- * $Revision: 252 $
- * $Date: 2010-02-16 13:01:55 +0100 (Tue, 16 Feb 2010) $
- * $Author: blekinge $
+ * $Id$
+ * $Revision$
+ * $Date$
+ * $Author$
  *
  * The DOMS project.
  * Copyright (C) 2007-2010  The State and University Library
@@ -60,7 +60,8 @@ for (var i = 0; i < dirs.length; i++) {
     subdir = new File(basedir, dirs[i])
     echo.setMessage("recursing into " + subdir);
     echo.execute();
-    if (contains(subdir.list(),"build.xml")){
+    list = subdir.list(); //TODO possible race condition
+    if (list != null && contains(list,"build.xml")){
         var anttask = project.createTask("ant");
         anttask.setDir(subdir);
         anttask.setTarget(target);

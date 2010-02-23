@@ -33,8 +33,7 @@
               value="surveillance-surveyor.jar"/>
 
     <!--Contain the normal build tasks, including war-->
-    <import  file="${global.dir}/build/build-webservice.xml"/>
-    <target  name="_postdist" depends="war"/>
+    <import  file="${global.dir}/build/build-webservice-module.xml"/>
 
     <!--Module dependencies-->
     <dirset  id="module.dependencies" dir="${global.dir}/modules/">
@@ -42,10 +41,11 @@
     </dirset>
 
     <!--Project libs used by this module-->
-    <fileset id="project.libs" dir="${global.dir}/lib">
-        <include name="jsr311-api-1.0/jars/**"/>
-        <include name="jersey-1.1.4/jars/**"/>
-        <include name="commons-logging-1.1.1/jars/**"/>
-        <include name="servlet-api-2.5-apache-tomcat-6.0.20/jars/**"/>
-    </fileset>
+    <dirset id="project.libs" dir="${global.dir}/lib">
+        <include name="sbutils-0.4.6"/>
+        <include name="jsr311-api-1.0"/>
+        <include name="jersey-1.1.4"/>
+        <include name="commons-logging-1.1.1"/>
+        <include name="servlet-api-2.5-apache-tomcat-6.0.20"/>
+    </dirset>
 </project>
