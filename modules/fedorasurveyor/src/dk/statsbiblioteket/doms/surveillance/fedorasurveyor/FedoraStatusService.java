@@ -64,7 +64,7 @@ public class FedoraStatusService implements Surveyable {
 
     /** Prefix for parameter names. */
     private static final String PARAMETER_PACKAGENAME_PREFIX
-            = "dk.statsbiblioteket.doms.surveyor.fedorasurveyor";
+            = "dk.statsbiblioteket.doms.surveillance.fedorasurveyor";
 
     /** Parameter name for Fedora URL. */
     private static final String FEDORA_URL_PARAMETER
@@ -79,13 +79,13 @@ public class FedoraStatusService implements Surveyable {
             = PARAMETER_PACKAGENAME_PREFIX + ".fedoraPassword";
 
     /** Read parameter for Fedora URL. */
-    private String fedoraUrl;
+    private String fedoraUrl = "http://localhost:8080/fedora";
 
     /** Read parameter for Fedora user. */
-    private String fedoraUser;
+    private String fedoraUser = "fedoraAdmin";
 
     /** Read parameter for Fedora password. */
-    private String fedoraPassword;
+    private String fedoraPassword = "fedoraAdminPass";
 
     /**
      * Behaves exactly like getStatus().
