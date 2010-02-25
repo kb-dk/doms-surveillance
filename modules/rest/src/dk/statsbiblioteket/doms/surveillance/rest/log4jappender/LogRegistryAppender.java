@@ -38,7 +38,7 @@ import java.util.Properties;
  * Log4J appender that registers log messages in a registry.
  *
  * The configuration parameter MaxNumberOfMessages will, if present, be
- * delegated to the log registry by setting the parameter 
+ * delegated to the log registry by setting the parameter
  * <code>dk.statsbiblioteket.doms.surveillance.rest.log4jappender.numberOfMessages</code>
  */
 @QAInfo(author = "kfc",
@@ -87,12 +87,8 @@ public class LogRegistryAppender extends AppenderSkeleton {
      * @param event The event to cache.
      */
     protected void append(LoggingEvent event) {
+        LogRegistryFactory.getLogRegistry().setName(getName());
         LogRegistryFactory.getLogRegistry().registerMessage(event);
-    }
-
-    /** Set the name of this Appender. */
-    public void setName(String name) {
-        LogRegistryFactory.getLogRegistry().setName(name);
     }
 
     /**

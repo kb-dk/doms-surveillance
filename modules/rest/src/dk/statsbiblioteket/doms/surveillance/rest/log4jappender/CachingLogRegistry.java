@@ -62,7 +62,7 @@ public class CachingLogRegistry implements LogRegistry {
             = new TreeMap<Long, Collection<StatusMessage>>();
 
     /** The name of what is being surveyed. */
-    private String name;
+    private String name = "";
 
     /** The logger for this class. */
     private Log log = LogFactory.getLog(getClass());

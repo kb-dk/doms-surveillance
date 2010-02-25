@@ -26,6 +26,12 @@
   -->
 
 <web-app>
+    <listener>
+        <listener-class>
+            dk.statsbiblioteket.doms.webservices.ConfigContextListener
+        </listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>Fedora Real Time surveyor</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer
@@ -41,11 +47,20 @@
         <url-pattern>/fedorarealtime/*</url-pattern>
     </servlet-mapping>
 
-    <listener>
-        <listener-class>
-            dk.statsbiblioteket.doms.webservices.ConfigContextListener
-        </listener-class>
-    </listener>
+    <servlet>
+        <servlet-name>Log Survey Service</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer
+        </servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>dk.statsbiblioteket.doms.surveillance.rest
+            </param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Log Survey Service</servlet-name>
+        <url-pattern>/logsurveyservice/*</url-pattern>
+    </servlet-mapping>
 
     <context-param>
         <param-name>

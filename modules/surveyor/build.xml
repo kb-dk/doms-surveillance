@@ -27,17 +27,14 @@
 
 <project name="surveillance-surveyor" basedir=".">
     <property name="global.dir" value="${basedir}/../.."/>
-    <property name="warfilename"
-              value="surveillance-surveyor.war"/>
-    <property name="jarfile"
-              value="surveillance-surveyor.jar"/>
 
     <!--Contain the normal build tasks, including war-->
-    <import  file="${global.dir}/build/build-webservice-module.xml"/>
+    <import file="${global.dir}/build/build-webservice-module.xml"/>
 
     <!--Module dependencies-->
-    <dirset  id="module.dependencies" dir="${global.dir}/modules/">
+    <dirset id="module.dependencies" dir="${global.dir}/modules/">
         <include name="status"/>
+        <include name="rest"/>
     </dirset>
 
     <!--Project libs used by this module-->
