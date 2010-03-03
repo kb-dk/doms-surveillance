@@ -207,6 +207,7 @@
         <attribute name="warfilename"/>
         <attribute name="webxml" default="web/WEB-INF/web.xml"/>
         <attribute name="web-inf"/>
+        <attribute name="web-content"/>
         <attribute name="wsdl.dir" default=""/>
         <attribute name="jars.to.pack"/>
         <sequential>
@@ -218,6 +219,7 @@
             <war destfile="dist/@{warfilename}"
                  webxml="@{webxml}" duplicate="fail">
 <!--                <classes dir="classes"/>-->
+                <fileset refid="@{web-content}"/>
                 <lib dir="libtemp"/>
                 <lib dir="dist">
                     <include name="*.jar"/>
