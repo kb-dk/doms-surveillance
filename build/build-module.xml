@@ -1,6 +1,4 @@
 <!--
-  ~ Doms build framework version 1.0.7#SNAPSHOT
-  ~
   ~ $Id$
   ~ $Revision$
   ~ $Date$
@@ -130,20 +128,22 @@
     </target>
 
 
-    <target name="-copyLibsForDist" depends="-copyLicensesForDist">
-        <!--
+    <target name="_copyLibsForDist" depends="_copyLicensesForDist">
+
                 <convertPath dirset="project.libs"
                              postfix="/**/*"
                              newfileset="project.libs.all"/>
-        -->
 
-
+<!--
+        <property name="project.libs.property" refid="project.libs"/>
+        <echo message="${project.libs.property}"/>
+-->
         <copy todir="${global.dir}/temp/usedlibs" overwrite="false">
-            <dirset refid="project.libs"/>
+            <fileset refid="project.libs.all"/>
         </copy>
     </target>
 
-    <target name="-copyLicensesForDist">
+    <target name="_copyLicensesForDist">
         <convertPath dirset="project.libs"
                      postfix="/license/*"
                      newfileset="project.libs.license"/>

@@ -1,6 +1,4 @@
 <!--
-  ~ Doms build framework version 1.0.7#SNAPSHOT
-  ~
   ~ $Id$
   ~ $Revision$
   ~ $Date$
@@ -107,7 +105,7 @@
 
         <dependsloop target="all" dependencies="project.modules"/>
         <!--Collect the used project libs from all the ordinary modules -->
-        <dependsloop target="-copyLibsForDist" dependencies="project.modules"/>
+        <dependsloop target="_copyLibsForDist" dependencies="project.modules"/>
 
         <!--The list of produced jars-->
         <convertPath dirset="project.modules"
@@ -155,10 +153,12 @@
             </zipfileset>
         </zip>
 
+<!--
         <delete dir="temp/libtemp"/>
         <delete dir="temp/licensestemp"/>
         <delete dir="temp/usedlibs"/>
         <delete dir="temp/wartemp"/>
+-->
 
     </target>
 
