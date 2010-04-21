@@ -1,8 +1,10 @@
 /*
- * $Id$
- * $Revision$
- * $Date$
- * $Author$
+ * Doms build framework version 1.0.9
+ *
+ * $Id: dependsforloop.js 279 2010-02-18 14:19:12Z blekinge $
+ * $Revision: 279 $
+ * $Date: 2010-02-18 15:19:12 +0100 (Thu, 18 Feb 2010) $
+ * $Author: blekinge $
  *
  * The DOMS project.
  * Copyright (C) 2007-2010  The State and University Library
