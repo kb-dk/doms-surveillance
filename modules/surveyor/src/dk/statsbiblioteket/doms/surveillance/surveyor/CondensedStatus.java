@@ -24,9 +24,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
-import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
+import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
 import java.util.Collection;

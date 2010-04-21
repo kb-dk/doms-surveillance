@@ -24,9 +24,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
-import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
+import dk.statsbiblioteket.doms.domsutil.surveyable.Severity;
+import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
 /** A datastructure for status messages. This datastructure condenses status
@@ -40,7 +42,7 @@ public class CondensedStatusMessage {
     private String message;
 
     /** The severity of the message. */
-    private StatusMessage.Severity severity;
+    private Severity severity;
 
     /** The first time this message occured. */
     private long firstTime;
@@ -86,7 +88,7 @@ public class CondensedStatusMessage {
      *
      * @return The severity.
      */
-    public StatusMessage.Severity getSeverity() {
+    public Severity getSeverity() {
         return severity;
     }
 

@@ -24,14 +24,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
 import com.sun.jersey.api.client.Client;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import dk.statsbiblioteket.doms.surveillance.status.Status;
-import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
+import dk.statsbiblioteket.doms.domsutil.surveyable.Severity;
+import dk.statsbiblioteket.doms.domsutil.surveyable.Status;
+import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
 import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
@@ -280,19 +282,28 @@ public class RestSurveyor implements Surveyor {
             log.debug("REST status query for URL '" + queryUrl + "'");
             restStatus = restClient.resource(queryUrl).get(Status.class);
         } catch (Exception e) {
+            Status status = new Status();
+            StatusMessage statusMessage = new StatusMessage();
+
             log.debug(
                     "Cannot get status for REST status URL '" + queryUrl + "'",
                     e);
             //On exceptions, create a status with information about trouble
-            String name;
             if (currentStatus.get(statusUrl) != null) {
-                name = currentStatus.get(statusUrl).getName();
+                status.setName(currentStatus.get(statusUrl).getName());
             } else {
-                name = statusUrl;
+                status.setName(statusUrl);
             }
-            restStatus = new Status(name, Arrays.asList(new StatusMessage(
-                    "Unable to communicate with service: " + e.getMessage(),
-                    StatusMessage.Severity.RED, timestamp, false)));
+
+            statusMessage.setMessage("Unable to communicate with service: "
+                    + e.getMessage());
+            statusMessage.setSeverity(Severity.RED);
+            statusMessage.setTime(timestamp);
+            statusMessage.setLogMessage(false);
+
+            status.getMessages().addAll(Arrays.asList(statusMessage));
+
+            restStatus = status;
         }
         return restStatus;
     }

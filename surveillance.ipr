@@ -18,15 +18,7 @@
       <maximumStackSize value="32" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/modules/rest/build.xml">
-      <additionalClassPath />
-      <antReference projectDefault="true" />
-      <customJdkName value="" />
-      <maximumHeapSize value="128" />
-      <maximumStackSize value="32" />
-      <properties />
-    </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/modules/status/build.xml">
+    <buildFile url="file://$PROJECT_DIR$/modules/log4jappender/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
@@ -316,8 +308,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" filepath="$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/modules/rest/rest.iml" filepath="$PROJECT_DIR$/modules/rest/rest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/modules/status/status.iml" filepath="$PROJECT_DIR$/modules/status/status.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/rest/log4jappender.iml" filepath="$PROJECT_DIR$/modules/rest/log4jappender.iml" />
       <module fileurl="file://$PROJECT_DIR$/surveillance.iml" filepath="$PROJECT_DIR$/surveillance.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/surveyor/surveyor.iml" filepath="$PROJECT_DIR$/modules/surveyor/surveyor.iml" />
     </modules>
@@ -460,15 +451,19 @@
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/sbutils-0.4.6/jars" recursive="false" />
     </library>
-    <library name="domsutil-0.0.2#SNAPSHOT">
+    <library name="domsutil-0.0.3">
       <CLASSES>
-        <root url="file://$PROJECT_DIR$/lib/domsutil-0.0.2#SNAPSHOT/jars" />
+        <root url="file://$PROJECT_DIR$/lib/domsutil-0.0.3/jars" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.2#SNAPSHOT/apidocs/webservice-common-apidocs.zip!/" />
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.3/apidocs/domsutil-0.0.3-doc.zip!/domsutil-0.0.3" />
       </JAVADOC>
-      <SOURCES />
-      <jarDirectory url="file://$PROJECT_DIR$/lib/domsutil-0.0.2#SNAPSHOT/jars" recursive="false" />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.3/src/domsutil-0.0.3-src.zip!/domsutil-0.0.3/modules/surveyable/surveyable_impl/src" />
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.3/src/domsutil-0.0.3-src.zip!/domsutil-0.0.3/modules/surveyable/surveyable_interface/src" />
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.3/src/domsutil-0.0.3-src.zip!/domsutil-0.0.3/modules/webservice-common/src" />
+      </SOURCES>
+      <jarDirectory url="file://$PROJECT_DIR$/lib/domsutil-0.0.3/jars" recursive="false" />
     </library>
   </component>
 </project>

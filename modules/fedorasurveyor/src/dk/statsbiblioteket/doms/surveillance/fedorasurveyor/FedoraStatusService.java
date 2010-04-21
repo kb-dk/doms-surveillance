@@ -24,6 +24,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package dk.statsbiblioteket.doms.surveillance.fedorasurveyor;
 
 import fedora.client.FedoraClient;
@@ -31,9 +32,10 @@ import fedora.server.types.gen.RepositoryInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import dk.statsbiblioteket.doms.surveillance.status.Status;
-import dk.statsbiblioteket.doms.surveillance.status.StatusMessage;
-import dk.statsbiblioteket.doms.surveillance.status.Surveyable;
+import dk.statsbiblioteket.doms.domsutil.surveyable.Severity;
+import dk.statsbiblioteket.doms.domsutil.surveyable.Status;
+import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
+import dk.statsbiblioteket.doms.domsutil.surveyable.Surveyable;
 import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
@@ -121,15 +123,19 @@ public class FedoraStatusService implements Surveyable {
         try {
             statusMessage = getFedoraStatus();
         } catch (Exception e) {
-            statusMessage = new StatusMessage(
-                    "Unable to communicate with Fedora: "
-                            + e.getClass().getName() + ": " + e.getMessage(),
-                    StatusMessage.Severity.RED, System.currentTimeMillis(),
-                    false);
+            statusMessage = new StatusMessage();
+            statusMessage.setMessage("Unable to communicate with Fedora: "
+                            + e.getClass().getName() + ": " + e.getMessage());
+            statusMessage.setSeverity(Severity.RED);
+            statusMessage.setTime(System.currentTimeMillis());
+            statusMessage.setLogMessage(false);
         }
         list.add(statusMessage);
 
-        return new Status(APPLICATION_NAME, list);
+        Status status = new Status();
+        status.setName(APPLICATION_NAME);
+        status.getMessages().addAll(list);
+        return status;
     }
 
     /**
@@ -189,9 +195,12 @@ public class FedoraStatusService implements Surveyable {
                 .getObjectProfile(description.getSamplePID(), null);
         //Done in order to provoke exception on trouble
         new URL(description.getSampleSearchURL()).openConnection();
-        return new StatusMessage(descriptionToStatus(description),
-                                 StatusMessage.Severity.GREEN,
-                                 System.currentTimeMillis(), false);
+        StatusMessage statusMessage = new StatusMessage();
+        statusMessage.setMessage(descriptionToStatus(description));
+        statusMessage.setSeverity(Severity.GREEN);
+        statusMessage.setTime(System.currentTimeMillis());
+        statusMessage.setLogMessage(false);
+        return statusMessage;
     }
 
     /**
