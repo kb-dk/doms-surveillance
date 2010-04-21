@@ -28,7 +28,7 @@
 <project name="webservice">
     <import file="build-module.xml"/>
 
-    <property name="wsdl.dir" value=""/>
+    <property name="wsdl.dir" value="data/wsdl"/>
 
     <fileset id="webinf" dir="${basedir}/web/WEB-INF">
     </fileset>
