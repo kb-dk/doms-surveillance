@@ -31,7 +31,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
                      debug="false">
     <appender name="LogRegistry"
-              class="dk.statsbiblioteket.doms.surveillance.rest.log4jappender.LogRegistryAppender">
+              class="dk.statsbiblioteket.doms.surveillance.log4jappender.LogRegistryAppender">
         <param name="Threshold" value="INFO"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%-5p [%t] [%d] [%c] %m%n"/>
