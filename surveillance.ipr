@@ -308,7 +308,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" filepath="$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/modules/rest/log4jappender.iml" filepath="$PROJECT_DIR$/modules/rest/log4jappender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/log4jappender/log4jappender.iml" filepath="$PROJECT_DIR$/modules/log4jappender/log4jappender.iml" />
       <module fileurl="file://$PROJECT_DIR$/surveillance.iml" filepath="$PROJECT_DIR$/surveillance.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/surveyor/surveyor.iml" filepath="$PROJECT_DIR$/modules/surveyor/surveyor.iml" />
     </modules>
