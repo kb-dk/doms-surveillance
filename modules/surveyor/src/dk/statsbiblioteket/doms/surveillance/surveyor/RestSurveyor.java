@@ -104,10 +104,13 @@ public class RestSurveyor implements Surveyor {
             = new HashMap<String, Set<String>>();
 
     /** File containing ignored strings */
-    private File ignoredMessagesFile = new File("ignored.txt");
+    private File ignoredMessagesFile = new File(DEFAULT_IGNORED_MESSAGES_PATH);
 
     /** Logger for this class. */
     private final Log log = LogFactory.getLog(Surveyor.class);
+
+    /** Default configuration for ignored messages file. */
+    private static final String DEFAULT_IGNORED_MESSAGES_PATH = "ignored.txt";
 
     /** Initialise this surveyor. */
     public RestSurveyor() {
@@ -150,9 +153,18 @@ public class RestSurveyor implements Surveyor {
 
         //Initialize file with list of ignored messages.
         if (ignoredMessagesPath == null || ignoredMessagesPath.equals("")) {
-            ignoredMessagesPath = "ignored.txt";
+            ignoredMessagesPath = DEFAULT_IGNORED_MESSAGES_PATH;
         }
         ignoredMessagesFile = new File(ignoredMessagesPath);
+        if (!ignoredMessagesFile.getAbsoluteFile().getParentFile().isDirectory() ||
+                (ignoredMessagesFile.exists() && !ignoredMessagesFile.isFile())) {
+            log.warn("Configuration for file of ignored messages '"
+                    + ignoredMessagesPath
+                    + "' does not denote a valid file."
+                    + " Falling back to default.");
+            ignoredMessagesPath = DEFAULT_IGNORED_MESSAGES_PATH;
+            ignoredMessagesFile = new File(ignoredMessagesPath);
+        }
         if (!this.ignoredMessagesFile.equals(ignoredMessagesFile)) {
             log.info("Setting file with list of ignored messages to '"
                     + ignoredMessagesFile + "'");
