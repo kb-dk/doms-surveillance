@@ -52,7 +52,7 @@ public class SurveyorFactory {
 
     /** Default implementation class. */
     private static final String DEFAULT_IMPLEMENTATION
-            = RestSurveyor.class.getName();
+            = WebServiceSurveyor.class.getName();
 
     /** Logger for this class. */
     private static Log log = LogFactory.getLog(SurveyorFactory.class);

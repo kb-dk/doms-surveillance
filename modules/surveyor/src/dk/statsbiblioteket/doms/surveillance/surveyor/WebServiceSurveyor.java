@@ -34,9 +34,12 @@ import org.apache.commons.logging.LogFactory;
 import dk.statsbiblioteket.doms.domsutil.surveyable.Severity;
 import dk.statsbiblioteket.doms.domsutil.surveyable.Status;
 import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
+import dk.statsbiblioteket.doms.domsutil.surveyable.Surveyable;
+import dk.statsbiblioteket.doms.domsutil.surveyable.SurveyableService;
 import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
+import javax.xml.namespace.QName;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -44,6 +47,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -57,11 +61,13 @@ import java.util.Set;
  * A surveyor that calls specified REST URLs to get status.
  *
  * This is configurable with parameters:
- * <code>dk.statsbiblioteket.doms.surveillance.surveyor.urls</code>
+ * <code>dk.statsbiblioteket.doms.surveillance.surveyor.restUrls</code>
+ * defining list of REST status URLs to monitor (default is empty), and
+ * <code>dk.statsbiblioteket.doms.surveillance.surveyor.soapUrls</code>
  * defining list of REST status URLs to monitor (default is empty), and
  * <code>dk.statsbiblioteket.doms.surveillance.surveyor.ignoredMessagesFile</code>
  * defining the file used to persist list of ignored messages (default is
- * "ignored.txt"). 
+ * "ignored.txt").
  *
  * This class is synchronized on all public methods.
  */
@@ -70,14 +76,18 @@ import java.util.Set;
         comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
         state = QAInfo.State.QA_NEEDED)
-public class RestSurveyor implements Surveyor {
+public class WebServiceSurveyor implements Surveyor {
     /** The package prefix for parameter names. */
     private static final String CONFIGURATION_PACKAGE_NAME
             = "dk.statsbiblioteket.doms.surveillance.surveyor";
 
     /** Parameter for URLS for surveyor. */
-    public static final String URLS_CONFIGURATION_PARAMETER
-            = CONFIGURATION_PACKAGE_NAME + ".urls";
+    public static final String REST_URLS_CONFIGURATION_PARAMETER
+            = CONFIGURATION_PACKAGE_NAME + ".restUrls";
+
+    /** Parameter for URLS for surveyor. */
+    public static final String SOAP_URLS_CONFIGURATION_PARAMETER
+            = CONFIGURATION_PACKAGE_NAME + ".soapUrls";
 
     /** Parameter for file with ignored messages for surveyor. */
     public static final String IGNOREFILE_CONFIGURATION_PARAMETER
@@ -96,6 +106,9 @@ public class RestSurveyor implements Surveyor {
     /** List of REST URLs to query. */
     private List<String> restStatusUrls = new ArrayList<String>();
 
+    /** List of SOAP URLs to query. */
+    private List<String> soapStatusUrls = new ArrayList<String>();
+
     /**
      * Map of messages to ignore. Map from application name to set of ignored
      * messages.
@@ -111,9 +124,12 @@ public class RestSurveyor implements Surveyor {
 
     /** Default configuration for ignored messages file. */
     private static final String DEFAULT_IGNORED_MESSAGES_PATH = "ignored.txt";
+    private static final QName SERVICE_QNAME = new QName(
+            "http://surveyable.domsutil.doms.statsbiblioteket.dk/",
+            "SurveyableService");
 
     /** Initialise this surveyor. */
-    public RestSurveyor() {
+    public WebServiceSurveyor() {
         log.info("Starting surveyor");
         readConfiguration();
     }
@@ -124,7 +140,8 @@ public class RestSurveyor implements Surveyor {
      * This method will read the configuration values, and do initialization
      * based on this.
      *
-     * @see #URLS_CONFIGURATION_PARAMETER
+     * @see #REST_URLS_CONFIGURATION_PARAMETER
+     * @see #SOAP_URLS_CONFIGURATION_PARAMETER
      * @see #IGNOREFILE_CONFIGURATION_PARAMETER
      */
     private synchronized void readConfiguration() {
@@ -133,13 +150,17 @@ public class RestSurveyor implements Surveyor {
         //Read configuration
         String restUrlParameter
                 = ConfigCollection.getProperties().getProperty(
-                URLS_CONFIGURATION_PARAMETER);
+                REST_URLS_CONFIGURATION_PARAMETER);
+        String soapUrlParameter
+                = ConfigCollection.getProperties().getProperty(
+                SOAP_URLS_CONFIGURATION_PARAMETER);
         String ignoredMessagesPath = ConfigCollection.getProperties()
                 .getProperty(IGNOREFILE_CONFIGURATION_PARAMETER);
         List<String> restStatusUrls;
+        List<String> soapStatusUrls;
         File ignoredMessagesFile;
 
-        //Initialize status urls
+        //Initialize REST status urls
         if (restUrlParameter == null || restUrlParameter.equals("")) {
             restStatusUrls = Collections.emptyList();
         } else {
@@ -149,6 +170,18 @@ public class RestSurveyor implements Surveyor {
             log.info("Setting list of surveyed REST status URLs to '"
                     + restStatusUrls + "'");
             this.restStatusUrls = restStatusUrls;
+        }
+
+        //Initialize SOAP status urls
+        if (soapUrlParameter == null || soapUrlParameter.equals("")) {
+            soapStatusUrls = Collections.emptyList();
+        } else {
+            soapStatusUrls = Arrays.asList(soapUrlParameter.split(";"));
+        }
+        if (!soapStatusUrls.equals(this.soapStatusUrls)) {
+            log.info("Setting list of surveyed SOAP status URLs to '"
+                    + soapStatusUrls + "'");
+            this.soapStatusUrls = soapStatusUrls;
         }
 
         //Initialize file with list of ignored messages.
@@ -234,31 +267,64 @@ public class RestSurveyor implements Surveyor {
             }
             //Get status from REST
             Status restStatus = getStatusFromRest(c, statusUrl, newest);
-            //Add condensed status to result if not already there
-            CondensedStatus status = result.get(restStatus.getName());
-            if (status == null) {
-                status = new CondensedStatus(restStatus.getName());
-                result.put(restStatus.getName(), status);
-            }
-            //Filter status by list of ignored messages
-            Set<String> ignored = ignoredMessages.get(restStatus.getName());
-            for (StatusMessage message : restStatus.getMessages()) {
-                if (ignored == null
-                        || !ignored.contains(message.getMessage())) {
-                    status.addMessage(message);
-                }
-            }
-            //Remember the newest time of messages
-            for (StatusMessage message : restStatus.getMessages()) {
-                if (newest < message.getTime()) {
-                    newestStatusTime.put(statusUrl, message.getTime());
-                }
-            }
+            //Update result with status
+            updateResultWithStatus(result, statusUrl, newest, restStatus);
         }
+
+        //Query SOAP-URLS for more messages
+        for (String statusUrl : soapStatusUrls) {
+            //Find time of newest currently known log message from that URL
+            Long newest = newestStatusTime.get(statusUrl);
+            if (newest == null) {
+                newest = 0L;
+            }
+            //Get status from SOAP
+            Status soapStatus = getStatusFromSoap(statusUrl, newest);
+            //Update result with status
+            updateResultWithStatus(result, statusUrl, newest, soapStatus);
+        }
+
         //Remember result
         currentStatus = result;
         log.trace("Exit getStatusMap()");
         return result;
+    }
+
+    /**
+     * Update the status result map with information from a status query.
+     * Also updates the map of newest status timestamps.
+     *
+     * @param resultToUpdate The map to update
+     * @param queryStatusUrl The query URL
+     * @param queryDate The query date
+     * @param resultStatus The query results
+     */
+    private void updateResultWithStatus(
+            Map<String, CondensedStatus> resultToUpdate, String queryStatusUrl,
+            Long queryDate, Status resultStatus) {
+        log.trace("updateResultWithStatus(" + resultToUpdate + ", '"
+                + queryStatusUrl + "', " + queryDate + ", " + resultStatus
+                + ")");
+        //Add condensed status to result if not already there
+        CondensedStatus status = resultToUpdate.get(resultStatus.getName());
+        if (status == null) {
+            status = new CondensedStatus(resultStatus.getName());
+            resultToUpdate.put(resultStatus.getName(), status);
+        }
+        //Filter status by list of ignored messages
+        Set<String> ignored = ignoredMessages.get(resultStatus.getName());
+        for (StatusMessage message : resultStatus.getMessages()) {
+            if (ignored == null
+                    || !ignored.contains(message.getMessage())) {
+                status.addMessage(message);
+            }
+        }
+        //Remember the newest time of messages
+        for (StatusMessage message : resultStatus.getMessages()) {
+            if (queryDate < message.getTime()) {
+                newestStatusTime.put(queryStatusUrl, message.getTime());
+            }
+        }
     }
 
     /**
@@ -318,6 +384,58 @@ public class RestSurveyor implements Surveyor {
             restStatus = status;
         }
         return restStatus;
+    }
+
+    /**
+     * Get status from a REST URL.
+     * This method serves as fault barrier for REST calls. All exceptions are
+     * caught and turned into a status message.
+     *
+     * @param statusUrl  The URL to query for status. Any occurence of "{date}"
+     *                   will be replaced with the given timestamp, to allow
+     *                   querying only for messages after a given time.
+     * @param timestamp  Date to insert in URL in place of "{date}". Also used
+     *                   as timestamp for error messages.
+     * @return The status returned from the query URL, or a status reporting the
+     *         error in any other case. Never null.
+     */
+    private Status getStatusFromSoap(String statusUrl, Long timestamp) {
+        log.trace("Enter getStatusFromSoap('" + statusUrl + "','" + timestamp
+                + "')");
+        Status soapStatus;
+
+        //Query SOAP
+        try {
+            SurveyableService surveyableService = new SurveyableService(
+                    new URL(statusUrl), SERVICE_QNAME);
+            Surveyable surveyable = surveyableService.getSurveyable();
+            log.debug("SOAP status query for URL '" + statusUrl + "'");
+            soapStatus = surveyable.getStatusSince(timestamp);
+        } catch (Exception e) {
+            Status status = new Status();
+            StatusMessage statusMessage = new StatusMessage();
+
+            log.debug(
+                    "Cannot get status for SOAP status URL '" + statusUrl + "'",
+                    e);
+            //On exceptions, create a status with information about trouble
+            if (currentStatus.get(statusUrl) != null) {
+                status.setName(currentStatus.get(statusUrl).getName());
+            } else {
+                status.setName(statusUrl);
+            }
+
+            statusMessage.setMessage("Unable to communicate with service: "
+                    + e.getMessage());
+            statusMessage.setSeverity(Severity.RED);
+            statusMessage.setTime(timestamp);
+            statusMessage.setLogMessage(false);
+
+            status.getMessages().addAll(Arrays.asList(statusMessage));
+
+            soapStatus = status;
+        }
+        return soapStatus;
     }
 
     /**

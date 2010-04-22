@@ -58,11 +58,17 @@
 
     <context-param>
         <param-name>
-            dk.statsbiblioteket.doms.surveillance.surveyor.urls
+            dk.statsbiblioteket.doms.surveillance.surveyor.restUrls
         </param-name>
         <param-value>
             http://localhost:8080/surveillance-surveyor/logsurveyservice/getStatusSince/{date}
         </param-value>
+    </context-param>
+    <context-param>
+        <param-name>
+            dk.statsbiblioteket.doms.surveillance.surveyor.soapUrls
+        </param-name>
+        <param-value/>
     </context-param>
     <context-param>
         <param-name>
@@ -77,7 +83,7 @@
             dk.statsbiblioteket.doms.surveillance.surveyor.surveyorClass
         </param-name>
         <param-value>
-            dk.statsbiblioteket.doms.surveillance.surveyor.RestSurveyor
+            dk.statsbiblioteket.doms.surveillance.surveyor.WebServiceSurveyor
         </param-value>
     </context-param>
 </web-app>
