@@ -86,4 +86,16 @@
             dk.statsbiblioteket.doms.surveillance.surveyor.WebServiceSurveyor
         </param-value>
     </context-param>
+
+    <context-param>
+        <description>The class that will be exposed for surveillance
+        </description>
+        <param-name>
+            dk.statsbiblioteket.doms.domsutil.surveyable.surveyables
+        </param-name>
+        <param-value>
+            dk.statsbiblioteket.doms.surveillance.surveyor.SurveyorSurveyable
+        </param-value>
+    </context-param>
+
 </web-app>
