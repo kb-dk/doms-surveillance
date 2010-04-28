@@ -33,21 +33,6 @@
     </listener>
 
     <servlet>
-        <servlet-name>Fedora Real Time surveyor</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer
-        </servlet-class>
-        <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>dk.statsbiblioteket.doms.surveillance.fedorasurveyor
-            </param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Fedora Real Time surveyor</servlet-name>
-        <url-pattern>/fedorarealtime/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>Surveyable Service</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer
         </servlet-class>
@@ -61,6 +46,17 @@
         <servlet-name>Surveyable Service</servlet-name>
         <url-pattern>/surveyable/*</url-pattern>
     </servlet-mapping>
+
+    <context-param>
+        <description>The class that will be exposed for surveillance
+        </description>
+        <param-name>
+            dk.statsbiblioteket.doms.domsutil.surveyable.surveyables
+        </param-name>
+        <param-value>
+            dk.statsbiblioteket.doms.surveillance.fedorasurveyor.FedoraStatusService
+        </param-value>
+    </context-param>
 
     <context-param>
         <param-name>

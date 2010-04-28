@@ -39,24 +39,18 @@ import dk.statsbiblioteket.doms.domsutil.surveyable.Surveyable;
 import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
-import javax.annotation.PostConstruct;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-/** Class that exposes fedora status as surveyable messages over REST. */
+/** Class that exposes fedora status as surveyable. */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
         comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
         state = QAInfo.State.QA_NEEDED)
-@Path("/")
 public class FedoraStatusService implements Surveyable {
     /** The application name for what is being surveyed. */
     private static final String APPLICATION_NAME = "fedora";
@@ -81,13 +75,29 @@ public class FedoraStatusService implements Surveyable {
             = PARAMETER_PACKAGENAME_PREFIX + ".fedoraPassword";
 
     /** Read parameter for Fedora URL. */
-    private String fedoraUrl = "http://localhost:8080/fedora";
+    private final String fedoraUrl;
 
     /** Read parameter for Fedora user. */
-    private String fedoraUser = "fedoraAdmin";
+    private final String fedoraUser;
 
     /** Read parameter for Fedora password. */
-    private String fedoraPassword = "fedoraAdminPass";
+    private final String fedoraPassword;
+
+    /**
+     * Initialise the surveyable by reading the parameters.
+     */
+    public FedoraStatusService() {
+        log.trace("Enter FedoraStatusService()");
+        Properties configuration = ConfigCollection.getProperties();
+
+        fedoraUrl = configuration.getProperty(FEDORA_URL_PARAMETER);
+        log.info("Setting parameter fedoraUrl to '" + fedoraUrl + "'");
+        fedoraUser = configuration.getProperty(FEDORA_USER_PARAMETER);
+        log.info("Setting parameter fedoraUser to '" + fedoraUser + "'");
+        fedoraPassword = configuration.getProperty(FEDORA_PASSWORD_PARAMETER);
+        log.info("Setting parameter fedoraPassword to '" + fedoraPassword
+                + "'");
+    }
 
     /**
      * Behaves exactly like getStatus().
@@ -96,10 +106,7 @@ public class FedoraStatusService implements Surveyable {
      * @return A realtime status of Fedora.
      * @see #getStatus
      */
-    @GET
-    @Path("getStatusSince/{date}")
-    @Produces("application/xml")
-    public Status getStatusSince(@PathParam("date") long time) {
+    public Status getStatusSince(long time) {
         log.trace("Enter getStatusSince(" + time + ")");
         return getStatus();
     }
@@ -112,9 +119,6 @@ public class FedoraStatusService implements Surveyable {
      *
      * @return A realtime status of Fedora.
      */
-    @GET
-    @Path("getStatus")
-    @Produces("application/xml")
     public Status getStatus() {
         log.trace("Enter getStatus()");
         List<StatusMessage> list = new ArrayList<StatusMessage>();
@@ -136,43 +140,6 @@ public class FedoraStatusService implements Surveyable {
         status.setName(APPLICATION_NAME);
         status.getMessages().addAll(list);
         return status;
-    }
-
-    /**
-     * Initialise the web service by reading the parameters.
-     * This method acts as fault barrier for configuration problems.
-     */
-    @PostConstruct
-    private synchronized void initialize() {
-        log.trace("Enter initialize()");
-        try {
-            Properties configuration = ConfigCollection.getProperties();
-            String fedoraUrl = configuration.getProperty(FEDORA_URL_PARAMETER);
-            String fedoraUser = configuration
-                    .getProperty(FEDORA_USER_PARAMETER);
-            String fedoraPassword = configuration
-                    .getProperty(FEDORA_PASSWORD_PARAMETER);
-
-            if (this.fedoraUrl == null || !this.fedoraUrl.equals(fedoraUrl)) {
-                this.fedoraUrl = fedoraUrl;
-                log.info("Setting parameter fedoraUrl to '" + fedoraUrl + "'");
-            }
-            if (this.fedoraUser == null || !this.fedoraUser
-                    .equals(fedoraUser)) {
-                this.fedoraUser = fedoraUser;
-                log.info(
-                        "Setting parameter fedoraUser to '" + fedoraUser + "'");
-            }
-            if (this.fedoraPassword == null || !this.fedoraPassword
-                    .equals(fedoraPassword)) {
-                this.fedoraPassword = fedoraPassword;
-                log.info(
-                        "Setting parameter fedoraPassword to '" + fedoraPassword
-                                + "'");
-            }
-        } catch (Exception e) {
-            log.error("Error during configuration of Fedora Surveyor", e);
-        }
     }
 
     /**
