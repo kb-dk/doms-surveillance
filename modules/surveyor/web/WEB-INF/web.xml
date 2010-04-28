@@ -42,18 +42,18 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>Log Survey Service</servlet-name>
+        <servlet-name>Surveyable Service</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer
         </servlet-class>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>dk.statsbiblioteket.doms.surveillance.rest
+            <param-value>dk.statsbiblioteket.doms.domsutil.surveyable
             </param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Log Survey Service</servlet-name>
-        <url-pattern>/logsurveyservice/*</url-pattern>
+        <servlet-name>Surveyable Service</servlet-name>
+        <url-pattern>/surveyable/*</url-pattern>
     </servlet-mapping>
 
     <context-param>
@@ -61,7 +61,7 @@
             dk.statsbiblioteket.doms.surveillance.surveyor.restUrls
         </param-name>
         <param-value>
-            http://localhost:8080/surveillance-surveyor/logsurveyservice/getStatusSince/{date}
+            http://localhost:8080/surveillance-surveyor/surveyable/getStatusSince/{date}
         </param-value>
     </context-param>
     <context-param>

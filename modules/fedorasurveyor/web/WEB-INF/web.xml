@@ -48,7 +48,7 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>Log Survey Service</servlet-name>
+        <servlet-name>Surveyable Service</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer
         </servlet-class>
         <init-param>
@@ -58,8 +58,8 @@
         </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Log Survey Service</servlet-name>
-        <url-pattern>/logsurveyservice/*</url-pattern>
+        <servlet-name>Surveyable Service</servlet-name>
+        <url-pattern>/surveyable/*</url-pattern>
     </servlet-mapping>
 
     <context-param>
