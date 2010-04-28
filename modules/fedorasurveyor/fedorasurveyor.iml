@@ -26,7 +26,7 @@
     </orderEntry>
     <orderEntry type="library" name="servlet-api-2.5-apache-tomcat-6.0.20" level="project" />
     <orderEntry type="library" name="sbutil-0.4.6" level="project" />
-    <orderEntry type="library" name="domsutil-0.0.4" level="project" />
+    <orderEntry type="library" name="domsutil-0.0.5" level="project" />
   </component>
 </module>
 
