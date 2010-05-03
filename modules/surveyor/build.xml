@@ -40,4 +40,8 @@
         <include name="${servlet.dir}"/>
         <include name="${domsutil.dir}"/>
     </dirset>
+
+    <dirset id="module.dependencies" dir="${global.dir}">
+        <include  name="modules/log4jappender"/>
+    </dirset>
 </project>
