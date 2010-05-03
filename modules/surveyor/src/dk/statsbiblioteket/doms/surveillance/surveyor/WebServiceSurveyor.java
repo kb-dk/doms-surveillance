@@ -36,6 +36,8 @@ import dk.statsbiblioteket.doms.domsutil.surveyable.Status;
 import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
 import dk.statsbiblioteket.doms.domsutil.surveyable.Surveyable;
 import dk.statsbiblioteket.doms.domsutil.surveyable.SurveyableService;
+import dk.statsbiblioteket.doms.surveillance.log4jappender.LogRegistry;
+import dk.statsbiblioteket.doms.surveillance.log4jappender.LogRegistryFactory;
 import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
@@ -282,6 +284,21 @@ public class WebServiceSurveyor implements Surveyor {
             Status soapStatus = getStatusFromSoap(statusUrl, newest);
             //Update result with status
             updateResultWithStatus(result, statusUrl, newest, soapStatus);
+        }
+
+        //Query log appender for more messages
+        LogRegistry logRegistry = LogRegistryFactory.getLogRegistry();
+        for (String appender : logRegistry.listSurveyables()) {
+            //Find time of newest currently known log message from that URL
+            Long newest = newestStatusTime.get(appender);
+            if (newest == null) {
+                newest = 0L;
+            }
+            //Get status from SOAP
+            Status logStatus = logRegistry.getSurveyable(appender)
+                    .getStatusSince(newest); 
+            //Update result with status
+            updateResultWithStatus(result, appender, newest, logStatus);
         }
 
         //Remember result
