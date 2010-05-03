@@ -41,7 +41,7 @@ import dk.statsbiblioteket.util.qa.QAInfo;
         comment = "Needs review on diff from revision 265",
         level = QAInfo.Level.NORMAL,
         state = QAInfo.State.QA_NEEDED)
-public interface LogRegistry extends Surveyable {
+public interface LogRegistry {
     /** The package prefix for parameter names. */
     String CONFIGURATION_PACKAGE_NAME
             = "dk.statsbiblioteket.doms.surveillance.log4jappender";
@@ -54,14 +54,22 @@ public interface LogRegistry extends Surveyable {
     /**
      * Register a message for later inspection.
      *
+     * @param appender The name of the appender to register in.
      * @param event The log message to register.
      */
-    public void registerMessage(LoggingEvent event);
+    public void registerMessage(String appender, LoggingEvent event);
 
     /**
-     * Sets the name.
-     *
-     * @param name The name.
+     * List surveyables with registered content.
+     * @return List of names of surveyables.
      */
-    public void setName(String name);
+    public Iterable<String> listSurveyables();
+
+    /**
+     * Get surveyable for given appender.
+     *
+     * @param appender The name of the appender.
+     * @return A surveyable that exposes registered messages for that appender.
+     */
+    public Surveyable getSurveyable(String appender);
 }

@@ -33,11 +33,14 @@ import org.apache.log4j.spi.LoggingEvent;
 
 import dk.statsbiblioteket.doms.domsutil.surveyable.Status;
 import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
+import dk.statsbiblioteket.doms.domsutil.surveyable.Surveyable;
 import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
@@ -58,17 +61,23 @@ public class CachingLogRegistry implements LogRegistry {
     private int maxNumberOfMessagesKeptByLog
             = DEFAULT_MAX_NUMBER_OF_MESSAGES_KEPT_BY_LOG;
 
-    /** A sorted map from timestamp of log message to list of actual messages. */
-    private NavigableMap<Long, Collection<StatusMessage>> logStatusMessages
-            = new TreeMap<Long, Collection<StatusMessage>>();
+    /** Datastructure for remembered log messages. Maps from name to collection
+     *  of messages. The collections of messages are organised as a sorted map
+     *  from timestamp to message. */
+    private Map<String, NavigableMap<Long, Collection<StatusMessage>>>
+            logStatusMessages
+            = new HashMap<String,
+                          NavigableMap<Long, Collection<StatusMessage>>>();
 
-    /** The name of what is being surveyed. */
-    private String name = "";
+    /** Map of classes that expose an appender as a surveyable. */
+    private static Map<String, Surveyable> surveyables
+            = new HashMap<String, Surveyable>();
 
     /** The logger for this class. */
     private Log log = LogFactory.getLog(getClass());
 
-    /** Read paramters from configuration, and initialize caching log registry. */
+    /** Read paramters from configuration, and initialize caching log
+     * registry. */
     public CachingLogRegistry() {
         log.trace("Enter CachingLogEntry()");
         configure();
@@ -95,77 +104,143 @@ public class CachingLogRegistry implements LogRegistry {
     }
 
     /**
-     * Returns all log messages received since the given date.
-     *
-     * @param time Only messages strictly after the given date are returned.
-     * @return A status containing list of log messages.
-     */
-    public synchronized Status getStatusSince(long time) {
-        log.trace("Enter getStatusSince(" + time + ")");
-        Collection<Collection<StatusMessage>> listCollection = logStatusMessages
-                .subMap(time, false, Long.MAX_VALUE, true).values();
-        Collection<StatusMessage> statusMessages
-                = new ArrayList<StatusMessage>();
-        for (Collection<StatusMessage> collection : listCollection) {
-            statusMessages.addAll(collection);
-        }
-        Status status = new Status();
-        status.setName(name);
-        status.getMessages().addAll(statusMessages);
-        return status;
-    }
-
-    /**
-     * Returns all log messages received.
-     *
-     * @return A status containing list of log messages.
-     */
-    public synchronized Status getStatus() {
-        log.trace("Enter getStatus()");
-        return getStatusSince(0l);
-    }
-
-    /**
      * Register a message for later inspection.
      *
+     * @param appender The name of the appender to register in.
      * @param event The log message to register. Should never be null.
-     * @throws IllegalArgumentException if event is null.
+     *
+     * @throws IllegalArgumentException if appender or event is null.
      */
-    public synchronized void registerMessage(LoggingEvent event) {
+    public synchronized void registerMessage(String appender,
+                                             LoggingEvent event) {
         Collection<StatusMessage> collection;
+        NavigableMap<Long, Collection<StatusMessage>> appenderRegistry;
 
         // Check parameters
         if (event == null) {
             throw new IllegalArgumentException(
                     "Parameter event must not be null");
         }
+        if (appender == null) {
+            throw new IllegalArgumentException(
+                    "Parameter appender must not be null");
+        }
+
+        // Get or create the registry for this appender
+        appenderRegistry = getStatusMessagesForAppender(appender);
 
         // Ensure the log doesn't grow too huge
-        if (logStatusMessages.size() > maxNumberOfMessagesKeptByLog - 1) {
-            long earliestTimeStamp = logStatusMessages.firstKey();
-            logStatusMessages.remove(earliestTimeStamp);
+        if (appenderRegistry.size() > maxNumberOfMessagesKeptByLog - 1) {
+            long earliestTimeStamp = appenderRegistry.firstKey();
+            appenderRegistry.remove(earliestTimeStamp);
         }
 
         // Register it
-        collection = logStatusMessages.get(event.getTimeStamp());
+        collection = appenderRegistry.get(event.getTimeStamp());
         if (collection == null) {
             collection = new ArrayList<StatusMessage>();
-            logStatusMessages.put(event.getTimeStamp(), collection);
+            appenderRegistry.put(event.getTimeStamp(), collection);
         }
         collection.add(new LogStatusMessage(event));
     }
 
     /**
-     * Sets the name of what is being surveyed.
+     * List surveyables with registered content.
      *
-     * @param name The name. Should never be null.
+     * @return List of names of surveyables.
      */
-    public synchronized void setName(String name) {
-        log.trace("Enter setName('" + name + "')");
-        if (name == null) {
+    public synchronized Iterable<String> listSurveyables() {
+        return logStatusMessages.keySet();
+    }
+
+    /**
+     * Get surveyable for given appender.
+     *
+     * @param appender The name of the appender.
+     * @return A surveyable that exposes registered messages for that appender.
+     *
+     * @throws IllegalArgumentException if appender or event is null.
+     */
+    public synchronized Surveyable getSurveyable(String appender) {
+        log.trace("Enter getSurveyable('" + appender + "')");
+
+        if (appender == null) {
             throw new IllegalArgumentException(
-                    "Parameter name must not be null");
+                    "Parameter appender must not be null");
         }
-        this.name = name;
+
+        if (!surveyables.containsKey(appender)) {
+            surveyables.put(appender,
+                            new CachingLogRegistrySurveyable(appender));
+        }
+        return surveyables.get(appender);
+    }
+
+    /**
+     * Get collection of messages for a given appender. Will return empty map
+     * for no messages.
+     * @param appender Name of appender.
+     * @return Empty map.
+     */
+    private NavigableMap<Long, Collection<StatusMessage>> getStatusMessagesForAppender(
+            String appender) {
+        NavigableMap<Long, Collection<StatusMessage>> appenderRegistry;
+        appenderRegistry = logStatusMessages.get(appender);
+        if (appenderRegistry == null) {
+            appenderRegistry = new TreeMap<Long, Collection<StatusMessage>>();
+            logStatusMessages.put(appender, appenderRegistry);
+        }
+        return appenderRegistry;
+    }
+
+    /**
+     * Expose messages for a given appender using the surveyable framework.
+     */
+    private class CachingLogRegistrySurveyable implements Surveyable {
+        /** Name of the appender this exposes. */
+        private final String appender;
+
+        /**
+         * Initialise with the appender to expose.
+         * @param appender Name of appender.
+         */
+        public CachingLogRegistrySurveyable(String appender) {
+            log.trace("Enter CachingLogRegistrySurveyable('" + appender + "')");
+            this.appender = appender;
+        }
+
+        /**
+         * Returns all log messages received since the given date.
+         *
+         * @param time Only messages strictly after the given date are returned.
+         * @return A status containing list of log messages.
+         */
+        public synchronized Status getStatusSince(long time) {
+            log.trace("Enter getStatusSince(" + time + ")");
+            NavigableMap<Long, Collection<StatusMessage>> appenderRegistry
+                    = getStatusMessagesForAppender(appender);
+            Collection<Collection<StatusMessage>> listCollection
+                    = appenderRegistry.subMap(
+                    time, false, Long.MAX_VALUE, true).values();
+            Collection<StatusMessage> statusMessages
+                    = new ArrayList<StatusMessage>();
+            for (Collection<StatusMessage> collection : listCollection) {
+                statusMessages.addAll(collection);
+            }
+            Status status = new Status();
+            status.setName(appender);
+            status.getMessages().addAll(statusMessages);
+            return status;
+        }
+
+        /**
+         * Returns all log messages received.
+         *
+         * @return A status containing list of log messages.
+         */
+        public synchronized Status getStatus() {
+            log.trace("Enter getStatus()");
+            return getStatusSince(0l);
+        }
     }
 }

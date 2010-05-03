@@ -88,8 +88,7 @@ public class LogRegistryAppender extends AppenderSkeleton {
      * @param event The event to cache.
      */
     protected void append(LoggingEvent event) {
-        LogRegistryFactory.getLogRegistry().setName(getName());
-        LogRegistryFactory.getLogRegistry().registerMessage(event);
+        LogRegistryFactory.getLogRegistry().registerMessage(getName(), event);
     }
 
     /**
