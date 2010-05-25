@@ -159,7 +159,7 @@ public class FedoraStatusService implements Surveyable {
                 .describeRepository();
 
         fedoraClient.getAPIA()
-                .getObjectProfile(description.getSamplePID(), null);
+                .getObjectProfile("fedora-system:ContentModel-3.0", null);
         //Done in order to provoke exception on trouble
         new URL(description.getSampleSearchURL()).openConnection();
         StatusMessage statusMessage = new StatusMessage();
