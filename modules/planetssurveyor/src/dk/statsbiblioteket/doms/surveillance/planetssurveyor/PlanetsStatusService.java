@@ -221,6 +221,7 @@ public class PlanetsStatusService implements Surveyable {
             Service service = Service.create(url, qname);
             Validate jhoveValidator = service.getPort(Validate.class);
 
+            // Get name and throw away. Done to provoke exception on failure.
             //String nameResponse =
             jhoveValidator.describe().getName();
 
@@ -277,6 +278,7 @@ public class PlanetsStatusService implements Surveyable {
             Service service = Service.create(url, qname);
             Identify jhoveIdentifier = service.getPort(Identify.class);
             
+            // Get name and throw away. Done to provoke exception on failure.
             //String nameResponse =
             jhoveIdentifier.describe().getName();
 
@@ -333,6 +335,7 @@ public class PlanetsStatusService implements Surveyable {
             Service service = Service.create(url, qname);
             Identify droidIdentifier = service.getPort(Identify.class);
 
+            // Get name and throw away. Done to provoke exception on failure.
             //String nameResponse =
             droidIdentifier.describe().getName();
 
