@@ -2,31 +2,15 @@
 <project relativePaths="false" version="4">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
-    <buildFile url="file://$PROJECT_DIR$/build.xml">
-      <additionalClassPath />
-      <antReference projectDefault="true" />
-      <customJdkName value="" />
-      <maximumHeapSize value="128" />
-      <maximumStackSize value="32" />
-      <properties />
-    </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/modules/surveyor/build.xml">
-      <additionalClassPath />
-      <antReference projectDefault="true" />
-      <customJdkName value="" />
-      <maximumHeapSize value="128" />
-      <maximumStackSize value="32" />
-      <properties />
-    </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/modules/log4jappender/build.xml">
-      <additionalClassPath />
-      <antReference projectDefault="true" />
-      <customJdkName value="" />
-      <maximumHeapSize value="128" />
-      <maximumStackSize value="32" />
-      <properties />
-    </buildFile>
     <buildFile url="file://$PROJECT_DIR$/modules/fedorasurveyor/build.xml">
+      <additionalClassPath />
+      <antReference projectDefault="true" />
+      <customJdkName value="" />
+      <maximumHeapSize value="128" />
+      <maximumStackSize value="32" />
+      <properties />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/modules/planetssurveyor/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
@@ -121,6 +105,11 @@
           <module name="surveyor">
             <files>
               <file url="file://$PROJECT_DIR$/modules/surveyor/web/WEB-INF/web.xml" />
+            </files>
+          </module>
+          <module name="planetssurveyor">
+            <files>
+              <file url="file://$PROJECT_DIR$/planetssurveyor/web/WEB-INF/web.xml" />
             </files>
           </module>
         </modules>
@@ -307,8 +296,11 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ecmsurveyor/ecmsurveyor.iml" filepath="$PROJECT_DIR$/ecmsurveyor/ecmsurveyor.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" filepath="$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/log4jappender/log4jappender.iml" filepath="$PROJECT_DIR$/modules/log4jappender/log4jappender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/planetssurveyor/planetssurveyor.iml" filepath="$PROJECT_DIR$/modules/planetssurveyor/planetssurveyor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/planetssurveyor/planetssurveyor.iml" filepath="$PROJECT_DIR$/planetssurveyor/planetssurveyor.iml" />
       <module fileurl="file://$PROJECT_DIR$/surveillance.iml" filepath="$PROJECT_DIR$/surveillance.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/surveyor/surveyor.iml" filepath="$PROJECT_DIR$/modules/surveyor/surveyor.iml" />
     </modules>
@@ -464,6 +456,13 @@
         <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.6/src/domsutil-0.0.6-src.zip!/domsutil-0.0.6/modules/webservice-common/src" />
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/domsutil-0.0.6/jars" recursive="false" />
+    </library>
+    <library name="pserv-if-common">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/pserv-if-common/jars/pserv-if-common.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
     </library>
   </component>
 </project>
