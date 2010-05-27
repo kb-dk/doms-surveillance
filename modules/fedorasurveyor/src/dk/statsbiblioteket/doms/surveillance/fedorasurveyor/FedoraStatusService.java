@@ -53,7 +53,7 @@ import java.util.Properties;
         state = QAInfo.State.QA_NEEDED)
 public class FedoraStatusService implements Surveyable {
     /** The application name for what is being surveyed. */
-    private static final String APPLICATION_NAME = "fedora";
+    private static final String APPLICATION_NAME = "Fedora";
 
     /** Logger for this class. */
     private Log log = LogFactory.getLog(getClass());
