@@ -25,25 +25,19 @@
   ~ under the License.
   -->
 
-<project name="surveillance-planetssurveyor" basedir=".">
-    <property name="global.dir" value="${basedir}/../.."/>
-
-    <!--Contain the normal build tasks, including war-->
-    <import file="${global.dir}/build/build-webservice-module.xml"/>
-
-    <!--Project libs used by this module-->
-    <dirset id="project.libs" dir="${global.dir}/lib">
-        <include name="${sbutils.dir}"/>
-        <include name="${jsr311.dir}"/>
-        <include name="${jersey.dir}"/>
-        <include name="${commons-logging.dir}"/>
-        <include name="${domsutil.dir}"/>
-        <include name="${pserv-if-common.dir}"/>
-    </dirset>
-
-    <dirset id="build.project.libs" dir="${global.dir}/lib">
-        <include name="${servlet.dir}"/>
-    </dirset>
-</project>
-
-
+<web-app>
+    <servlet>
+        <servlet-name>Log Registry Service</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer
+        </servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>dk.statsbiblioteket.doms.surveillance.logregistrywebservice
+            </param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Log Registry Service</servlet-name>
+        <url-pattern>/logregistry/*</url-pattern>
+    </servlet-mapping>
+</web-app>
