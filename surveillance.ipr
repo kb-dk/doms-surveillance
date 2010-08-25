@@ -18,7 +18,7 @@
       <maximumStackSize value="32" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/modules/log4jappender/build.xml">
+    <buildFile url="file://$PROJECT_DIR$/modules/logappender/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
@@ -329,7 +329,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" filepath="$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/modules/log4jappender/log4jappender.iml" filepath="$PROJECT_DIR$/modules/log4jappender/log4jappender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/log4jappender/logappender.iml" filepath="$PROJECT_DIR$/modules/log4jappender/logappender.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/logregistrywebservice/logregistrywebservice.iml" filepath="$PROJECT_DIR$/modules/logregistrywebservice/logregistrywebservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/planetssurveyor/planetssurveyor.iml" filepath="$PROJECT_DIR$/modules/planetssurveyor/planetssurveyor.iml" />
       <module fileurl="file://$PROJECT_DIR$/surveillance.iml" filepath="$PROJECT_DIR$/surveillance.iml" />
@@ -494,6 +494,18 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES />
+    </library>
+    <library name="logback-0.9.24">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/logback-0.9.4/jars" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.4/src/logback-access-0.9.24-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.4/src/logback-classic-0.9.24-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.4/src/logback-core-0.9.24-sources.jar!/" />
+      </SOURCES>
+      <jarDirectory url="file://$PROJECT_DIR$/lib/logback-0.9.4/jars" recursive="false" />
     </library>
   </component>
 </project>
