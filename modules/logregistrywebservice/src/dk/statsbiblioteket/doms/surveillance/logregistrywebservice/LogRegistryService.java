@@ -31,7 +31,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import dk.statsbiblioteket.doms.domsutil.surveyable.Status;
-import dk.statsbiblioteket.doms.surveillance.log4jappender.LogRegistryFactory;
+import dk.statsbiblioteket.doms.surveillance.logappender.LogRegistryFactory;
 import dk.statsbiblioteket.util.qa.QAInfo;
 
 import javax.ws.rs.GET;

@@ -1,0 +1,10 @@
+This contains a log4j appender that will cache messages in a registry, for
+later access through the surveyable framework.
+
+To use this log4j appender, simply configure your log4j to use it in log4j.xml.
+This will cause the appender to start caching the messages in a registry.
+
+To expose that registry, use the Surveyable implementation from domsutil.
+Configure it to expose the "LogRegistrySurveyableSingleton".
+
+Examples of configuration can be found in log4j-example.xml and web-example.xml.

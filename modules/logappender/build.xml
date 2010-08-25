@@ -25,34 +25,17 @@
   ~ under the License.
   -->
 
-<project name="surveillance-logregistrywebservice" basedir=".">
+<project name="surveillance-log4jappender" basedir=".">
     <property name="global.dir" value="${basedir}/../.."/>
 
-    <!--Contain the normal build tasks, including war-->
-    <import file="${global.dir}/build/build-webservice-module.xml"/>
-
-    <target name="depends" depends="module.depends">
-        <ant inheritall="false" inheritrefs="false"
-             dir="${global.dir}/modules/logappender" antfile="build.xml"
-             target="jar"/>
-        <mkdir dir="templib/log4jappender/jars" />
-        <copy todir="templib/log4jappender/jars">
-            <fileset dir="${global.dir}/modules/logappender/dist" includes="*.jar"/>
-        </copy>
-    </target>
+    <!--Contain the normal build tasks, including jar-->
+    <import file="${global.dir}/build/build-module.xml"/>
 
     <!--Project libs used by this module-->
     <dirset id="project.libs" dir="${global.dir}/lib">
-        <include name="${sbutils.dir}"/>
-        <include name="${jsr311.dir}"/>
-        <include name="${jersey.dir}"/>
         <include name="${commons-logging.dir}"/>
-    </dirset>
-
-    <dirset id="build.project.libs" dir="${global.dir}">
-        <include name="lib/${servlet.dir}"/>
-        <include name="lib/${domsutil.dir}"/>
-        <!-- Workaround to depend on a module without bundling it -->
-        <include name="modules/logregistrywebservice/templib/log4jappender"/>
+        <include name="${log4j.dir}"/>
+        <include name="${sbutils.dir}"/>
+        <include name="${domsutil.dir}"/>
     </dirset>
 </project>
