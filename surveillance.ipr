@@ -329,7 +329,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" filepath="$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/modules/log4jappender/logappender.iml" filepath="$PROJECT_DIR$/modules/log4jappender/logappender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/logappender/logappender.iml" filepath="$PROJECT_DIR$/modules/logappender/logappender.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/logregistrywebservice/logregistrywebservice.iml" filepath="$PROJECT_DIR$/modules/logregistrywebservice/logregistrywebservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/planetssurveyor/planetssurveyor.iml" filepath="$PROJECT_DIR$/modules/planetssurveyor/planetssurveyor.iml" />
       <module fileurl="file://$PROJECT_DIR$/surveillance.iml" filepath="$PROJECT_DIR$/surveillance.iml" />

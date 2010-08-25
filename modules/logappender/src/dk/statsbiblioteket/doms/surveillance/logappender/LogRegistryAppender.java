@@ -40,7 +40,7 @@ import java.util.Properties;
  *
  * The configuration parameter MaxNumberOfMessages will, if present, be
  * delegated to the log registry by setting the parameter
- * <code>dk.statsbiblioteket.doms.surveillance.rest.log4jappender.numberOfMessages</code>
+ * <code>dk.statsbiblioteket.doms.surveillance.rest.logappender.numberOfMessages</code>
  */
 @QAInfo(author = "kfc",
         reviewers = "jrg",

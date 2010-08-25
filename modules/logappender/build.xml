@@ -25,7 +25,7 @@
   ~ under the License.
   -->
 
-<project name="surveillance-log4jappender" basedir=".">
+<project name="surveillance-logappender" basedir=".">
     <property name="global.dir" value="${basedir}/../.."/>
 
     <!--Contain the normal build tasks, including jar-->

@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
 
 import dk.statsbiblioteket.doms.domsutil.surveyable.Severity;
 
-/** Test the Log4JAppender */
+/** Test the LogAppender */
 public class LogRegistryAppenderTest extends TestCase {
     public void testAppend() {
         Logger logger = Logger.getLogger(LogRegistryAppenderTest.class);

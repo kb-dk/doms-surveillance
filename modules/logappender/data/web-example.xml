@@ -38,7 +38,7 @@
 
     <context-param>
         <param-name>dk.statsbiblioteket.doms.domsutil.surveyable.surveyables</param-name>
-        <param-value>dk.statsbiblioteket.doms.surveyable.log4jappender.LogRegistrySurveyableSingleton</param-value>
+        <param-value>dk.statsbiblioteket.doms.surveyable.logappender.LogRegistrySurveyableSingleton</param-value>
     </context-param>
 
     <!-- REST webservice -->

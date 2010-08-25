@@ -35,7 +35,7 @@ import dk.statsbiblioteket.util.qa.QAInfo;
 
 /** Factory for getting the log registry singleton.
  * The choice of singleton is defined by configuration parameter
- * <code>dk.statsbiblioteket.doms.surveillance.rest.log4jappender.registryClass</code>.
+ * <code>dk.statsbiblioteket.doms.surveillance.rest.logappender.registryClass</code>.
  * Default is dk.statsbiblioteket.doms.surveillance.surveyor.RestSurveyor.
  * */
 @QAInfo(author = "kfc",

@@ -35,7 +35,7 @@ import dk.statsbiblioteket.util.qa.QAInfo;
 
 /** Interface for a surveyable log message registry.
  * Implementations may be configured by the parameter:
- * <code>dk.statsbiblioteket.doms.surveillance.rest.log4jappender.numberOfMessages</code> 
+ * <code>dk.statsbiblioteket.doms.surveillance.rest.logappender.numberOfMessages</code> 
  * */
 @QAInfo(author = "kfc",
         reviewers = "jrg",
