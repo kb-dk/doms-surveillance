@@ -27,10 +27,10 @@
 
 package dk.statsbiblioteket.doms.surveillance.fedorasurveyor;
 
-import fedora.client.FedoraClient;
-import fedora.server.types.gen.RepositoryInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.fcrepo.client.FedoraClient;
+import org.fcrepo.server.types.gen.RepositoryInfo;
 
 import dk.statsbiblioteket.doms.domsutil.surveyable.Severity;
 import dk.statsbiblioteket.doms.domsutil.surveyable.Status;

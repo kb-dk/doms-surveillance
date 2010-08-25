@@ -11,17 +11,62 @@
     <orderEntry type="library" name="jersey-1.1.4" level="project" />
     <orderEntry type="library" name="commons-logging-1.1.1" level="project" />
     <orderEntry type="module-library">
-      <library name="fedora-client-3.2.1">
+      <library name="fedora-client">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/lib/fedora-client-3.2.1/jars" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/slf4j-api-1.5.10.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/commons-httpclient-3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-gvt-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/openrdf-sesame-onejar-2.2.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/log4j-over-slf4j-1.5.10.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/commons-codec-1.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-svg-dom-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/sunxacml-1.2-melcoe.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-dom-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-gui-util-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/xpp3_min-1.1.3.4.O.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/jhbasic-2.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/fcrepo-server-3.4-utilities-main.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-ext-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/jai_core-1.1.2_01.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/wsdl4j-1.5.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/axis-1.3-PATCHED.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/trippi-core-1.4.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-util-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/saaj-api-1.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-xml-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/mulgara-core-2.1.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-script-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/xercesImpl-2.9.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/mail-1.4.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/java-getopt-1.0.13.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/xmlpull-1.1.3.4a.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/saxon-9.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/fcrepo-common-3.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/commons-discovery-0.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/commons-pool-1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-bridge-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/logback-classic-0.9.18.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-swing-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/activation-1.1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/fcrepo-server-3.4-cli-loader-main.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-parser-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/jaxrpc-api-1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/fcrepo-server-3.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-css-1.6-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/jai_codec-1.1.2_01.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/jcl-over-slf4j-1.5.10.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/logback-core-0.9.18.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/fcrepo-client-admin-3.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/batik-awt-util-1.6-1.jar!/" />
         </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/lib/fedora-client-3.2.1/apidocs/fedora-client-3.2.1-apidocs.zip!/" />
-        </JAVADOC>
+        <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/lib/fedora-client-3.2.1/src/fedora-client-3.2.1-src.zip!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/src/fcrepo-src-3.4.zip!/fcrepo-src-3.4/fcrepo-generate/src/main/java" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/src/fcrepo-src-3.4.zip!/fcrepo-src-3.4/fcrepo-common/src/main/java" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/src/fcrepo-src-3.4.zip!/fcrepo-src-3.4/fcrepo-client/fcrepo-client-admin/src/main/java" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/jars/xpp3_min-1.1.3.4.O.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FedoraClient-3.4/src/fcrepo-src-3.4.zip!/fcrepo-src-3.4/fcrepo-server/src/main/java" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/lib/fedora-client-3.2.1/jars" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="library" name="servlet-api-2.5-apache-tomcat-6.0.20" level="project" />
