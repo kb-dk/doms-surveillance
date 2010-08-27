@@ -35,6 +35,7 @@
     <dirset id="project.libs" dir="${global.dir}/lib">
         <include name="${commons-logging.dir}"/>
         <include name="${log4j.dir}"/>
+        <include name="${logback.dir}"/>
         <include name="${sbutils.dir}"/>
         <include name="${domsutil.dir}"/>
     </dirset>
