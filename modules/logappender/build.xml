@@ -36,6 +36,7 @@
         <include name="${commons-logging.dir}"/>
         <include name="${log4j.dir}"/>
         <include name="${logback.dir}"/>
+        <include name="${slf4j.api.dir}"/>
         <include name="${sbutils.dir}"/>
         <include name="${domsutil.dir}"/>
     </dirset>

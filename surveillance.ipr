@@ -497,15 +497,28 @@
     </library>
     <library name="logback-0.9.24">
       <CLASSES>
-        <root url="file://$PROJECT_DIR$/lib/logback-0.9.4/jars" />
+        <root url="file://$PROJECT_DIR$/lib/logback-0.9.24/jars" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.4/src/logback-access-0.9.24-sources.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.4/src/logback-classic-0.9.24-sources.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.4/src/logback-core-0.9.24-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.24/src/logback-access-0.9.24-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.24/src/logback-classic-0.9.24-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.24/src/logback-core-0.9.24-sources.jar!/" />
       </SOURCES>
-      <jarDirectory url="file://$PROJECT_DIR$/lib/logback-0.9.4/jars" recursive="false" />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/logback-0.9.24/jars" recursive="false" />
+    </library>
+    <library name="logback-0.9.18">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.18/jars/logback-classic-0.9.18.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.18/jars/logback-access-0.9.18.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.18/jars/logback-core-0.9.18.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.18/src/logback-core-0.9.18-sources.zip!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.18/src/logback-classic-0.9.18-sources.zip!/" />
+        <root url="jar://$PROJECT_DIR$/lib/logback-0.9.18/src/logback-access-0.9.18-sources.zip!/" />
+      </SOURCES>
     </library>
   </component>
 </project>
