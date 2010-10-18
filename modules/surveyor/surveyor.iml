@@ -14,7 +14,7 @@
     <orderEntry type="library" name="jsp-api-2.1-apache-tomcat-6.0.20" level="project" />
     <orderEntry type="library" name="commons-logging-1.1.1" level="project" />
     <orderEntry type="library" name="sbutil-0.4.6" level="project" />
-    <orderEntry type="library" name="domsutil-0.0.6" level="project" />
+    <orderEntry type="library" name="domsutil" level="project" />
   </component>
 </module>
 
