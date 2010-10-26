@@ -462,31 +462,30 @@
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/commons-logging-1.1.1/jars" recursive="false" />
     </library>
-    <library name="sbutil-0.4.6">
+    <library name="sbutil-0.5.2">
       <CLASSES>
-        <root url="file://$PROJECT_DIR$/lib/sbutils-0.4.6/jars" />
+        <root url="jar://$PROJECT_DIR$/lib/sbutil-0.5.2/jars/sbutil-0.5.2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$PROJECT_DIR$/lib/sbutils-0.4.6/apidocs/sbutil-0.4.6-apidocs.zip!/sbutil-0.4.6/doc" />
+        <root url="jar://$PROJECT_DIR$/lib/sbutil-0.5.2/apidocs/sbutil-0.5.2-apidocs.zip!/sbutil-0.5.2/doc" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$PROJECT_DIR$/lib/sbutils-0.4.6/src/sbutil-0.4.6-src.zip!/sbutil-0.4.6/src" />
+        <root url="jar://$PROJECT_DIR$/lib/sbutil-0.5.2/src/sbutil-0.5.2-src.zip!/sbutil-0.5.2/src" />
       </SOURCES>
-      <jarDirectory url="file://$PROJECT_DIR$/lib/sbutils-0.4.6/jars" recursive="false" />
     </library>
     <library name="domsutil">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.10/jars/webservice-common.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.10/jars/surveyable_interface.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.10/jars/surveyable_impl.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.11/jars/webservice-common.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.11/jars/surveyable_interface.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.11/jars/surveyable_impl.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.10/apidocs/domsutil-0.0.10-doc.zip!/domsutil-0.0.10" />
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.11/apidocs/domsutil-0.0.11-doc.zip!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.10/src/domsutil-0.0.10-src.zip!/domsutil-0.0.10/modules/surveyable/surveyable_interface/src" />
-        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.10/src/domsutil-0.0.10-src.zip!/domsutil-0.0.10/modules/webservice-common/src" />
-        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.10/src/domsutil-0.0.10-src.zip!/domsutil-0.0.10/modules/surveyable/surveyable_impl/src" />
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.11/src/surveyable_impl-src.zip!/" />
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.11/src/surveyable_interface-src.zip!/" />
+        <root url="jar://$PROJECT_DIR$/lib/domsutil-0.0.11/src/webservice-common-src.zip!/" />
       </SOURCES>
     </library>
     <library name="pserv-if-common">
