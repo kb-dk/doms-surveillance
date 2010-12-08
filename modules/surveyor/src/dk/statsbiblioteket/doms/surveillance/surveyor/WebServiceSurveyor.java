@@ -354,7 +354,7 @@ public class WebServiceSurveyor implements Surveyor {
         } else {
             queryUrl = statusUrl;
         }
-
+        queryUrl = queryUrl.trim();
         //Query REST
         try {
             log.debug("REST status query for URL '" + queryUrl + "'");
