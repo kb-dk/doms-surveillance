@@ -15,6 +15,7 @@
     <orderEntry type="library" name="commons-logging-1.1.1" level="project" />
     <orderEntry type="library" name="sbutil-0.5.2" level="project" />
     <orderEntry type="library" name="domsutil" level="project" />
+    <orderEntry type="library" name="log4j-1.2.15" level="project" />
   </component>
 </module>
 

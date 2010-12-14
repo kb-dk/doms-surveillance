@@ -25,23 +25,26 @@
   ~ under the License.
   -->
 
-<project name="surveillance-surveyor" basedir=".">
+<project name="surveillance-fedoraLogSurveyor" basedir=".">
     <property name="global.dir" value="${basedir}/../.."/>
 
-    <!--Contain the normal build tasks, including war-->
-    <import file="${global.dir}/build/build-webservice-module.xml"/>
+    <!--Contain the normal build tasks, including jar-->
+    <import file="${global.dir}/build/build-executable-module.xml"/>
+
+
+    <dirset id="module.dependencies" dir="${global.dir}/modules/">
+        <include name="logappender"/>
+    </dirset>
+
+
 
     <!--Project libs used by this module-->
     <dirset id="project.libs" dir="${global.dir}/lib">
-        <include name="${sbutil.dir}"/>
-        <include name="${jsr311.dir}"/>
-        <include name="${jersey.dir}"/>
         <include name="${commons-logging.dir}"/>
-        <include name="${log4j.dir}"/>
+<!--        <include name="${log4j.dir}"/>-->
+        <include name="${logback.dir}"/>
+        <include name="${slf4j.api.dir}"/>
+        <include name="${sbutil.dir}"/>
         <include name="${domsutil.dir}"/>
-    </dirset>
-
-    <dirset id="build.project.libs" dir="${global.dir}/lib">
-        <include name="${servlet.dir}"/>
     </dirset>
 </project>

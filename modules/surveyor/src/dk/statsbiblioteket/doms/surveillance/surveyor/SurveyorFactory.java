@@ -26,11 +26,13 @@
  */
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.xml.DOMConfigurator;
+
+import java.io.File;
 
 /** Factory for getting the surveyor singleton.
  * The choice of singleton is defined by configuration parameter
@@ -59,6 +61,29 @@ public class SurveyorFactory {
 
     /** The surveyor singleton instance. */
     private static Surveyor surveyor;
+
+
+    static {
+       String log4jconfigLocation
+               = ConfigCollection.getProperties().getProperty(
+               SurveyorFactory.class.getPackage().getName()+".log4jconfig");
+       if (log4jconfigLocation != null){
+           File configFile = new File(log4jconfigLocation);
+           if (configFile.canRead()){
+               DOMConfigurator.configure(configFile.getAbsolutePath());
+           } else {
+               // The file could not be found, either because the path is not
+               // an absolute path or because it does not exist. Now try
+               // locating it within the WAR file before giving up.
+               configFile = new File(ConfigCollection
+                       .getServletContext().getRealPath(log4jconfigLocation));
+               DOMConfigurator.configure(configFile.getAbsolutePath());
+           }
+       } else {
+           log.error("Failed to load log4jconfig parameter");
+       }
+   }
+
 
     /**
      * Get the surveyor singleton instance. As this produces a singleton,

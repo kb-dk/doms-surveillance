@@ -33,7 +33,7 @@
 
     <target name="depends" depends="module.depends">
         <ant inheritall="false" inheritrefs="false"
-             dir="${global.dir}/modules/logappender" antfile="build.xml"
+             dir="${global.dir}/modules/logappender" antfile="build-disabled.xml"
              target="jar"/>
         <mkdir dir="templib/log4jappender/jars" />
         <copy todir="templib/log4jappender/jars">

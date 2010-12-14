@@ -27,18 +27,19 @@
 
 package dk.statsbiblioteket.doms.surveillance.fedorasurveyor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.fcrepo.client.FedoraClient;
-import org.fcrepo.server.types.gen.RepositoryInfo;
-
 import dk.statsbiblioteket.doms.domsutil.surveyable.Severity;
 import dk.statsbiblioteket.doms.domsutil.surveyable.Status;
 import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
 import dk.statsbiblioteket.doms.domsutil.surveyable.Surveyable;
 import dk.statsbiblioteket.doms.webservices.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.xml.DOMConfigurator;
+import org.fcrepo.client.FedoraClient;
+import org.fcrepo.server.types.gen.RepositoryInfo;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +57,7 @@ public class FedoraStatusService implements Surveyable {
     private static final String APPLICATION_NAME = "Fedora";
 
     /** Logger for this class. */
-    private Log log = LogFactory.getLog(getClass());
+    private static Log log = LogFactory.getLog(FedoraStatusService.class);
 
     /** Prefix for parameter names. */
     private static final String PARAMETER_PACKAGENAME_PREFIX
@@ -82,6 +83,30 @@ public class FedoraStatusService implements Surveyable {
 
     /** Read parameter for Fedora password. */
     private final String fedoraPassword;
+
+
+    static {
+       String log4jconfigLocation
+               = ConfigCollection.getProperties().getProperty(
+               FedoraStatusService.class.getPackage().getName()+".log4jconfig");
+       if (log4jconfigLocation != null){
+           File configFile = new File(log4jconfigLocation);
+           if (configFile.canRead()){
+               DOMConfigurator.configure(configFile.getAbsolutePath());
+           } else {
+               // The file could not be found, either because the path is not
+               // an absolute path or because it does not exist. Now try
+               // locating it within the WAR file before giving up.
+               configFile = new File(ConfigCollection
+                       .getServletContext().getRealPath(log4jconfigLocation));
+               DOMConfigurator.configure(configFile.getAbsolutePath());
+           }
+       } else {
+           log.error("Failed to load log4jconfig parameter");
+       }
+   }
+
+
 
     /**
      * Initialise the surveyable by reading the parameters.
