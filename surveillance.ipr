@@ -10,14 +10,6 @@
       <maximumStackSize value="32" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/modules/logappender/build.xml">
-      <additionalClassPath />
-      <antReference projectDefault="true" />
-      <customJdkName value="" />
-      <maximumHeapSize value="128" />
-      <maximumStackSize value="32" />
-      <properties />
-    </buildFile>
     <buildFile url="file://$PROJECT_DIR$/modules/fedorasurveyor/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
@@ -27,14 +19,6 @@
       <properties />
     </buildFile>
     <buildFile url="file://$PROJECT_DIR$/build.xml">
-      <additionalClassPath />
-      <antReference projectDefault="true" />
-      <customJdkName value="" />
-      <maximumHeapSize value="128" />
-      <maximumStackSize value="32" />
-      <properties />
-    </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/modules/fedoraLogSurveyor/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
@@ -320,9 +304,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/modules/fedoraLogSurveyor/fedoraLogSurveyor.iml" filepath="$PROJECT_DIR$/modules/fedoraLogSurveyor/fedoraLogSurveyor.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" filepath="$PROJECT_DIR$/modules/fedorasurveyor/fedorasurveyor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/modules/logappender/logappender.iml" filepath="$PROJECT_DIR$/modules/logappender/logappender.iml" />
       <module fileurl="file://$PROJECT_DIR$/surveillance.iml" filepath="$PROJECT_DIR$/surveillance.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/surveyor/surveyor.iml" filepath="$PROJECT_DIR$/modules/surveyor/surveyor.iml" />
     </modules>
