@@ -32,8 +32,8 @@
                      debug="false">
 
     <!--DO NOT RENAME THIS APPENDER-->
-    <appender name="DomsFedoraSurveyorLogRegistry"
-              class="dk.statsbiblioteket.doms.surveillance.logappender.LogRegistryAppender">
+    <appender name="DomsSurveyorLogRegistry"
+              class="dk.statsbiblioteket.doms.domsutil.surveillance.logappender.Log4jRegistryAppender">
         <param name="Threshold" value="WARN"/>
         <param name="dk.statsbiblioteket.doms.surveillance.logappender.numberOfMessages" value="100"/>
         <layout class="org.apache.log4j.PatternLayout">
@@ -42,10 +42,10 @@
     </appender>
 
 
-    <appender name="DomsFedoraSurveyorFile"
+    <appender name="DomsSurveyorFile"
               class="org.apache.log4j.FileAppender">
         <param name="Threshold" value="DEBUG"/>
-        <param name="File" value="logs/DomsFedoraSurveyor.log"/>
+        <param name="File" value="logs/DomsSurveyor.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%-5p [%t] [%d] [%c] %m%n"/>
         </layout>
@@ -70,10 +70,10 @@
     </appender>
 
 
-    <logger name="dk.statsbiblioteket.doms.surveillance.fedorasurveyor">
+    <logger name="dk.statsbiblioteket.doms.surveillance.surveyor">
         <level value="ALL"/>
-        <appender-ref ref="DomsFedoraSurveyorLogRegistry"/>
-        <appender-ref ref="DomsFedoraSurveyorFile"/>
+        <appender-ref ref="DomsSurveyorLogRegistry"/>
+        <appender-ref ref="DomsSurveyorFile"/>
     </logger>
 
 
