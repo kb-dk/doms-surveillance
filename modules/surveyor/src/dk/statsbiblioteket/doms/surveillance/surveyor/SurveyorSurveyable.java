@@ -43,7 +43,7 @@ import dk.statsbiblioteket.util.qa.QAInfo;
         reviewers = "jrg")
 public class SurveyorSurveyable implements Surveyable {
     /** The name this status reports. */
-    private static final String SURVEYABLE_NAME = "Surveyor";
+    private static final String SURVEYABLE_NAME = "DomsSurveyor";
 
     /** Log for this class. */
     private final Log log = LogFactory.getLog(getClass());

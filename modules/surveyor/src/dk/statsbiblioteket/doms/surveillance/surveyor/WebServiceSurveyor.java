@@ -164,7 +164,13 @@ public class WebServiceSurveyor implements Surveyor {
         if (restUrlParameter == null || restUrlParameter.equals("")) {
             restStatusUrls = Collections.emptyList();
         } else {
-            restStatusUrls = Arrays.asList(restUrlParameter.split(";"));
+            String[] splits = restUrlParameter.split(";");
+            restStatusUrls = new ArrayList<String>();
+            for (String split : splits) {
+                if (split != null && !split.isEmpty()) {
+                    restStatusUrls.add(split);
+                }
+            }
         }
         if (!restStatusUrls.equals(this.restStatusUrls)) {
             log.info("Setting list of surveyed REST status URLs to '"
