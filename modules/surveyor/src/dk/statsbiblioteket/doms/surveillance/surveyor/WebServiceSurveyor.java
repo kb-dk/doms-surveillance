@@ -27,19 +27,6 @@
 
 package dk.statsbiblioteket.doms.surveillance.surveyor;
 
-import com.sun.jersey.api.client.Client;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import dk.statsbiblioteket.doms.domsutil.surveyable.Severity;
-import dk.statsbiblioteket.doms.domsutil.surveyable.Status;
-import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
-import dk.statsbiblioteket.doms.domsutil.surveyable.Surveyable;
-import dk.statsbiblioteket.doms.domsutil.surveyable.SurveyableService;
-import dk.statsbiblioteket.doms.webservices.configuration.ConfigCollection;
-import dk.statsbiblioteket.util.qa.QAInfo;
-
-import javax.xml.namespace.QName;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -56,6 +43,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.xml.namespace.QName;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.sun.jersey.api.client.Client;
+
+import dk.statsbiblioteket.doms.domsutil.surveyable.Severity;
+import dk.statsbiblioteket.doms.domsutil.surveyable.Status;
+import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
+import dk.statsbiblioteket.doms.domsutil.surveyable.Surveyable;
+import dk.statsbiblioteket.doms.domsutil.surveyable.SurveyableService;
+import dk.statsbiblioteket.doms.webservices.configuration.ConfigCollection;
+import dk.statsbiblioteket.util.qa.QAInfo;
 
 /**
  * A surveyor that calls specified REST URLs to get status.
@@ -120,7 +122,7 @@ public class WebServiceSurveyor implements Surveyor {
     private File ignoredMessagesFile = new File(DEFAULT_IGNORED_MESSAGES_PATH);
 
     /** Logger for this class. */
-    private final Log log = LogFactory.getLog(Surveyor.class);
+    private final Log log = LogFactory.getLog(WebServiceSurveyor.class);
 
     /** Default configuration for ignored messages file. */
     private static final String DEFAULT_IGNORED_MESSAGES_PATH = "ignored.txt";
