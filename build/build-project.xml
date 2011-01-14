@@ -1,4 +1,6 @@
 <!--
+  ~ Doms build framework version 1.0.15
+  ~
   ~ $Id$
   ~ $Revision$
   ~ $Date$
@@ -162,7 +164,7 @@
             <fileset refid="project.modules.data"/>
             <regexpmapper from="(.*)/data(/.*)" to="\1\2"/>
         </copy>
-                              
+
 
 
         <zip destfile="dist/${dist.bin.zip}">
@@ -188,6 +190,7 @@
         <delete dir="temp/packagetemp"/>
 
     </target>
+
 
 
     <target name="release.src" depends="distclean">
@@ -221,6 +224,7 @@
             <zipgroupfileset file="dist/${dist.bin.zip}"/>
             <zipfileset dir="dist" prefix="${dist.name}/src">
                 <include name="*-src.zip"/>
+                <exclude name="${dist.src.zip}"/>
             </zipfileset>
             <zipfileset file="dist/${dist.doc.zip}"
                         prefix="${dist.name}/apidocs"/>
