@@ -48,7 +48,7 @@
             dk.statsbiblioteket.doms.surveillance.surveyor.restUrls
         </param-name>
         <param-value>
-            http://localhost:8080/surveillance-surveyor/surveyable/getStatusSince/{date}
+            http://localhost:8080/surveillance-surveyor-service/surveyable/getStatusSince/{date}
         </param-value>
     </context-param>
     <context-param>

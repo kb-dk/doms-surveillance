@@ -37,7 +37,7 @@
         <version>0.0.8-SNAPSHOT</version>
     </parent>
 
-    <artifactId>surveyor-service</artifactId>
+    <artifactId>surveillance-surveyor-service</artifactId>
     <packaging>war</packaging>
 
     <build>
@@ -66,11 +66,13 @@
             <artifactId>domsutil-bundle</artifactId>
             <type>pom</type>
         </dependency>
+<!--
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
+-->
 <!--
         <dependency>
             <groupId>net.sourceforge.saxon</groupId>
@@ -80,7 +82,7 @@
 -->
         <dependency>
             <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
+            <artifactId>jersey-bundle</artifactId>
         </dependency>
     </dependencies>
 
