@@ -3,12 +3,12 @@
   <component name="ArtifactManager">
     <artifact type="war" name="surveillance-fedorasurveyor:war">
       <output-path>$PROJECT_DIR$/modules/fedorasurveyor/target</output-path>
-      <root id="archive" name="surveillance-fedorasurveyor-0.0.8-SNAPSHOT.war">
+      <root id="archive" name="surveillance-fedorasurveyor-service-0.0.8-SNAPSHOT.war">
         <element id="artifact" artifact-name="surveillance-fedorasurveyor:war exploded" />
       </root>
     </artifact>
     <artifact type="exploded-war" name="surveillance-fedorasurveyor:war exploded">
-      <output-path>$PROJECT_DIR$/modules/fedorasurveyor/target/surveillance-fedorasurveyor-0.0.8-SNAPSHOT</output-path>
+      <output-path>$PROJECT_DIR$/modules/fedorasurveyor/target/surveillance-fedorasurveyor-service-0.0.8-SNAPSHOT</output-path>
       <root id="root">
         <element id="javaee-facet-resources" facet="surveillance-fedorasurveyor/web/Web" />
         <element id="directory" name="WEB-INF">

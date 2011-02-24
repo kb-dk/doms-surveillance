@@ -37,7 +37,7 @@
         <version>0.0.8-SNAPSHOT</version>
     </parent>
 
-    <artifactId>surveillance-fedorasurveyor</artifactId>
+    <artifactId>surveillance-fedorasurveyor-service</artifactId>
 
     <packaging>war</packaging>
 
