@@ -68,13 +68,6 @@
         </dependency>
         <!--
                 <dependency>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                    <scope>provided</scope>
-                </dependency>
-        -->
-        <!--
-                <dependency>
                     <groupId>net.sourceforge.saxon</groupId>
                     <artifactId>saxon</artifactId>
                     <classifier>dom</classifier>
@@ -88,6 +81,12 @@
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
 
