@@ -8,14 +8,14 @@
 
     <groupId>dk.statsbiblioteket.doms.surveillance</groupId>
     <artifactId>surveillance</artifactId>
-    <version>0.0.8</version>
+    <version>0.0.9-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <scm>
-        <connection>scm:svn:https://doms.svn.sourceforge.net/svnroot/doms/surveillance/tags/surveillance-0.0.8</connection>
-        <developerConnection>scm:svn:https://doms.svn.sourceforge.net/svnroot/doms/surveillance/tags/surveillance-0.0.8
+        <connection>scm:svn:https://doms.svn.sourceforge.net/svnroot/doms/surveillance/trunk</connection>
+        <developerConnection>scm:svn:https://doms.svn.sourceforge.net/svnroot/doms/surveillance/trunk
         </developerConnection>
-        <url>http://doms.svn.sourceforge.net/viewvc/doms/surveillance/tags/surveillance-0.0.8</url>
+        <url>http://doms.svn.sourceforge.net/viewvc/doms/surveillance/trunk</url>
     </scm>
 
 
