@@ -66,25 +66,29 @@
             <artifactId>domsutil-bundle</artifactId>
             <type>pom</type>
         </dependency>
-<!--
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
--->
-<!--
-        <dependency>
-            <groupId>net.sourceforge.saxon</groupId>
-            <artifactId>saxon</artifactId>
-            <classifier>dom</classifier>
-        </dependency>
--->
+        <!--
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+        -->
+        <!--
+                <dependency>
+                    <groupId>net.sourceforge.saxon</groupId>
+                    <artifactId>saxon</artifactId>
+                    <classifier>dom</classifier>
+                </dependency>
+        -->
         <dependency>
             <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-bundle</artifactId>
+            <artifactId>jersey-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
         </dependency>
     </dependencies>
 
-    
+
 </project>
