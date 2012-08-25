@@ -19,8 +19,8 @@
 
 
     <modules>
-        <module>modules/fedorasurveyor</module>
-        <module>modules/surveyor</module>
+        <module>fedorasurveyor</module>
+        <module>surveyor</module>
     </modules>
 
     <dependencyManagement>
