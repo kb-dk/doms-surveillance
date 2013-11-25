@@ -192,7 +192,7 @@ public class FedoraStatusService implements Surveyable {
                             + " should not be null");
         }
         return "AdminEmailList: '"
-                + Arrays.toString(description.getAdminEmailList()) + "'<br />\n"
+                + Arrays.toString(description.getAdminEmailList().getItem().toArray()) + "'<br />\n"
                 + "DefaultExportFormat: '"
                 + description.getDefaultExportFormat() + "'<br />\n"
                 + "OAINamespace: '"
@@ -206,7 +206,7 @@ public class FedoraStatusService implements Surveyable {
                 + "RepositoryVersion: '"
                 + description.getRepositoryVersion() + "'<br />\n"
                 + "RetainPIDs: '"
-                + Arrays.toString(description.getRetainPIDs()) + "'<br />\n"
+                + Arrays.toString(description.getRetainPIDs().getItem().toArray()) + "'<br />\n"
                 + "SampleAccessURL: '"
                 + description.getSampleAccessURL() + "'<br />\n"
                 + "SampleOAIIdentifier: '"
