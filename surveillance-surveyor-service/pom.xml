@@ -64,6 +64,24 @@
             <artifactId>domsutil-bundle</artifactId>
             <type>pom</type>
         </dependency>
+        <dependency>
+            <groupId>dk.statsbiblioteket.doms.domsutil.surveyable</groupId>
+            <artifactId>domsutil-logappender</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.statsbiblioteket.sbutil</groupId>
+            <artifactId>sbutil-webservices-log4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.statsbiblioteket.sbutil</groupId>
+            <artifactId>sbutil-webservices-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.statsbiblioteket.doms.domsutil.surveyable</groupId>
+            <artifactId>domsutil-logappender</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!--
                 <dependency>
                     <groupId>net.sourceforge.saxon</groupId>

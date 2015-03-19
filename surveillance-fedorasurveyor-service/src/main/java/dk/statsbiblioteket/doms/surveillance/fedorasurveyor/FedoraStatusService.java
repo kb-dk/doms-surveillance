@@ -31,7 +31,7 @@ import dk.statsbiblioteket.doms.domsutil.surveyable.Severity;
 import dk.statsbiblioteket.doms.domsutil.surveyable.Status;
 import dk.statsbiblioteket.doms.domsutil.surveyable.StatusMessage;
 import dk.statsbiblioteket.doms.domsutil.surveyable.Surveyable;
-import dk.statsbiblioteket.doms.webservices.configuration.ConfigCollection;
+import dk.statsbiblioteket.sbutil.webservices.configuration.ConfigCollection;
 import dk.statsbiblioteket.util.qa.QAInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

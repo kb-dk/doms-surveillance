@@ -3,7 +3,7 @@
     <parent>
         <groupId>dk.statsbiblioteket.doms</groupId>
         <artifactId>doms</artifactId>
-        <version>1.0</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
 
     <groupId>dk.statsbiblioteket.doms.surveillance</groupId>
@@ -28,8 +28,23 @@
             <dependency>
                 <groupId>dk.statsbiblioteket.doms.domsutil</groupId>
                 <artifactId>domsutil-bundle</artifactId>
-                <version>1.0</version>
+                <version>1.1-SNAPSHOT</version>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>dk.statsbiblioteket.doms.domsutil.surveyable</groupId>
+                <artifactId>domsutil-logappender</artifactId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>dk.statsbiblioteket.sbutil</groupId>
+                <artifactId>sbutil-webservices-common</artifactId>
+                <version>0.5.29</version>
+            </dependency>
+            <dependency>
+                <groupId>dk.statsbiblioteket.sbutil</groupId>
+                <artifactId>sbutil-webservices-log4j</artifactId>
+                <version>0.5.29</version>
             </dependency>
             <dependency>
                 <groupId>org.fcrepo</groupId>

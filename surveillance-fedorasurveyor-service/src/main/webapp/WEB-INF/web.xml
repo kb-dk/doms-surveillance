@@ -28,7 +28,7 @@
 <web-app>
     <listener>
         <listener-class>
-            dk.statsbiblioteket.doms.webservices.configuration.ConfigContextListener
+            dk.statsbiblioteket.sbutil.webservices.configuration.ConfigContextListener
         </listener-class>
     </listener>
 
@@ -75,11 +75,11 @@
     <servlet>
         <description>The servlet that is loaded on startup, and initializes the logging system</description>
         <servlet-name>Log4jInitialisation</servlet-name>
-        <servlet-class>dk.statsbiblioteket.doms.webservices.logging.Log4JInitServlet</servlet-class>
+        <servlet-class>dk.statsbiblioteket.sbutil.webservices.logging.Log4JInitServlet</servlet-class>
         <init-param>
             <description>Name of the context param that controls the location of the log4j config file</description>
             <param-name>
-                dk.statsbiblioteket.doms.webservices.logging.Log4JInitServlet.log4jConfigurationPropertyKey
+                dk.statsbiblioteket.sbutil.webservices.logging.Log4JInitServlet.log4jConfigurationPropertyKey
             </param-name>
             <param-value>
                 dk.statsbiblioteket.doms.surveillance.fedorasurveyor.log4jconfig
