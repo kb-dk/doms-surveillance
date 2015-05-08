@@ -65,12 +65,12 @@
             <type>pom</type>
         </dependency>
         <dependency>
-            <groupId>dk.statsbiblioteket.doms.domsutil.surveyable</groupId>
-            <artifactId>domsutil-logappender</artifactId>
+            <groupId>dk.statsbiblioteket.sbutil</groupId>
+            <artifactId>sbutil-webservices-log4j</artifactId>
         </dependency>
         <dependency>
             <groupId>dk.statsbiblioteket.sbutil</groupId>
-            <artifactId>sbutil-webservices-log4j</artifactId>
+            <artifactId>sbutil-qa</artifactId>
         </dependency>
         <dependency>
             <groupId>dk.statsbiblioteket.sbutil</groupId>
