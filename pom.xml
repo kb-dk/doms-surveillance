@@ -26,12 +26,6 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>dk.statsbiblioteket.doms.domsutil</groupId>
-                <artifactId>domsutil-bundle</artifactId>
-                <version>1.1-SNAPSHOT</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
                 <groupId>dk.statsbiblioteket.doms.domsutil.surveyable</groupId>
                 <artifactId>domsutil-logappender</artifactId>
                 <version>1.1-SNAPSHOT</version>
