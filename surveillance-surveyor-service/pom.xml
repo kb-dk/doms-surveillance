@@ -76,6 +76,10 @@
             <artifactId>domsutil-logappender</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>dk.statsbiblioteket.doms.domsutil.surveyable</groupId>
+            <artifactId>domsutil-surveyable-impl</artifactId>
+        </dependency>
 
         <!--
                 <dependency>
